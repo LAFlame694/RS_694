@@ -53,11 +53,12 @@ class MeterReadingAdmin(LandlordFilteredAdmin):
 @admin.register(RecurringCharge)
 class RecurringChargeAdmin(LandlordFilteredAdmin):
 
-    landlord_lookup = "ledger_account__tenancy__unit__property__landlord"
+    landlord_lookup = "property__landlord"
 
     list_display = (
         "category",
-        "ledger_account",
+        "property",
+        "applies_to_unit_types",
         "amount",
         "frequency",
         "start_date",

@@ -1,6 +1,8 @@
+from random import choices
 from django.db import models
 from django.conf import settings
 from django.db.models import UniqueConstraint
+from properties.choices import UnitType
 
 # Create your models here.
 class Property(models.Model):
@@ -35,19 +37,16 @@ class Property(models.Model):
         return f"{self.name} ({self.landlord.username})"
 
 class Unit(models.Model):
-    UNIT_CHOICES = [
-        ("BEDSITTER", "Bedsitter"),
-        ("ONE_BEDROOM", "One Bedroom"),
-        ("TWO_BEDROOM", "Two Bedroom"),
-        ("SHOP", "Shop")
-    ]
     property = models.ForeignKey(
         Property,
         on_delete=models.PROTECT,
         related_name="units"
     )
     unit_number = models.CharField(max_length=20)
-    unit_type = models.CharField(choices=UNIT_CHOICES, max_length=50)
+    unit_type = models.CharField(
+        max_length=50,
+        choices=UnitType.choices
+    )
     floor = models.CharField(max_length=20, blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

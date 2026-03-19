@@ -4,6 +4,7 @@ class LedgerEntryCategory(models.TextChoices):
     RENT = "RENT", "Rent"
     WATER = "WATER", "Water"
     ELECTRICITY = "ELECTRICITY", "Electricity"
+    GARBAGE = "GARBAGE", "Garbage"
     DEPOSIT = "DEPOSIT", "Deposit"
     PENALTY = "PENALTY", "Penalty"
     OTHER = "OTHER", "Other"
