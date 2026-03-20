@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from finance.choices import LedgerEntryCategory
 from properties.choices import UnitType
+from multiselectfield import MultiSelectField
 
 # Create your models here.
 class InvoiceSequence(models.Model):
@@ -80,7 +81,7 @@ class Invoice(models.Model):
                 name="unique_invoice_per_charge_per_period"
             )
         ]
-    
+
     # safe invoice generator
     def generate_invoice_number(self):
         year = timezone.now().year
@@ -102,6 +103,12 @@ class Invoice(models.Model):
             self.invoice_number = self.generate_invoice_number()
 
         super().save(*args, **kwargs)
+    
+    def is_system_generated(self):
+        return self.created_by.role == "SYSTEM"
+     
+    is_system_generated.boolean = True
+    is_system_generated.short_description = "Auto Generated"
     
     def __str__(self):
         return f"Invoice {self.invoice_number} - {self.tenancy}"
@@ -205,9 +212,9 @@ class RecurringCharge(models.Model):
     class Frequency(models.TextChoices):
         MONTHLY = "MONTHLY", "Monthly"
 
-    applies_to_unit_types = models.CharField(
-        max_length=255,
-        help_text="Comma separated unit types"
+    applies_to_unit_types = MultiSelectField(
+        choices=UnitType.choices,
+        help_text="Select applicable unit types"
     )
     category = models.CharField(
         choices=LedgerEntryCategory.choices,
@@ -249,16 +256,6 @@ class RecurringCharge(models.Model):
         ordering = ["-start_date"]
     
     def clean(self):
-        valid_types = [choice[0] for choice in UnitType.choices]
-
-        input_types = [
-            ut.strip() for ut in self.applies_to_unit_types.split(",")
-        ]
-
-        for ut in input_types:
-            if ut not in valid_types:
-                raise ValidationError(f"{ut} is not a valid UnitType")
-
         # only validate if value is provided
         if self.day_of_month is not None:
             if self.day_of_month < 1 or self.day_of_month > 31:

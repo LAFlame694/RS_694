@@ -1,5 +1,8 @@
 from django.contrib import admin
 from accounts.models import Role, User
+import logging
+
+logger = logging.getLogger("admin")
 
 """
 custom base class for Django Admin that 
@@ -83,7 +86,8 @@ class LandlordFilteredAdmin(admin.ModelAdmin):
 
         fields = [f.name for f in obj._meta.fields]
 
-        # object creation
+
+        # ===== CREATE OBJECT =====
         if not change:
             if "created_by" in fields:
                 obj.created_by = request.user
@@ -101,20 +105,72 @@ class LandlordFilteredAdmin(admin.ModelAdmin):
                 # system admin must choose landlord manually
                 elif request.user.role == Role.SYSTEM_ADMIN and not obj.landlord:
                     form.add_error("landlord", "Landlord must be selected.")
+                    logger.warning(
+                        f"ADMIN CREATE FAILED | user={request.user.username} | "
+                        f"model={obj.__class__.__name__} | reason=missing landlord"
+                    )
                     return
 
-        # object editing
+        # ===== OBJECT EDITING =====
         else:
             if "landlord" in form.changed_data:
                 form.add_error("landlord", "landlord cannot be changed.")
+                logger.warning(
+                    f"ADMIN UPDATE BLOCKED | user={request.user.username} | "
+                    f"model={obj.__class__.__name__} | id={obj.id} | field=landlord"
+                )
                 return
             
             # prevent tenancy reassignment
             if "tenancy" in form.changed_data:
                 form.add_error("tenancy", "Tenancy cannot be changed.")
+                logger.warning(
+                    f"ADMIN UPDATE BLOCKED | user={request.user.username} | "
+                    f"model={obj.__class__.__name__} | id={obj.id} | field=tenancy"
+                )
                 return
-        
+
+        # save first
         super().save_model(request, obj, form, change)
+
+        # ===== LOG AFTER SAVE =====
+        if change:
+            logger.info(
+                f"ADMIN UPDATE | user={request.user.username} | "
+                f"model={obj.__class__.__name__} | id={obj.id}"
+            )
+
+            # field level changes
+            for field in form.changed_data:
+                old_value = form.initial.get(field)
+                new_value = getattr(obj, field)
+
+                logger.info(
+                    f"FIELD CHANGE | user={request.user.username} | "
+                    f"model={obj.__class__.__name__} | id={obj.id} | "
+                    f"field={field} | from={old_value} | to={new_value}"
+                )
+        
+        else:
+            logger.info(
+                f"ADMIN CREATE | user={request.user.username} | "
+                f"model={obj.__class__.__name__} | id={obj.id}"
+            )
+    
+    def delete_model(self, request, obj):
+        logger.warning(
+            f"ADMIN DELETE | user={request.user.username} | "
+            f"model={obj.__class__.__name__} | id={obj.id}"
+        )
+        super().delete_model(request, obj)
+    
+    def delete_queryset(self, request, queryset):
+        for obj in queryset:
+            logger.warning(
+                f"ADMIN BULK DELETE | user={request.user.username} | "
+                f"model={obj.__class__.__name__} | id={obj.id}"
+            )
+        super().delete_queryset(request, queryset)
     
     def get_exclude(self, request, obj = None):
         exclude = list(super().get_exclude(request, obj) or [])
@@ -150,14 +206,22 @@ class LandlordFilteredAdmin(admin.ModelAdmin):
         
         if obj is None:
             return True
+
+        allowed = False
         
         if request.user.role == Role.LANDLORD:
-            return self.get_nested_attr(obj, self.landlord_lookup) == request.user
+            allowed = self.get_nested_attr(obj, self.landlord_lookup) == request.user
         
-        if request.user.role == Role.CARETAKER:
-            return self.get_nested_attr(obj, self.landlord_lookup) == request.user.landlord
+        elif request.user.role == Role.CARETAKER:
+            allowed = self.get_nested_attr(obj, self.landlord_lookup) == request.user.landlord
         
-        return False
+        if not allowed:
+            logger.warning(
+                f"VIEW DENIED | user={request.user.username} | "
+                f"model={obj.__class__.__name__} | id={obj.id}"
+            )
+        
+        return allowed
     
     def has_change_permission(self, request, obj = None):
         # prevents modifying objects outside tenant scope
@@ -167,13 +231,20 @@ class LandlordFilteredAdmin(admin.ModelAdmin):
         if obj is None:
             return True
         
+        allowed = False
+        
         if request.user.role == Role.LANDLORD:
-            return self.get_nested_attr(obj, self.landlord_lookup) == request.user
+            allowed = self.get_nested_attr(obj, self.landlord_lookup) == request.user
         
-        if request.user.role == Role.CARETAKER:
-            return self.get_nested_attr(obj, self.landlord_lookup) == request.user.landlord
+        elif request.user.role == Role.CARETAKER:
+            allowed = self.get_nested_attr(obj, self.landlord_lookup) == request.user.landlord
         
-        return False
+        if not allowed:
+            logger.warning(
+                f"CHANGE DENIED | user={request.user.username} | "
+                f"model={obj.__class__.__name__} | id={obj.id}"
+            )
+        return allowed
     
     def has_delete_permission(self, request, obj = None):
         # prevent deleting objects belonging to other landlords
@@ -183,13 +254,21 @@ class LandlordFilteredAdmin(admin.ModelAdmin):
         if obj is None:
             return True
         
+        allowed = False
+        
         if request.user.role == Role.LANDLORD:
-            return self.get_nested_attr(obj, self.landlord_lookup) == request.user
+            allowed = self.get_nested_attr(obj, self.landlord_lookup) == request.user
         
         if request.user.role == Role.CARETAKER:
-            return self.get_nested_attr(obj, self.landlord_lookup) == request.user.landlord
+            allowed = self.get_nested_attr(obj, self.landlord_lookup) == request.user.landlord
+        
+        if not allowed:
+            logger.warning(
+                f"DELETE DENIED | user={request.user.username} | "
+                f"model={obj.__class__.__name__} | id={obj.id}"
+            )
 
-        return False
+        return allowed
     
     def get_nested_attr(self, obj, attr_path):
         """

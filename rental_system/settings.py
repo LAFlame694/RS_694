@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import logging.handlers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -121,3 +122,88 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 AUTH_USER_MODEL = "accounts.User"
+
+# Logging configuration
+LOG_DIR = BASE_DIR / "logs"
+
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s | %(levelname)s | %(name)s | %(message)s'
+        },
+    },
+
+    'handlers': {
+        'billing_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'billing.log'),
+            'maxBytes': 5 * 1024 * 1024, # 5mb
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'system_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'system.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 3,
+            'formatter': 'standard',
+        },
+        'admin_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'admin.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'errors.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'debug_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'debug.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 2,
+            'formatter': 'standard',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+
+    'loggers': {
+        'billing': {
+            'handlers': ['billing_file', 'error_file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'admin': {
+            'handlers': ['admin_file', 'error_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'system': {
+            'handlers': ['system_file', 'error_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['error_file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}

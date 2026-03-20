@@ -1,0 +1,4 @@
+2026-03-20 18:32:38,575 | INFO | admin | ADMIN CREATE | user=3 | model=Tenant | id=5
+ 2026-03-20 18:38:00,088 | INFO | admin | ADMIN CREATE | user=3 | model=Property | id=2
+2026-03-20 18:40:47,319 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Unit | id=5
+2026-03-20 19:36:50,832 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=5

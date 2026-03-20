@@ -14,9 +14,11 @@ class InvoiceAdmin(LandlordFilteredAdmin):
         "total_amount",
         "amount_paid",
         "status",
-        "issue_date"
+        "issue_date",
+        "created_by",
+        "is_system_generated",
     )
-    list_filter = ("status",)
+    list_filter = ("category","created_by__role",)
 
 @admin.register(Meter)
 class MeterAdmin(LandlordFilteredAdmin):
@@ -60,11 +62,10 @@ class RecurringChargeAdmin(LandlordFilteredAdmin):
         "property",
         "applies_to_unit_types",
         "amount",
-        "frequency",
         "start_date",
         "is_active",
     )
-    list_filter = ("category", "frequency", "is_active",)
+    list_filter = ("category", "applies_to_unit_types", "is_active",)
 
 # only system_admin should see this model
 @admin.register(InvoiceSequence)

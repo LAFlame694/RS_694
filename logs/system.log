@@ -1,0 +1,161 @@
+2026-03-20 15:55:18,952 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 15:56:10,816 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 15:56:15,709 | INFO | django.server | "GET /admin/ HTTP/1.1" 200 17845
+2026-03-20 15:56:18,967 | INFO | django.server | "GET /admin/billing/recurringcharge/ HTTP/1.1" 200 18956
+2026-03-20 15:56:19,059 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 15:56:20,573 | INFO | django.server | "GET /admin/billing/recurringcharge/add/ HTTP/1.1" 200 23643
+2026-03-20 15:56:20,645 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 15:57:05,682 | INFO | django.server | "POST /admin/billing/recurringcharge/add/ HTTP/1.1" 302 0
+2026-03-20 15:57:05,750 | INFO | django.server | "GET /admin/billing/recurringcharge/ HTTP/1.1" 200 19749
+2026-03-20 15:57:05,832 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 15:58:42,551 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 15:58:53,589 | INFO | django.server | "GET /admin/ HTTP/1.1" 200 17864
+2026-03-20 15:59:00,862 | INFO | django.server | "GET /admin/billing/invoice/ HTTP/1.1" 200 29285
+2026-03-20 15:59:00,944 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 15:59:12,256 | INFO | django.server | "GET /admin/finance/ledgerentry/ HTTP/1.1" 200 24294
+2026-03-20 15:59:12,321 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 16:18:46,118 | INFO | django.server | "GET /admin/finance/ledgerentry/15/change/ HTTP/1.1" 200 29774
+2026-03-20 16:18:46,209 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 17:14:58,139 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:14:59,859 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:32:00,750 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:32:02,354 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:41:10,170 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:41:11,932 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:47:48,227 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:47:50,179 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:50:16,724 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:50:19,275 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:51:30,318 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:51:32,067 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:51:56,912 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:52:47,209 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:52:47,242 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:52:49,114 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:52:49,136 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:54:10,585 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:54:10,602 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:54:12,834 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:54:12,834 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:59:42,319 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:59:42,368 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:59:44,281 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:59:44,377 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:59:50,686 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:59:50,746 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 17:59:52,267 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 17:59:52,272 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:01:37,954 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:01:37,956 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:01:39,987 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:03:20,666 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:03:20,712 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:03:22,645 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:03:22,658 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:08:05,027 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:08:05,103 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:08:06,902 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:08:06,954 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:09:45,440 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:09:45,466 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:09:47,386 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:09:47,389 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:12:50,608 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:12:50,615 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:12:53,492 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:12:53,496 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:13:15,447 | INFO | django.server | "GET /admin/ HTTP/1.1" 200 17864
+2026-03-20 18:13:21,040 | INFO | django.server | "GET /admin/finance/ledgerentry/ HTTP/1.1" 200 24294
+2026-03-20 18:13:21,151 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 18:13:22,943 | INFO | django.server | "GET /admin/finance/ledgerentry/15/change/ HTTP/1.1" 200 29774
+2026-03-20 18:13:23,022 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 18:13:29,521 | INFO | system | ADMIN UPDATE | user=3 | model=LedgerEntry | id=15
+2026-03-20 18:13:29,757 | ERROR | django.request | Internal Server Error: /admin/finance/ledgerentry/15/change/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 144, in save_model
+    for field in form.changed_date:
+                 ^^^^^^^^^^^^^^^^^
+AttributeError: 'LedgerEntryForm' object has no attribute 'changed_date'. Did you mean: 'changed_data'?
+2026-03-20 18:13:29,772 | ERROR | django.server | "POST /admin/finance/ledgerentry/15/change/ HTTP/1.1" 500 131150
+2026-03-20 18:13:35,089 | INFO | django.server | "GET /admin/finance/ledgerentry/15/change/ HTTP/1.1" 200 29774
+2026-03-20 18:13:49,314 | INFO | system | ADMIN UPDATE | user=3 | model=LedgerEntry | id=15
+2026-03-20 18:13:49,411 | ERROR | django.request | Internal Server Error: /admin/finance/ledgerentry/15/change/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 144, in save_model
+    for field in form.changed_date:
+                 ^^^^^^^^^^^^^^^^^
+AttributeError: 'LedgerEntryForm' object has no attribute 'changed_date'. Did you mean: 'changed_data'?
+2026-03-20 18:13:49,421 | ERROR | django.server | "POST /admin/finance/ledgerentry/15/change/ HTTP/1.1" 500 131150
+2026-03-20 18:15:39,333 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:15:40,424 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py changed, reloading.
+2026-03-20 18:15:41,241 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:15:42,517 | INFO | django.utils.autoreload | Watching for file changes with StatReloader
+2026-03-20 18:16:05,094 | INFO | system | ADMIN UPDATE | user=3 | model=LedgerEntry | id=15
+2026-03-20 18:16:05,387 | INFO | django.server | "POST /admin/finance/ledgerentry/15/change/ HTTP/1.1" 302 0
+2026-03-20 18:16:05,567 | INFO | django.server | "GET /admin/finance/ledgerentry/ HTTP/1.1" 200 24524
+2026-03-20 18:16:05,683 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 18:16:28,082 | INFO | django.server | "GET /admin/ HTTP/1.1" 200 17890
+2026-03-20 18:16:56,734 | INFO | django.server | "GET /admin/billing/invoice/ HTTP/1.1" 200 29285
+2026-03-20 18:16:56,870 | INFO | django.server | "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+2026-03-20 18:25:54,264 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\rental_system\settings.py changed, reloading.
+2026-03-20 18:25:54,292 | INFO | django.utils.autoreload | C:\Users\GEORGE\Desktop\RS_694\rental_system\settings.py changed, reloading.

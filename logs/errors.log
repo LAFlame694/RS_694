@@ -1,0 +1,74 @@
+2026-03-20 18:13:29,757 | ERROR | django.request | Internal Server Error: /admin/finance/ledgerentry/15/change/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 144, in save_model
+    for field in form.changed_date:
+                 ^^^^^^^^^^^^^^^^^
+AttributeError: 'LedgerEntryForm' object has no attribute 'changed_date'. Did you mean: 'changed_data'?
+2026-03-20 18:13:29,772 | ERROR | django.server | "POST /admin/finance/ledgerentry/15/change/ HTTP/1.1" 500 131150
+2026-03-20 18:13:49,411 | ERROR | django.request | Internal Server Error: /admin/finance/ledgerentry/15/change/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 144, in save_model
+    for field in form.changed_date:
+                 ^^^^^^^^^^^^^^^^^
+AttributeError: 'LedgerEntryForm' object has no attribute 'changed_date'. Did you mean: 'changed_data'?
+2026-03-20 18:13:49,421 | ERROR | django.server | "POST /admin/finance/ledgerentry/15/change/ HTTP/1.1" 500 131150
