@@ -1,0 +1,147 @@
+:root {
+--primary-color: #2563eb;
+--secondary-color: #10b981;
+--dark-blue: #1e293b;
+--light-bg: #f8fafc;
+}
+
+body {
+font-family: "Inter", sans-serif;
+color: #334155;
+scroll-behavior: smooth;
+}
+
+.navbar {
+transition: all 0.3s ease;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand {
+font-weight: 700;
+color: var(--primary-color) !important;
+font-size: 1.5rem;
+}
+
+.hero-section {
+background:
+    linear-gradient(rgba(30, 41, 59, 0.8), rgba(30, 41, 59, 0.8)),
+    url("https://i.pinimg.com/1200x/10/3d/40/103d4053c3e0f2583005967a38488a34.jpg");
+background-size: cover;
+background-position: center;
+min-height: 100vh;
+display: flex;
+align-items: center;
+color: white;
+padding-top: 80px;
+}
+
+.btn-primary {
+background-color: var(--primary-color);
+border-color: var(--primary-color);
+padding: 12px 30px;
+font-weight: 600;
+border-radius: 8px;
+}
+
+.btn-outline-light {
+padding: 12px 30px;
+font-weight: 600;
+border-radius: 8px;
+}
+
+.section-padding {
+padding: 100px 0;
+}
+
+.feature-card {
+border: none;
+border-radius: 16px;
+transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+height: 100%;
+background: #fff;
+}
+
+.feature-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.icon-box {
+width: 60px;
+height: 60px;
+background: rgba(37, 99, 235, 0.1);
+color: var(--primary-color);
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5rem;
+margin-bottom: 20px;
+}
+
+.step-number {
+width: 40px;
+height: 40px;
+background: var(--primary-color);
+color: white;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: bold;
+margin: 0 auto 20px;
+}
+
+.about-img {
+border-radius: 20px;
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.cta-section {
+background-color: var(--primary-color);
+color: white;
+padding: 80px 0;
+border-radius: 0;
+}
+
+.footer {
+background-color: var(--dark-blue);
+color: #94a3b8;
+padding: 60px 0 30px;
+}
+
+.footer h5 {
+color: white;
+font-weight: 600;
+margin-bottom: 25px;
+}
+
+.footer-link {
+color: #94a3b8;
+text-decoration: none;
+transition: color 0.3s;
+display: block;
+margin-bottom: 12px;
+}
+
+.footer-link:hover {
+color: white;
+}
+
+#contact .form-control {
+padding: 12px;
+border-radius: 8px;
+border: 1px solid #e2e8f0;
+}
+
+@media (max-width: 768px) {
+.hero-section {
+    text-align: center;
+    min-height: 80vh;
+}
+.section-padding {
+    padding: 60px 0;
+}
+}

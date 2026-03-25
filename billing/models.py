@@ -8,6 +8,7 @@ from django.utils import timezone
 from finance.choices import LedgerEntryCategory
 from properties.choices import UnitType
 from multiselectfield import MultiSelectField
+from .choices import MeterReadingStatus, InvoiceStatus
 
 # Create your models here.
 class InvoiceSequence(models.Model):
@@ -18,14 +19,6 @@ class InvoiceSequence(models.Model):
         return f"{self.year} - {self.last_number}"
 
 class Invoice(models.Model):
-    class Status(models.TextChoices):
-        DRAFT = "DRAFT", "Draft"
-        ISSUED = "ISSUED", "Issued"
-        PARTIAL = "PARTIAL", "Partially Paid"
-        PAID = "PAD", "Paid"
-        OVERDUE = "OVERDUE", "Overdue"
-        CANCELLED = "CANCELLED", "Cancelled"
-    
     tenancy = models.ForeignKey(
         Tenancy,
         on_delete=models.PROTECT,
@@ -57,8 +50,8 @@ class Invoice(models.Model):
     )
     status = models.CharField(
         max_length=20,
-        choices=Status.choices,
-        default=Status.DRAFT
+        choices=InvoiceStatus.choices,
+        default=InvoiceStatus.DRAFT
     )
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -161,7 +154,11 @@ class MeterReading(models.Model):
         decimal_places=2,
         editable=False
     )
-    is_billed = models.BooleanField(default=False)
+    status = models.CharField(
+        max_length=20,
+        choices=MeterReadingStatus.choices,
+        default=MeterReadingStatus.PENDING
+    )
     invoice = models.OneToOneField(
         Invoice,
         null=True,
@@ -169,6 +166,14 @@ class MeterReading(models.Model):
         on_delete=models.PROTECT,
         related_name="meter_reading"
     )
+    billed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="billed_meter_readings"
+    )
+    billed_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -194,16 +199,32 @@ class MeterReading(models.Model):
     
     def save(self, *args, **kwargs):
 
-        # Auto calculate consuption
-        self.consumption = self.current_reading - self.previous_reading
+        # detect updates
+        if self.pk:
+            old = MeterReading.objects.get(pk=self.pk)
 
-        # auto calculate amount
+            # block edits after BILLED
+            if old.status == "BILLED":
+                # allow only safe updates
+                if (
+                    self.current_reading != old.current_reading or
+                    self.previous_reading != old.previous_reading or
+                    self.rate_per_unit != old.rate_per_unit or
+                    self.reading_date != old.reading_date
+                ):
+                    raise ValidationError("Cannot modify a billed reading")
+        
+        # always recalculate
+        self.consumption = self.current_reading - self.previous_reading
         self.amount = self.consumption * self.rate_per_unit
 
         # run model validation
         self.full_clean()
 
         super().save(*args, **kwargs)
+    
+    def can_be_billed(self):
+        return self.status == MeterReadingStatus.PENDING and self.invoice is None
     
     def __str__(self):
         return f"{self.meter} - {self.reading_date}"

@@ -2,3 +2,12 @@
  2026-03-20 18:38:00,088 | INFO | admin | ADMIN CREATE | user=3 | model=Property | id=2
 2026-03-20 18:40:47,319 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Unit | id=5
 2026-03-20 19:36:50,832 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=5
+2026-03-25 06:37:20,586 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Meter | id=1
+2026-03-25 06:37:59,700 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Meter | id=2
+2026-03-25 06:39:38,788 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=MeterReading | id=1
+2026-03-25 06:41:52,127 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=MeterReading | id=2
+2026-03-25 16:38:36,858 | INFO | admin | ADMIN UPDATE | user=Landlord1 | model=MeterReading | id=1
+2026-03-25 16:38:36,858 | INFO | admin | FIELD CHANGE | user=Landlord1 | model=MeterReading | id=1 | field=billed_by | from=2 | to=Landlord1 (LANDLORD)
+2026-03-25 16:56:40,022 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Meter | id=3
+2026-03-25 16:57:26,421 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=MeterReading | id=3
+2026-03-25 23:03:18,780 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Payment | id=2

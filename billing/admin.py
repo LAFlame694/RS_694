@@ -47,9 +47,9 @@ class MeterReadingAdmin(LandlordFilteredAdmin):
         "current_reading",
         "consumption",
         "amount",
-        "is_billed",
+        "status",
     )
-    list_filter = ("is_billed", "reading_date")
+    list_filter = ("status", "reading_date")
     search_fields = ("meter__meter_number",)
 
 @admin.register(RecurringCharge)

@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from tenants.models import Tenancy
+from billing.models import Invoice
 from django.conf import settings
 from .choices import LedgerEntryCategory, LedgerEntryType, PaymentMethod
 
@@ -123,3 +124,28 @@ class Payment(models.Model):
     
     def __str__(self):
         return f"{self.reference_code} - {self.amount}"
+
+class PaymentAllocation(models.Model):
+    payment = models.ForeignKey(
+        Payment,
+        on_delete=models.CASCADE,
+        related_name="allocations"
+    )
+    invoice = models.ForeignKey(
+        Invoice,
+        on_delete=models.PROTECT,
+        related_name="payment_allocations"
+    )
+    amount_applied = models.DecimalField(max_digits=20, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["payment", "invoice"],
+                name="unique_payment_invoice_allocation"
+            )
+        ]
+    
+    def __str__(self):
+        return f"{self.payment} -> {self.invoice} ({self.amount_applied})"

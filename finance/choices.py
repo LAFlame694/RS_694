@@ -8,12 +8,14 @@ class LedgerEntryCategory(models.TextChoices):
     DEPOSIT = "DEPOSIT", "Deposit"
     PENALTY = "PENALTY", "Penalty"
     OTHER = "OTHER", "Other"
+    PAYMENT = "PAYMENT", "Payment"
 
 class LedgerEntryType(models.TextChoices):
     CHARGE = "CHARGE", "Charge"
     PAYMENT = "PAYMENT", "Payment"
     ADJUSTMENT = "ADJUSTMENT", "Adjustment"
     REVERSAL = "REVERSAL", "Reversal"
+    CREDIT = "CREDIT", "Credit"
 
 class PaymentMethod(models.TextChoices):
     CASH = "CASH", "Cash"

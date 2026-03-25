@@ -59,12 +59,25 @@ class LandlordFilteredAdmin(admin.ModelAdmin):
             from properties.models import Unit
             kwargs["queryset"] = Unit.objects.filter(property__landlord=landlord)
         
+        # tenancy filter
         if db_field.name == "tenancy" and landlord:
             from tenants.models import Tenancy
             kwargs["queryset"] = Tenancy.objects.filter(unit__property__landlord=landlord)
 
         # created_by filter
         if db_field.name == "created_by":
+
+            if request.user.role == Role.LANDLORD:
+                kwargs["queryset"] = User.objects.filter(
+                    landlord=request.user
+                ) | User.objects.filter(id=request.user.id)
+            
+            elif request.user.role == Role.CARETAKER:
+                kwargs["queryset"] = User.objects.filter(
+                    landlord=request.user.landlord
+                ) | User.objects.filter(id=request.user.landlord.id)
+        
+        if db_field.name == "billed_by":
 
             if request.user.role == Role.LANDLORD:
                 kwargs["queryset"] = User.objects.filter(

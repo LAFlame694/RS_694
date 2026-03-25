@@ -5,14 +5,10 @@ from django.db.models import Q
 from accounts.models import User
 from django.db.models import UniqueConstraint
 from properties.models import Unit
+from .choices import TenancyStatus
 
 # Create your models here.
 class Tenancy(models.Model):
-    STATUS_CHOICES = [
-        ("ACTIVE", "Active"),
-        ("ENDED", "Ended"),
-        ("TERMINATED", "Terminated"),
-    ]
     tenant = models.ForeignKey(
         "Tenant",
         on_delete=models.PROTECT,
@@ -28,8 +24,8 @@ class Tenancy(models.Model):
     rent_amount = models.DecimalField(max_digits=12, decimal_places=2)
     status = models.CharField(
         max_length=20,
-        choices=STATUS_CHOICES,
-        default="ACTIVE"
+        choices=TenancyStatus.choices,
+        default=TenancyStatus.ACTIVE
     )
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
