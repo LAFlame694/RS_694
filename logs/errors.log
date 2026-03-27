@@ -1,712 +1,165 @@
-2026-03-20 18:13:29,757 | ERROR | django.request | Internal Server Error: /admin/finance/ledgerentry/15/change/
+2026-03-26 22:02:59,054 | ERROR | django.request | Internal Server Error: /accounts/login/
 Traceback (most recent call last):
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
-    return view(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
-    return self.changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
-    return bound_method(*args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
-    return self._changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
-    self.save_model(request, new_object, form, not add)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 144, in save_model
-    for field in form.changed_date:
-                 ^^^^^^^^^^^^^^^^^
-AttributeError: 'LedgerEntryForm' object has no attribute 'changed_date'. Did you mean: 'changed_data'?
-2026-03-20 18:13:29,772 | ERROR | django.server | "POST /admin/finance/ledgerentry/15/change/ HTTP/1.1" 500 131150
-2026-03-20 18:13:49,411 | ERROR | django.request | Internal Server Error: /admin/finance/ledgerentry/15/change/
+  File "C:\Users\GEORGE\Desktop\RS_694\accounts\views.py", line 9, in login_view
+    return redirect_user_dashboard(request.user)
+TypeError: redirect_user_dashboard() missing 1 required positional argument: 'user'
+2026-03-26 22:02:59,059 | ERROR | django.server | "GET /accounts/login/ HTTP/1.1" 500 71902
+2026-03-26 22:03:57,275 | ERROR | django.request | Internal Server Error: /accounts/login/
 Traceback (most recent call last):
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
-    return view(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
-    return self.changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
-    return bound_method(*args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
-    return self._changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
-    self.save_model(request, new_object, form, not add)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 144, in save_model
-    for field in form.changed_date:
-                 ^^^^^^^^^^^^^^^^^
-AttributeError: 'LedgerEntryForm' object has no attribute 'changed_date'. Did you mean: 'changed_data'?
-2026-03-20 18:13:49,421 | ERROR | django.server | "POST /admin/finance/ledgerentry/15/change/ HTTP/1.1" 500 131150
-2026-03-23 11:05:43,459 | ERROR | django.request | Internal Server Error: /
+  File "C:\Users\GEORGE\Desktop\RS_694\accounts\views.py", line 9, in login_view
+    return redirect_user_dashboard(request, user)
+                                            ^^^^
+UnboundLocalError: cannot access local variable 'user' where it is not associated with a value
+2026-03-26 22:03:57,281 | ERROR | django.server | "GET /accounts/login/ HTTP/1.1" 500 72101
+2026-03-26 22:04:12,789 | ERROR | django.request | Internal Server Error: /accounts/login/
 Traceback (most recent call last):
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\home\views.py", line 5, in landing_page
-    return render(request, 'home/landing_page.html')
+  File "C:\Users\GEORGE\Desktop\RS_694\accounts\views.py", line 9, in login_view
+    return redirect_user_dashboard(request.user)
+TypeError: redirect_user_dashboard() missing 1 required positional argument: 'user'
+2026-03-26 22:04:12,793 | ERROR | django.server | "GET /accounts/login/ HTTP/1.1" 500 72039
+2026-03-27 18:55:29,073 | ERROR | django.request | Internal Server Error: /accounts/landlord/dashboard/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\accounts\decorators.py", line 9, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\accounts\views.py", line 43, in landlord_dashboard
+    return render(request, 'dashboard/landlord/dashboard.html')
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
     content = loader.render_to_string(template_name, context, request, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
-    template = get_template(template_name, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
-    raise TemplateDoesNotExist(template_name, chain=chain)
-django.template.exceptions.TemplateDoesNotExist: home/landing_page.html
-2026-03-23 11:05:43,482 | ERROR | django.server | "GET / HTTP/1.1" 500 84096
-2026-03-23 11:18:01,635 | ERROR | django.request | Internal Server Error: /
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+2026-03-27 18:55:29,087 | ERROR | django.server | "GET /accounts/landlord/dashboard/ HTTP/1.1" 500 169424
+2026-03-27 18:55:39,242 | ERROR | django.request | Internal Server Error: /accounts/landlord/dashboard/
 Traceback (most recent call last):
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\home\views.py", line 5, in landing_page
-    return render(request, 'home/landing_page.html')
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\accounts\decorators.py", line 9, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\accounts\views.py", line 43, in landlord_dashboard
+    return render(request, 'dashboard/landlord/dashboard.html')
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
     content = loader.render_to_string(template_name, context, request, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
-    template = get_template(template_name, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
-    raise TemplateDoesNotExist(template_name, chain=chain)
-django.template.exceptions.TemplateDoesNotExist: home/landing_page.html
-2026-03-23 11:18:01,643 | ERROR | django.server | "GET / HTTP/1.1" 500 84295
-2026-03-24 22:44:23,349 | ERROR | django.request | Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\home\views.py", line 5, in landing_page
-    return render(request, 'home/landing_page.html')
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
-    content = loader.render_to_string(template_name, context, request, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
-    template = get_template(template_name, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
-    raise TemplateDoesNotExist(template_name, chain=chain)
-django.template.exceptions.TemplateDoesNotExist: home/landing_page.html
-2026-03-24 22:44:23,358 | ERROR | django.server | "GET / HTTP/1.1" 500 83442
-2026-03-24 22:45:04,890 | ERROR | django.request | Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\home\views.py", line 5, in landing_page
-    return render(request, 'home/landing_page.html')
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
-    content = loader.render_to_string(template_name, context, request, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
-    template = get_template(template_name, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
-    raise TemplateDoesNotExist(template_name, chain=chain)
-django.template.exceptions.TemplateDoesNotExist: home/landing_page.html
-2026-03-24 22:45:04,895 | ERROR | django.server | "GET / HTTP/1.1" 500 84159
-2026-03-25 06:41:25,469 | ERROR | django.request | Internal Server Error: /admin/billing/meterreading/add/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
-    return view(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1942, in add_view
-    return self.changeform_view(request, None, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
-    return bound_method(*args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
-    return self._changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
-    self.save_model(request, new_object, form, not add)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 147, in save_model
-    super().save_model(request, obj, form, change)
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1272, in save_model
-    obj.save()
-    ~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\models.py", line 223, in save
-    self.full_clean()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1712, in full_clean
-    raise ValidationError(errors)
-django.core.exceptions.ValidationError: {'amount': ['Ensure that there are no more than 2 decimal places.']}
-2026-03-25 06:41:25,481 | ERROR | django.server | "POST /admin/billing/meterreading/add/ HTTP/1.1" 500 146191
-2026-03-25 07:00:51,295 | ERROR | billing | Failed to generate invoice for reading 1 | error=LedgerEntry() got unexpected keyword arguments: 'reference'
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\services\water_billing.py", line 52, in generate_invoice_from_meter_reading
-    LedgerEntry.objects.create(
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        ledger_account=tenancy.ledger_account,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<4 lines>...
-        created_by=system_user
-        ^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 667, in create
-    obj = self.model(**kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 590, in __init__
-    raise TypeError(
-    ...<2 lines>...
-    )
-TypeError: LedgerEntry() got unexpected keyword arguments: 'reference'
-2026-03-25 07:05:18,524 | ERROR | billing | Failed to generate invoice for reading 1 | error=LedgerEntry() got unexpected keyword arguments: 'reference'
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\services\water_billing.py", line 52, in generate_invoice_from_meter_reading
-    LedgerEntry.objects.create(
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        ledger_account=tenancy.ledger_account,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<4 lines>...
-        created_by=system_user
-        ^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 667, in create
-    obj = self.model(**kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 590, in __init__
-    raise TypeError(
-    ...<2 lines>...
-    )
-TypeError: LedgerEntry() got unexpected keyword arguments: 'reference'
-2026-03-25 07:09:05,993 | ERROR | billing | Failed to generate invoice for reading 1 | error=Cannot assign "'INV-2026-0017'": "LedgerEntry.invoice" must be a "Invoice" instance.
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\services\water_billing.py", line 52, in generate_invoice_from_meter_reading
-    LedgerEntry.objects.create(
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        ledger_account=tenancy.ledger_account,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<4 lines>...
-        created_by=system_user
-        ^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 667, in create
-    obj = self.model(**kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 566, in __init__
-    _setattr(self, field.name, rel_obj)
-    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 287, in __set__
-    raise ValueError(
-    ...<7 lines>...
-    )
-ValueError: Cannot assign "'INV-2026-0017'": "LedgerEntry.invoice" must be a "Invoice" instance.
-2026-03-25 07:15:14,314 | ERROR | billing | Failed to generate invoice for reading 1 | error=NOT NULL constraint failed: finance_ledgerentry.entry_date
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
-sqlite3.IntegrityError: NOT NULL constraint failed: finance_ledgerentry.entry_date
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\services\water_billing.py", line 52, in generate_invoice_from_meter_reading
-    LedgerEntry.objects.create(
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        ledger_account=tenancy.ledger_account,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<4 lines>...
-        created_by=system_user
-        ^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 669, in create
-    obj.save(force_insert=True, using=self.db)
-    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\finance\models.py", line 85, in save
-    super().save(*args, **kwargs)
-    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 874, in save
-    self.save_base(
-    ~~~~~~~~~~~~~~^
-        using=using,
-        ^^^^^^^^^^^^
-    ...<2 lines>...
-        update_fields=update_fields,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 966, in save_base
-    updated = self._save_table(
-        raw,
-    ...<4 lines>...
-        update_fields,
-    )
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
-    results = self._do_insert(
-        cls._base_manager, using, insert_fields, returning_fields, raw
-    )
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1220, in _do_insert
-    return manager._insert(
-           ~~~~~~~~~~~~~~~^
-        [self],
-        ^^^^^^^
-    ...<3 lines>...
-        raw=raw,
-        ^^^^^^^^
-    )
-    ^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1918, in _insert
-    return query.get_compiler(using=using).execute_sql(returning_fields)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1925, in execute_sql
-    cursor.execute(sql, params)
-    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
-    return super().execute(sql, params)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
-    return self._execute_with_wrappers(
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        sql, params, many=False, executor=self._execute
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
-    with self.db.wrap_database_errors:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
-django.db.utils.IntegrityError: NOT NULL constraint failed: finance_ledgerentry.entry_date
-2026-03-25 07:21:44,236 | ERROR | billing | Failed to generate invoice for reading 1 | error=['Cannot modify a billed reading']
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\services\water_billing.py", line 67, in generate_invoice_from_meter_reading
-    reading.save()
-    ~~~~~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\models.py", line 214, in save
-    raise ValidationError("Cannot modify a billed reading")
-django.core.exceptions.ValidationError: ['Cannot modify a billed reading']
-2026-03-25 16:30:54,982 | ERROR | django.request | Internal Server Error: /admin/billing/meterreading/1/change/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
-    return view(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
-    return self.changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
-    return bound_method(*args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
-    return self._changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
-    self.save_model(request, new_object, form, not add)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 147, in save_model
-    super().save_model(request, obj, form, change)
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1272, in save_model
-    obj.save()
-    ~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\models.py", line 212, in save
-    old = MeterReading.objects.get(pf=self.pk)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
-    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
-                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
-    return self._filter_or_exclude(False, args, kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
-    clone._filter_or_exclude_inplace(negate, args, kwargs)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
-    self._query.add_q(Q(*args, **kwargs))
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1676, in add_q
-    clause, _ = self._add_q(q_object, can_reuse)
-                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1708, in _add_q
-    child_clause, needed_inner = self.build_filter(
-                                 ~~~~~~~~~~~~~~~~~^
-        child,
-        ^^^^^^
-    ...<7 lines>...
-        update_join_types=update_join_types,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1556, in build_filter
-    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
-                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1363, in solve_lookup_type
-    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
-                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1842, in names_to_path
-    raise FieldError(
-    ...<2 lines>...
-    )
-django.core.exceptions.FieldError: Cannot resolve keyword 'pf' into field. Choices are: amount, billed_at, billed_by, billed_by_id, consumption, created_at, created_by, created_by_id, current_reading, id, invoice, invoice_id, meter, meter_id, previous_reading, rate_per_unit, reading_date, status
-2026-03-25 16:30:55,012 | ERROR | django.server | "POST /admin/billing/meterreading/1/change/ HTTP/1.1" 500 193077
-2026-03-25 16:36:17,744 | ERROR | django.request | Internal Server Error: /admin/billing/meterreading/1/change/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
-    return view(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
-    return self.changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
-    return bound_method(*args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
-    return self._changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
-    self.save_model(request, new_object, form, not add)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 147, in save_model
-    super().save_model(request, obj, form, change)
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1272, in save_model
-    obj.save()
-    ~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\models.py", line 230, in save
-    self.full_clean()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1712, in full_clean
-    raise ValidationError(errors)
-django.core.exceptions.ValidationError: {'amount': ['Ensure that there are no more than 2 decimal places.']}
-2026-03-25 16:36:17,758 | ERROR | django.server | "POST /admin/billing/meterreading/1/change/ HTTP/1.1" 500 147238
-2026-03-25 16:36:38,406 | ERROR | django.request | Internal Server Error: /admin/billing/meterreading/1/change/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
-    return view(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
-    return self.changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
-    return bound_method(*args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
-    return self._changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
-    self.save_model(request, new_object, form, not add)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 147, in save_model
-    super().save_model(request, obj, form, change)
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1272, in save_model
-    obj.save()
-    ~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\models.py", line 230, in save
-    self.full_clean()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1712, in full_clean
-    raise ValidationError(errors)
-django.core.exceptions.ValidationError: {'amount': ['Ensure that there are no more than 2 decimal places.']}
-2026-03-25 16:36:38,414 | ERROR | django.server | "POST /admin/billing/meterreading/1/change/ HTTP/1.1" 500 147237
-2026-03-25 16:37:16,695 | ERROR | django.request | Internal Server Error: /admin/billing/meterreading/1/change/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
-    return view(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
-    return self.changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
-    return bound_method(*args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
-    return self._changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
-    self.save_model(request, new_object, form, not add)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 147, in save_model
-    super().save_model(request, obj, form, change)
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1272, in save_model
-    obj.save()
-    ~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\models.py", line 230, in save
-    self.full_clean()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1712, in full_clean
-    raise ValidationError(errors)
-django.core.exceptions.ValidationError: {'amount': ['Ensure that there are no more than 2 decimal places.']}
-2026-03-25 16:37:16,702 | ERROR | django.server | "POST /admin/billing/meterreading/1/change/ HTTP/1.1" 500 147237
-2026-03-25 16:37:48,824 | ERROR | django.request | Internal Server Error: /admin/billing/meterreading/1/change/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
-    return view(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
-    return self.changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
-    return bound_method(*args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
-    return self._changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
-    self.save_model(request, new_object, form, not add)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 147, in save_model
-    super().save_model(request, obj, form, change)
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1272, in save_model
-    obj.save()
-    ~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\models.py", line 230, in save
-    self.full_clean()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1712, in full_clean
-    raise ValidationError(errors)
-django.core.exceptions.ValidationError: {'amount': ['Ensure that there are no more than 3 decimal places.']}
-2026-03-25 16:37:48,835 | ERROR | django.server | "POST /admin/billing/meterreading/1/change/ HTTP/1.1" 500 147237
-2026-03-25 16:42:27,869 | ERROR | django.request | Internal Server Error: /admin/billing/meterreading/2/change/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
-    return view(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1945, in change_view
-    return self.changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
-    return bound_method(*args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
-    result = _process_exception(request, e)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
-    response = view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
-    return self._changeform_view(request, object_id, form_url, extra_context)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
-    self.save_model(request, new_object, form, not add)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\core\admin_mixins.py", line 147, in save_model
-    super().save_model(request, obj, form, change)
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\admin\options.py", line 1272, in save_model
-    obj.save()
-    ~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\billing\models.py", line 230, in save
-    self.full_clean()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1712, in full_clean
-    raise ValidationError(errors)
-django.core.exceptions.ValidationError: {'amount': ['Ensure that there are no more than 5 decimal places.']}
-2026-03-25 16:42:27,880 | ERROR | django.server | "POST /admin/billing/meterreading/2/change/ HTTP/1.1" 500 147236
-2026-03-26 02:47:38,508 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:38,508 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:38,488 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:38,538 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:38,540 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:38,542 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:52,546 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:52,561 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:52,612 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:52,615 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:52,626 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:47:52,628 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:41,911 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:41,923 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:41,944 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:41,961 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:41,968 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:41,995 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:43,405 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:43,417 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:43,426 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:48:43,441 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:28,380 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:28,390 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:28,414 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:28,423 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:28,455 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:28,458 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:28,469 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:28,473 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:37,291 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:37,302 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:37,317 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:37,326 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:37,328 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 02:56:37,336 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:05,574 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:05,600 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:05,620 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:05,646 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:05,793 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:05,820 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:19,303 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:19,311 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:19,331 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:19,339 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:19,343 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:19,351 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:21,670 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:21,675 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:21,678 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
-2026-03-26 03:08:21,685 | ERROR | django.server | You're accessing the development server over HTTPS, but it only supports HTTP.
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+2026-03-27 18:55:39,251 | ERROR | django.server | "GET /accounts/landlord/dashboard/ HTTP/1.1" 500 169424

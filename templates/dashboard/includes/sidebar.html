@@ -1,0 +1,97 @@
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <a href="#" class="brand-name">
+      <i class="fa-solid fa-building-circle-check me-2 text-primary"></i>
+      RentMaster
+    </a>
+  </div>
+
+  <ul class="nav-list">
+    <!-- DASHBOARD -->
+    <li>
+      {% if request.user.role == "LANDLORD" %}
+        <a href="{% url 'landlord_dashboard' %}" class="nav-item-link">
+      {% elif request.user.role == "CARETAKER" %}
+        <a href="{% url 'caretaker_dashboard' %}" class="nav-item-link">
+      {% endif %}
+        <i class="fa-solid fa-gauge"></i> Dashboard
+      </a>
+    </li>
+
+    {% if request.user.role == "LANDLORD" %}
+
+    <!-- LANDLORD ONLY -->
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-house-user"></i> Properties</a
+      >
+    </li>
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-users"></i> Tenants</a
+      >
+    </li>
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-credit-card"></i> Payments</a
+      >
+    </li>
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-file-invoice"></i> Invoices</a
+      >
+    </li>
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-money-bill-transfer"></i> Transactions</a
+      >
+    </li>
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-chart-pie"></i> Reports</a
+      >
+    </li>
+
+    <hr class="text-secondary opacity-25" />
+
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-users-cog"></i> Manage Users</a
+      >
+    </li>
+
+    {% elif request.user.role == "CARETAKER" %}
+
+    <!-- CARETAKER ONLY -->
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-house-user"></i> Properties</a
+      >
+    </li>
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-users"></i> Tenants</a
+      >
+    </li>
+
+    {% endif %}
+
+    <!-- SHARED -->
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-paper-plane"></i> Send Messages</a
+      >
+    </li>
+    <li>
+      <a href="#" class="nav-item-link"
+        ><i class="fa-solid fa-faucet"></i> Water Bills</a
+      >
+    </li>
+
+    <li>
+      <a href="{% url 'logout' %}" class="nav-item-link text-danger">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </a>
+    </li>
+  </ul>
+</nav>

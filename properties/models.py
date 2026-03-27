@@ -2,7 +2,7 @@ from random import choices
 from django.db import models
 from django.conf import settings
 from django.db.models import UniqueConstraint
-from properties.choices import UnitType
+from properties.choices import UnitType, UnitStatus
 
 # Create your models here.
 class Property(models.Model):
@@ -46,6 +46,11 @@ class Unit(models.Model):
     unit_type = models.CharField(
         max_length=50,
         choices=UnitType.choices
+    )
+    status = models.CharField(
+        max_length=50,
+        choices=UnitStatus.choices,
+        default=UnitStatus.VACCANT
     )
     floor = models.CharField(max_length=20, blank=True)
     is_active = models.BooleanField(default=True)
