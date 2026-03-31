@@ -7,91 +7,90 @@
   </div>
 
   <ul class="nav-list">
+
     <!-- DASHBOARD -->
     <li>
-      {% if request.user.role == "LANDLORD" %}
-        <a href="{% url 'landlord_dashboard' %}" class="nav-item-link">
-      {% elif request.user.role == "CARETAKER" %}
-        <a href="{% url 'caretaker_dashboard' %}" class="nav-item-link">
-      {% endif %}
+      <a href="{% url 'landlord_dashboard' %}" class="nav-item-link">
         <i class="fa-solid fa-gauge"></i> Dashboard
       </a>
     </li>
 
-    {% if request.user.role == "LANDLORD" %}
+    <!-- CORE MANAGEMENT -->
+    <li>
+      <a href="{% url 'property_list' %}" class="nav-item-link">
+        <i class="fa-solid fa-house-user"></i> Properties
+      </a>
+    </li>
 
-    <!-- LANDLORD ONLY -->
     <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-house-user"></i> Properties</a
-      >
+      <a href="#" class="nav-item-link">
+        <i class="fa-solid fa-building"></i> Units
+      </a>
     </li>
+
     <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-users"></i> Tenants</a
-      >
-    </li>
-    <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-credit-card"></i> Payments</a
-      >
-    </li>
-    <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-file-invoice"></i> Invoices</a
-      >
-    </li>
-    <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-money-bill-transfer"></i> Transactions</a
-      >
-    </li>
-    <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-chart-pie"></i> Reports</a
-      >
+      <a href="#" class="nav-item-link">
+        <i class="fa-solid fa-users"></i> Tenants
+      </a>
     </li>
 
     <hr class="text-secondary opacity-25" />
 
+    <!-- FINANCE -->
     <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-users-cog"></i> Manage Users</a
-      >
+      <a href="#" class="nav-item-link">
+        <i class="fa-solid fa-credit-card"></i> Payments
+      </a>
     </li>
 
-    {% elif request.user.role == "CARETAKER" %}
-
-    <!-- CARETAKER ONLY -->
     <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-house-user"></i> Properties</a
-      >
-    </li>
-    <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-users"></i> Tenants</a
-      >
+      <a href="#" class="nav-item-link">
+        <i class="fa-solid fa-file-invoice"></i> Invoices
+      </a>
     </li>
 
-    {% endif %}
-
-    <!-- SHARED -->
     <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-paper-plane"></i> Send Messages</a
-      >
-    </li>
-    <li>
-      <a href="#" class="nav-item-link"
-        ><i class="fa-solid fa-faucet"></i> Water Bills</a
-      >
+      <a href="#" class="nav-item-link">
+        <i class="fa-solid fa-money-bill-transfer"></i> Transactions
+      </a>
     </li>
 
+    <li>
+      <a href="#" class="nav-item-link">
+        <i class="fa-solid fa-chart-pie"></i> Reports
+      </a>
+    </li>
+
+    <hr class="text-secondary opacity-25" />
+
+    <!-- SYSTEM -->
+    <li>
+      <a href="#" class="nav-item-link">
+        <i class="fa-solid fa-users-cog"></i> Manage Users
+      </a>
+    </li>
+
+    <hr class="text-secondary opacity-25" />
+
+    <!-- UTILITIES -->
+    <li>
+      <a href="#" class="nav-item-link">
+        <i class="fa-solid fa-paper-plane"></i> Send Messages
+      </a>
+    </li>
+
+    <li>
+      <a href="#" class="nav-item-link">
+        <i class="fa-solid fa-faucet"></i> Water Bills
+      </a>
+    </li>
+
+    <!-- LOGOUT -->
     <li>
       <a href="{% url 'logout' %}" class="nav-item-link text-danger">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
       </a>
     </li>
+
   </ul>
 </nav>

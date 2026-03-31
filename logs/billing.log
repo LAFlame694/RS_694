@@ -1,31 +1,22 @@
-2026-03-25 19:24:45,155 | INFO | billing | Starting allocation | payment=1 | amount=27000.00
-2026-03-25 19:24:45,165 | INFO | billing | Allocated 7500.00 | payment=1 -> invoice=16
-2026-03-25 19:24:45,165 | INFO | billing | Overpayment detected | payment=1 | remaining=19500.00
-2026-03-25 19:24:45,166 | INFO | billing | Allocation complete | payment=1
-2026-03-25 23:23:10,377 | INFO | billing | Starting allocation | payment=2 | amount=30000.00
-2026-03-25 23:23:10,387 | INFO | billing | Allocated 7000.00 | payment=2 -> invoice=1
-2026-03-25 23:23:10,392 | INFO | billing | Allocated 150.00 | payment=2 -> invoice=5
-2026-03-25 23:23:10,397 | INFO | billing | Allocated 100.00 | payment=2 -> invoice=8
-2026-03-25 23:23:10,404 | INFO | billing | Allocated 750.00 | payment=2 -> invoice=12
-2026-03-25 23:23:10,404 | INFO | billing | Overpayment detected | payment=2 | remaining=22000.00
-2026-03-25 23:23:10,405 | INFO | billing | Allocation comlpete | payment=2
-2026-03-26 00:03:07,702 | INFO | billing | === Monthly billing job started ===
-2026-03-26 00:03:07,708 | INFO | billing | === Monthly billing job STARTED ===
-2026-03-26 00:03:07,744 | INFO | billing | Billing date: 2026-03-25
-2026-03-26 00:03:07,744 | INFO | billing | Generating RENT invoices for period 2026-03-01 to 2026-03-31
-2026-03-26 00:03:07,932 | INFO | billing | Found 5 active tenancies for rent billing
-2026-03-26 00:03:08,165 | INFO | billing | Invoice already exists for tenancy 1, category RENT
-2026-03-26 00:03:08,168 | INFO | billing | Invoice already exists for tenancy 2, category RENT
-2026-03-26 00:03:08,170 | INFO | billing | Invoice already exists for tenancy 3, category RENT
-2026-03-26 00:03:08,173 | INFO | billing | Invoice already exists for tenancy 4, category RENT
-2026-03-26 00:03:08,175 | INFO | billing | Invoice already exists for tenancy 5, category RENT
-2026-03-26 00:03:08,176 | INFO | billing | Starting recurring charge billing
-2026-03-26 00:03:08,211 | INFO | billing | Found 3 active recurring charges
-2026-03-26 00:03:08,218 | INFO | billing | Processing charge 1 | property=1 | amount=150.00
-2026-03-26 00:03:08,218 | INFO | billing | Skipping charge 1 - already generated this month
-2026-03-26 00:03:08,220 | INFO | billing | Processing charge 2 | property=1 | amount=100.00
-2026-03-26 00:03:08,221 | INFO | billing | Skipping charge 2 - already generated this month
-2026-03-26 00:03:08,223 | INFO | billing | Processing charge 3 | property=1 | amount=750.00
-2026-03-26 00:03:08,224 | INFO | billing | Skipping charge 3 - already generated this month
-2026-03-26 00:03:08,224 | INFO | billing | === Monthly billing job COMPLETED ===
-2026-03-26 00:03:08,305 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===
+2026-04-01 02:28:27,467 | INFO | billing | === Monthly billing job STARTED ===
+2026-04-01 02:28:27,477 | INFO | billing | Billing date: 2026-03-31
+2026-04-01 02:28:27,477 | INFO | billing | Generating RENT invoices for period 2026-03-01 to 2026-03-31
+2026-04-01 02:28:27,481 | INFO | billing | Found 6 active tenancies for rent billing
+2026-04-01 02:28:27,498 | INFO | billing | Creating RENT invoice | tenancy=6 | amount=6500.00
+2026-04-01 02:28:27,499 | INFO | billing | Creating invoice + ledger | tenancy=6 | category=RENT | amount=6500.00
+2026-04-01 02:28:27,509 | INFO | billing | Invoice created | id=20 | tenancy=6
+2026-04-01 02:28:27,515 | INFO | billing | Ledger entry created | invoice=20 | amount=6500.00
+2026-04-01 02:28:27,693 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-04-01 02:28:27,700 | INFO | billing | Invoice already exists for tenancy 2, category RENT
+2026-04-01 02:28:27,708 | INFO | billing | Invoice already exists for tenancy 3, category RENT
+2026-04-01 02:28:27,718 | INFO | billing | Invoice already exists for tenancy 4, category RENT
+2026-04-01 02:28:27,724 | INFO | billing | Invoice already exists for tenancy 5, category RENT
+2026-04-01 02:28:27,726 | INFO | billing | Starting recurring charge billing
+2026-04-01 02:28:27,743 | INFO | billing | Found 3 active recurring charges
+2026-04-01 02:28:27,751 | INFO | billing | Processing charge 1 | property=1 | amount=150.00
+2026-04-01 02:28:27,752 | INFO | billing | Skipping charge 1 - already generated this month
+2026-04-01 02:28:27,757 | INFO | billing | Processing charge 2 | property=1 | amount=100.00
+2026-04-01 02:28:27,758 | INFO | billing | Skipping charge 2 - already generated this month
+2026-04-01 02:28:27,761 | INFO | billing | Processing charge 3 | property=1 | amount=750.00
+2026-04-01 02:28:27,762 | INFO | billing | Skipping charge 3 - already generated this month
+2026-04-01 02:28:27,763 | INFO | billing | === Monthly billing job COMPLETED ===

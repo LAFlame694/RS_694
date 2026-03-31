@@ -50,7 +50,7 @@ class Unit(models.Model):
     status = models.CharField(
         max_length=50,
         choices=UnitStatus.choices,
-        default=UnitStatus.VACCANT
+        default=UnitStatus.VACANT
     )
     floor = models.CharField(max_length=20, blank=True)
     is_active = models.BooleanField(default=True)

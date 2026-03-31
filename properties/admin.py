@@ -22,5 +22,5 @@ class UnitAdmin(LandlordFilteredAdmin):
 
     landlord_lookup = "property__landlord"
 
-    list_display = ("unit_number", "property", "unit_type", "is_active")
+    list_display = ("unit_number", "property", "unit_type", "status", "is_active",)
     search_fields = ("unit_number",)

@@ -12,6 +12,7 @@ from tenants.models import Tenancy
 from finance.models import LedgerEntry
 from finance.choices import LedgerEntryType, LedgerEntryCategory
 from billing.models import Invoice, RecurringCharge
+from billing.choices import InvoiceStatus
 from accounts.utils import get_system_user
 
 logger = logging.getLogger("billing")
@@ -220,7 +221,7 @@ def create_invoice_and_ledger_entry(
                 billing_period_start=billing_start,
                 billing_period_end=billing_end,
                 total_amount=amount,
-                status=Invoice.Status.ISSUED,
+                status=InvoiceStatus.ISSUED,
                 created_by=system_user
             )
             logger.info(

@@ -45,7 +45,7 @@ class Tenancy(models.Model):
                 name="unique_active_tenancy_per_unit"
             )
         ]
-    
+
     def clean(self):
         if self.end_date and self.end_date < self.start_date:
             raise ValidationError("End date cannot be before start date.")

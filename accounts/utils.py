@@ -12,3 +12,9 @@ def get_system_user():
     )
 
     return user
+
+def is_landlord(user):
+    return user.role == 'LANDLORD'
+
+def is_caretaker(user):
+    return user.role == 'CARETAKER'

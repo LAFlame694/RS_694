@@ -1,342 +1,186 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RentMaster | Dashboard</title>
+    <title>Dashboard Summary Components</title>
 
     <!-- Bootstrap 5 CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome 6 -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <!-- Google Fonts -->
+    <!-- Google Fonts (Inter) -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
     <style>
-      :root {
-        --sidebar-width: 260px;
-        --primary-color: #2563eb;
-        --dark-blue: #1e293b;
-        --light-bg: #f8fafc;
-        --top-navbar-height: 70px;
-      }
-
       body {
         font-family: "Inter", sans-serif;
-        background-color: var(--light-bg);
-        overflow-x: hidden;
+        background-color: #f8fafc;
       }
 
-      /* Sidebar Styling */
-      #sidebar {
-        width: var(--sidebar-width);
-        height: 100vh;
-        position: fixed;
-        left: 0;
-        top: 0;
-        background-color: var(--dark-blue);
-        color: #fff;
-        transition: all 0.3s;
-        z-index: 1000;
-        
-        /* ENABLE SCROLLING */
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto; 
-      }
-
-      /* Custom Scrollbar for Sidebar */
-      #sidebar::-webkit-scrollbar {
-        width: 5px;
-      }
-      #sidebar::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.1);
-      }
-      #sidebar::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
-      }
-      #sidebar::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.3);
-      }
-
-      .sidebar-header {
-        height: var(--top-navbar-height);
-        min-height: var(--top-navbar-height); /* Prevent shrinking */
-        display: flex;
-        align-items: center;
-        padding: 0 1.5rem;
-        background-color: rgba(0, 0, 0, 0.2);
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
-
-      .sidebar-header .brand-name {
-        font-size: 1.25rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        color: #fff;
-        text-decoration: none;
-      }
-
-      .nav-list {
-        padding: 1.5rem 0.75rem;
-        list-style: none;
-        margin: 0;
-        flex-grow: 1; /* Allow list to take available space */
-      }
-
-      .nav-item-link {
-        display: flex;
-        align-items: center;
-        padding: 0.8rem 1rem;
-        color: #94a3b8;
-        text-decoration: none;
-        border-radius: 8px;
-        margin-bottom: 0.3rem;
-        transition: all 0.2s;
-      }
-
-      .nav-item-link:hover,
-      .nav-item-link.active {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: #fff;
-      }
-
-      .nav-item-link i {
-        width: 25px;
-        font-size: 1.1rem;
-        margin-right: 10px;
-      }
-
-      /* Main Content Styling */
-      #main-content {
-        margin-left: var(--sidebar-width);
-        width: calc(100% - var(--sidebar-width));
-        min-height: 100vh;
-        transition: all 0.3s;
-      }
-
-      .top-navbar {
-        height: var(--top-navbar-height);
-        background-color: #fff;
-        padding: 0 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        position: sticky;
-        top: 0;
-        z-index: 999;
-      }
-
-      .content-body {
-        padding: 2rem;
-      }
-
-      /* Responsive Adjustments */
-      @media (max-width: 992px) {
-        #sidebar {
-          margin-left: calc(-1 * var(--sidebar-width));
-        }
-        #sidebar.active {
-          margin-left: 0;
-        }
-        #main-content {
-          margin-left: 0;
-          width: 100%;
-        }
-        #main-content.active {
-          margin-left: var(--sidebar-width);
-        }
-      }
-
-      /* Utility Components */
-      .user-profile-img {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-
-      .search-bar {
-        background-color: #f1f5f9;
+      /* Stat Card Styling */
+      .stat-card {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+        border-radius: 12px !important;
         border: none;
-        border-radius: 8px;
-        padding: 0.5rem 1rem;
-        width: 300px;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+      }
+
+      /* Icon Container */
+      .icon-shape {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Highlighted style for the financial cards */
+      .card-highlight {
+        border-bottom: 4px solid transparent;
+      }
+
+      .card-highlight-success {
+        border-bottom-color: #10b981;
+      }
+      .card-highlight-danger {
+        border-bottom-color: #ef4444;
+      }
+
+      /* Custom Accent Colors (Professional Palette) */
+      .bg-soft-primary {
+        background-color: #e0e7ff;
+        color: #4338ca;
+      }
+      .bg-soft-info {
+        background-color: #e0f2fe;
+        color: #0369a1;
+      }
+      .bg-soft-warning {
+        background-color: #fef3c7;
+        color: #b45309;
+      }
+      .bg-soft-success {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+      .bg-soft-danger {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .text-label {
+        color: #64748b;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+      }
+
+      .text-value {
+        color: #1e293b;
+        font-size: 1.5rem;
+        font-weight: 700;
       }
     </style>
   </head>
   <body>
-    <!-- SIDEBAR -->
-    <nav id="sidebar">
-      <div class="sidebar-header">
-        <a href="#" class="brand-name">
-          <i class="fa-solid fa-building-circle-check me-2 text-primary"></i>
-          RentMaster
-        </a>
-      </div>
-
-      <ul class="nav-list">
-        <li>
-          <a href="#" class="nav-item-link active">
-            <i class="fa-solid fa-gauge"></i> Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid fa-house-user"></i> Properties
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid fa-users"></i> Tenants
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid fas fa-credit-card"></i> Payments
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid fas fa-file-invoice"></i> Invoices
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid fas fa-money-bill-transfer"></i> Transactions
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid far fa-paper-plane"></i> Send Messages
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid fas fa-faucet"></i> Water Bills
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid fa-chart-pie"></i> Reports
-          </a>
-        </li>
-
-        <hr class="text-secondary opacity-25" />
-
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid fa-gear"></i> Settings
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-item-link">
-            <i class="fa-solid fas fa-users-cog"></i> Manage Users
-          </a>
-        </li>
-        <li>
-            <a href="#" class="nav-item-link text-danger mb-4">
-                <i class="fa-solid fa-right-from-bracket"></i> Logout
-            </a>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- MAIN CONTENT -->
-    <div id="main-content">
-      <!-- Top Navbar -->
-      <header class="top-navbar">
-        <div class="d-flex align-items-center">
-          <button class="btn d-lg-none me-3" id="sidebarCollapse">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-          <div class="d-none d-md-block">
-            <input
-              type="text"
-              class="search-bar"
-              placeholder="Search data..."
-            />
-          </div>
-        </div>
-
-        <div class="d-flex align-items-center">
-
-          <div class="dropdown">
-            <button
-              class="btn d-flex align-items-center text-decoration-none dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-            >
-              <img
-                src="https://ui-avatars.com/api/?name=Admin+User&background=2563eb&color=fff"
-                class="user-profile-img me-2"
-              />
-              <div class="text-start d-none d-sm-block">
-                <p class="mb-0 fw-semibold small lh-1">Admin User</p>
-                <span class="text-muted extra-small" style="font-size: 0.7rem"
-                  >Property Manager</span
-                >
+    <div class="container-fluid mt-4">
+      <!-- Dashboard Summary Row -->
+      <!-- row-cols-1: Mobile | row-cols-md-2: Tablet (2 per row) | row-cols-lg-5: Desktop (5 per row) -->
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4">
+        <!-- Card 1: Total Properties -->
+        <div class="col">
+          <div class="card h-100 shadow-sm stat-card">
+            <div class="card-body p-4">
+              <div class="icon-shape bg-soft-primary">
+                <i class="fa-solid fa-city"></i>
               </div>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-              <li><a class="dropdown-item py-2" href="#"><i class="fa-regular fa-user me-2"></i> Profile</a></li>
-              <li><a class="dropdown-item py-2" href="#"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
-              <li><a class="dropdown-item py-2" href="#"><i class="fas fa-users-cog me-2"></i> User Management</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item py-2 text-danger" href="#"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Logout</a></li>
-            </ul>
+              <p class="text-label mb-1">Properties</p>
+              <h3 class="text-value mb-0">24</h3>
+            </div>
           </div>
         </div>
-      </header>
 
-      <!-- Dynamic Content Area -->
-      <main class="content-body">
-        {% block content %}
-        <div class="mb-4">
-          <h2 class="fw-bold">Welcome to Dashboard</h2>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#" class="text-decoration-none">Home</a></li>
-              <li class="breadcrumb-item active">Overview</li>
-            </ol>
-          </nav>
+        <!-- Card 2: Total Units -->
+        <div class="col">
+          <div class="card h-100 shadow-sm stat-card">
+            <div class="card-body p-4">
+              <div class="icon-shape bg-soft-info">
+                <i class="fa-solid fa-door-open"></i>
+              </div>
+              <p class="text-label mb-1">Total Units</p>
+              <h3 class="text-value mb-0">142</h3>
+            </div>
+          </div>
         </div>
 
-        <div class="text-center py-5">
-          <p class="text-muted">Content block starts here...</p>
+        <!-- Card 3: Total Tenants -->
+        <div class="col">
+          <div class="card h-100 shadow-sm stat-card">
+            <div class="card-body p-4">
+              <div class="icon-shape bg-soft-warning">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <p class="text-label mb-1">Tenants</p>
+              <h3 class="text-value mb-0">128</h3>
+            </div>
+          </div>
         </div>
-        {% endblock %}
-      </main>
+
+        <!-- Card 4: Rent Collected (Highlighted) -->
+        <div class="col">
+          <div
+            class="card h-100 shadow-sm stat-card card-highlight card-highlight-success"
+          >
+            <div class="card-body p-4">
+              <div class="icon-shape bg-soft-success">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+              </div>
+              <p class="text-label mb-1">Rent Collected</p>
+              <h3 class="text-value mb-0 text-success">$42,500</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Outstanding Balance (Highlighted) -->
+        <div class="col">
+          <div
+            class="card h-100 shadow-sm stat-card card-highlight card-highlight-danger"
+          >
+            <div class="card-body p-4">
+              <div class="icon-shape bg-soft-danger">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+              </div>
+              <p class="text-label mb-1">Outstanding</p>
+              <h3 class="text-value mb-0 text-danger">$3,240</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Row -->
     </div>
+    <!-- End Container -->
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Sidebar Toggle Script -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const toggleBtn = document.getElementById("sidebarCollapse");
-        const sidebar = document.getElementById("sidebar");
-        const mainContent = document.getElementById("main-content");
-
-        toggleBtn.addEventListener("click", function () {
-          sidebar.classList.toggle("active");
-          mainContent.classList.toggle("active");
-        });
-      });
-    </script>
   </body>
 </html>

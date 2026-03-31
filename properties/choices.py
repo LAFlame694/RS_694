@@ -7,6 +7,6 @@ class UnitType(models.TextChoices):
     SHOP = "SHOP", "Shop"
 
 class UnitStatus(models.TextChoices):
-    VACCANT = "VACCANT", "Vaccant"
+    VACANT = "VACANT", "Vacant"
     OCCUPIED = "OCCUPIED", "Occupied"
     MAINTENANCE = "MAINTENANCE", "Maintenance"
