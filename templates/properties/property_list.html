@@ -1,4 +1,15 @@
-{% extends 'dashboard/base_dashboard.html' %} {% block content %}
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% load static %}
+
+{% block title %}Properties - Dashboard{% endblock %}
+
+{% block extra_css %}
+<!-- Custom CSS for Property List -->
+<link rel="stylesheet" href="{% static 'properties/css/property_list.css' %}">
+{% endblock %}
+
+{% block content %}
 <div class="container-fluid p-0">
   <!-- Header Section -->
   <div class="d-flex justify-content-between align-items-center mb-4">
@@ -216,27 +227,4 @@
     </div>
   </div>
 </div>
-
-<style>
-  /* Internal styles to enhance the SaaS look */
-  .btn-white {
-    background-color: #fff;
-  }
-  .btn-white:hover {
-    background-color: #f8f9fa;
-  }
-  .bg-success-subtle {
-    background-color: #e8f5e9 !important;
-  }
-  .bg-danger-subtle {
-    background-color: #ffebee !important;
-  }
-  .table thead th {
-    letter-spacing: 0.05em;
-  }
-  .form-select,
-  .form-control {
-    font-size: 0.9rem;
-  }
-</style>
 {% endblock %}

@@ -1,5 +1,14 @@
 {% extends 'dashboard/base_dashboard.html' %}
 
+{% load static %}
+
+{% block title %}Property - Units{% endblock %}
+
+{% block extra_css %}
+<!-- CSS -->
+<link rel="stylesheet" href="{% static 'properties/css/property_units.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid py-4">
   <!-- Header Section -->
@@ -220,11 +229,11 @@
 
                 <td>
                 {{ unit.floor }}
-                    {% if unit.floor == 1 %}
+                    {% if unit.floor == '1' %}
                         st
-                    {% elif unit.floor == 2 %}
+                    {% elif unit.floor == '2' %}
                         nd
-                    {% elif unit.floor == 3 %}
+                    {% elif unit.floor == '3' %}
                         rd
                     {% else %}
                         th
@@ -287,14 +296,14 @@
                             <i class="fa-solid fa-trash"></i>
                         </a>
 
-                        <!-- Assign Tenant -->
-                        {% if unit.status != "VACCANT" %}
+                        <!-- Assign Tenant (ONLY for VACANT or MAINTENANCE) -->
+                        {% if unit.status == "VACANT" or unit.status == "MAINTENANCE" %}
                         <a href="{% url 'assign_tenant' unit.id %}" class="btn btn-sm btn-light text-success" title="Assign Tenant">
                             <i class="fa-solid fa-user-plus"></i>
                         </a>
                         {% endif %}
 
-                        <!-- Vacate Unit -->
+                        <!-- Vacate Unit (ONLY for OCCUPIED) -->
                         {% if unit.status == "OCCUPIED" %}
                         <a href="{% url 'vacate_unit' unit.id %}" class="btn btn-sm btn-light text-warning" title="Vacate">
                             <i class="fa-solid fa-door-open"></i>
@@ -341,82 +350,4 @@
     </div>
   </div>
 </div>
-
-<style>
-  /* SaaS Dashboard Custom Styles */
-  :root {
-    --bs-primary: #4361ee;
-    --bs-primary-rgb: 67, 97, 238;
-  }
-
-  body {
-    background-color: #f8f9fa;
-    font-family:
-      "Inter",
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      sans-serif;
-  }
-
-  .stat-card {
-    transition: transform 0.2s ease-in-out;
-  }
-
-  .stat-card:hover {
-    transform: translateY(-4px);
-  }
-
-  /* Subtle Badges BS 5.3+ */
-  .bg-success-subtle {
-    background-color: #d1fae5 !important;
-  }
-  .bg-warning-subtle {
-    background-color: #fef3c7 !important;
-  }
-  .bg-danger-subtle {
-    background-color: #fee2e2 !important;
-  }
-
-  .text-success {
-    color: #065f46 !important;
-  }
-  .text-warning {
-    color: #92400e !important;
-  }
-  .text-danger {
-    color: #991b1b !important;
-  }
-
-  /* Button Groups & UI Elements */
-  .btn-light {
-    background-color: #f8f9fa;
-    border-color: #f1f3f5;
-  }
-  .btn-light:hover {
-    background-color: #e9ecef;
-  }
-
-  .table thead th {
-    letter-spacing: 0.03rem;
-    font-size: 0.75rem;
-  }
-
-  .form-control:focus,
-  .form-select:focus {
-    border-color: rgba(var(--bs-primary-rgb), 0.5);
-    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.1);
-  }
-
-  .uppercase {
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* Custom Table Styling */
-  .table tbody tr {
-    transition: background-color 0.2s ease;
-  }
-</style>
 {% endblock %}

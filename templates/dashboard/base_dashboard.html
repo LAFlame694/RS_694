@@ -24,6 +24,8 @@
     />
     <!-- Custom CSS -->
      <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}" />
+    {% block extra_css %}
+    {% endblock %}
   </head>
   <body>
     {% include 'dashboard/includes/sidebar.html' %}
@@ -74,6 +76,27 @@
           </div>
         </div>
       </header>
+
+      <!-- Flash Messages -->
+      {% if messages %}
+      <div class="messages-wrapper">
+          <div class="messages-container">
+              {% for message in messages %}
+                  <div class="alert 
+                      {% if message.tags == 'success' %}alert-success
+                      {% elif 'error' in message.tags %}alert-error
+                      {% endif %}">
+                      
+                      <span class="alert-text">{{ message }}</span>
+                      
+                      <button class="alert-close" onclick="this.parentElement.remove()">
+                          &times;
+                      </button>
+                  </div>
+              {% endfor %}
+          </div>
+      </div>
+      {% endif %}
 
       <!-- Dynamic Content Area -->
       <main class="content-body">

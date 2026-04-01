@@ -1,0 +1,19 @@
+.btn-white {
+background-color: #fff;
+}
+.btn-white:hover {
+background-color: #f8f9fa;
+}
+.bg-success-subtle {
+background-color: #e8f5e9 !important;
+}
+.bg-danger-subtle {
+background-color: #ffebee !important;
+}
+.table thead th {
+letter-spacing: 0.05em;
+}
+.form-select,
+.form-control {
+font-size: 0.9rem;
+}

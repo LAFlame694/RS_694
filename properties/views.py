@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 
 from tenants.models import Tenant
 from .models import Property, Unit
@@ -20,8 +21,13 @@ def assign_tenant(request, unit_id):
         try:
             assign_tenant_to_unit(unit, tenant, request.user)
             messages.success(request, f'{tenant} assigned to {unit}.')
+            return redirect('property_units', property_id=unit.property.id)
+        
+        except ValidationError as e:
+            messages.error(request, e.messages[0])
+        
         except Exception as e:
-            messages.error(request, str(e))
+            messages.error(request, 'Something went wrong. Please try again.')
         
         return redirect(request.META.get('HTTP_REFERER'))
     

@@ -97,6 +97,7 @@ margin-right: 10px;
 
 /* Main Content Styling */
 #main-content {
+position: relative;
 margin-left: var(--sidebar-width);
 width: calc(100% - var(--sidebar-width));
 min-height: 100vh;
@@ -118,6 +119,79 @@ z-index: 999;
 
 .content-body {
 padding: 2rem;
+}
+
+/* Flash Messages */
+.messages-wrapper {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    pointer-events: none; /* allows clicks through */
+}
+.messages-container {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 600px;
+    pointer-events: auto; /* re-enable clicks for buttons */
+}
+
+/* Base alert style */
+.alert {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    font-weight: 500;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* SUCCESS (Green) */
+.alert-success {
+    background-color: #e6fffa;
+    border-left: 5px solid #38b2ac;
+    color: #065f46;
+}
+
+/* ERROR (Red) */
+.alert-error {
+    background-color: #ffe6e6;
+    border-left: 5px solid #e53e3e;
+    color: #7f1d1d;
+}
+
+/* Close button */
+.alert-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* Match close button color to parent */
+.alert-success .alert-close {
+    color: #065f46;
+}
+
+.alert-error .alert-close {
+    color: #7f1d1d;
+}
+
+/* Optional animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0);
+    }
 }
 
 /* Responsive Adjustments */
