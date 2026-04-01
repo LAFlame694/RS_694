@@ -43,6 +43,11 @@ class Tenancy(models.Model):
                 fields=["unit"],
                 condition=Q(status="ACTIVE"),
                 name="unique_active_tenancy_per_unit"
+            ),
+            models.UniqueConstraint(
+                fields=["tenant"],
+                condition=Q(status="ACTIVE"),
+                name="unique_active_tenancy_per_tenant"
             )
         ]
 

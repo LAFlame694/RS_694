@@ -6,6 +6,30 @@ from django.db import transaction
 from tenants.models import Tenancy, Tenant
 from properties.models import Unit, Property
 from tenants.choices import TenancyStatus
+from properties.choices import UnitStatus
+
+@transaction.atomic
+def delete_unit(unit: Unit):
+    """
+    Delete a unit safely.
+    Only vacant units can be deleted.
+    """
+
+    # enforce business rule
+    if unit.status in ['OCCUPIED', 'MAINTENANCE']:
+        raise ValidationError(
+            f"Cannot delete unit {unit}. Only vacant units can be deleted."
+        )
+    
+    active_tenancy_exists = unit.tenancies.filter(
+        status=TenancyStatus.ACTIVE
+    ).exists()
+
+    if active_tenancy_exists:
+        raise ValidationError("Cannot delete unit with an active tenancy.")
+    
+    unit.delete()
+
 
 @transaction.atomic
 def assign_tenant_to_unit(unit: Unit, tenant: Tenant, created_by) -> Tenancy:
@@ -14,17 +38,28 @@ def assign_tenant_to_unit(unit: Unit, tenant: Tenant, created_by) -> Tenancy:
     Creates a new tenancy and updates unit status.
     """
 
-    # true source of truth check
-    existing_active = unit.tenancies.filter(status=TenancyStatus.ACTIVE).exists()
+    # check if unit is already occupied
+    existing_active_unit = unit.tenancies.filter(
+        status=TenancyStatus.ACTIVE
+    ).exists()
 
-    if existing_active:
+    if existing_active_unit:
         raise ValidationError(f"Unit {unit} is already occupied.")
     
+    # check if tenant has active tenancy
+    existing_active_tenant = tenant.tenancies.filter(
+        status=TenancyStatus.ACTIVE
+    ).exists()
+
+    if existing_active_tenant:
+        raise ValidationError(f"Tenant {tenant} already has an active tenancy.")
+    
+    # create tenancy
     tenancy = Tenancy.objects.create(
         tenant=tenant,
         unit=unit,
         start_date=timezone.now().date(),
-        rent_amount=getattr(unit, 'default_rent', 0), # fallback to 0 if not set
+        rent_amount=getattr(unit, 'default_rent', 0),
         status=TenancyStatus.ACTIVE,
         created_by=created_by
     )
@@ -42,21 +77,40 @@ def vacate_unit(unit: Unit):
     Terminates active tenancy and updates unit status.
     """
 
-    active_tenancy = unit.tenancies.filter(
+    active_tenancies = unit.tenancies.filter(
         status=TenancyStatus.ACTIVE
-    ).first()
+    )
 
-    if not active_tenancy:
+    count = active_tenancies.count()
+
+    if count == 0:
         raise ValidationError(f"Unit {unit} has no active tenancy.")
     
+    if count > 1:
+        raise ValidationError(
+            f"Data integrity error: multiple active tenancies for unit {unit}."
+        )
+    
+    active_tenancy = active_tenancies.first()
+
+    # safety check
+    if active_tenancy.start_date > timezone.now().date():
+        raise ValidationError("Cannot vacate tenancy before it starts.")
+    
+    # idempotency protection
+    if active_tenancy.status != TenancyStatus.ACTIVE:
+        raise ValidationError("Tenancy already terminated.")
+
     # terminate tenancy
     active_tenancy.status = TenancyStatus.TERMINATED
     active_tenancy.end_date = timezone.now().date()
     active_tenancy.save(update_fields=['status', 'end_date'])
 
     # sync unit status
-    unit.status = 'VACANT'
+    unit.status = UnitStatus.VACANT
     unit.save(update_fields=['status'])
+
+    return active_tenancy
 
 def get_property_with_units(user, property_id):
     """
