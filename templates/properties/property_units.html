@@ -36,9 +36,9 @@
       </nav>
     </div>
     <div>
-      <button class="btn btn-primary px-4 py-2 shadow-sm fw-semibold">
+      <a href="{% url 'add_unit' property.id %}" class="btn btn-primary px-4 py-2 shadow-sm fw-semibold">
         <i class="fa-solid fa-plus me-2"></i> Add Unit
-      </button>
+      </a>
     </div>
   </div>
 
@@ -282,12 +282,12 @@
                 <td class="pe-4 text-end">
                     <div class="btn-group" role="group">
                         <!-- View Unit -->
-                        <a href="#" class="btn btn-sm btn-light text-primary" title="View">
+                        <a href="{% url 'unit_detail' unit.id %}" class="btn btn-sm btn-light text-primary" title="View">
                             <i class="fa-solid fa-eye"></i>
                         </a>
 
                         <!-- Edit Unit -->
-                        <a href="#" class="btn btn-sm btn-light text-secondary" title="Edit">
+                        <a href="{% url 'edit_unit' unit.id %}" class="btn btn-sm btn-light text-secondary" title="Edit">
                             <i class="fa-solid fa-pen"></i>
                         </a>
 

@@ -1,0 +1,27 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <h3>Add Unit - {{ property.name }}</h3>
+
+  <form method="POST">
+    {% csrf_token %} {{ form.non_field_errors }}
+
+    <div class="mb-3">
+      {{ form.unit_number.label_tag }} {{ form.unit_number }} {{
+      form.unit_number.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.unit_type.label_tag }} {{ form.unit_type }} {{
+      form.unit_type.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.floor.label_tag }} {{ form.floor }} {{ form.floor.errors }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Create Unit</button>
+  </form>
+</div>
+{% endblock %}

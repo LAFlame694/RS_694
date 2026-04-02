@@ -117,3 +117,148 @@ Traceback (most recent call last):
     raise new from exc
 django.template.exceptions.TemplateDoesNotExist: base_dashboard.html
 2026-04-02 11:25:39,081 | ERROR | django.server | "GET /properties/9/assign-tenant/ HTTP/1.1" 500 140143
+2026-04-02 23:12:32,100 | ERROR | django.request | Internal Server Error: /properties/properties/3/units/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\properties\views.py", line 95, in property_units
+    return render('property_list') # safety fallback
+TypeError: render() missing 1 required positional argument: 'template_name'
+2026-04-02 23:12:32,116 | ERROR | django.server | "GET /properties/properties/3/units/ HTTP/1.1" 500 76767
+2026-04-02 23:14:17,896 | ERROR | django.request | Internal Server Error: /properties/properties/3/units/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\properties\views.py", line 95, in property_units
+    return render('property_list') # safety fallback
+TypeError: render() missing 1 required positional argument: 'template_name'
+2026-04-02 23:14:17,898 | ERROR | django.server | "GET /properties/properties/3/units/ HTTP/1.1" 500 76769
+2026-04-03 00:06:39,519 | ERROR | django.request | Internal Server Error: /properties/units/5/edit/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\engine.py", line 163, in find_template
+    raise TemplateDoesNotExist(name, tried=tried)
+django.template.exceptions.TemplateDoesNotExist: base_dashboard.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\properties\views.py", line 40, in edit_unit
+    return render(request, 'properties/edit_unit.html', {
+        'form': form,
+        'unit': unit
+    })
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 109, in render
+    reraise(exc, self.backend)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 130, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: base_dashboard.html
+2026-04-03 00:06:39,531 | ERROR | django.server | "GET /properties/units/5/edit/ HTTP/1.1" 500 139384
+2026-04-03 01:37:17,440 | ERROR | django.request | Internal Server Error: /properties/properties/3/units/add/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\properties\views.py", line 37, in add_unit
+    return render(request, 'properties/add_unit.html', {'property': property})
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: properties/add_unit.html
+2026-04-03 01:37:17,446 | ERROR | django.server | "GET /properties/properties/3/units/add/ HTTP/1.1" 500 92147
+2026-04-03 01:39:03,124 | ERROR | django.request | Internal Server Error: /properties/properties/3/units/add/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\properties\views.py", line 35, in add_unit
+    return redirect('unit_detail', property_id=property_id)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'unit_detail' with keyword arguments '{'property_id': 3}' not found. 1 pattern(s) tried: ['properties/units/(?P<unit_id>[0-9]+)/\\Z']
+2026-04-03 01:39:03,130 | ERROR | django.server | "POST /properties/properties/3/units/add/ HTTP/1.1" 500 99643
+2026-04-03 01:41:42,522 | ERROR | django.request | Internal Server Error: /properties/properties/3/units/add/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\properties\views.py", line 35, in add_unit
+    return redirect('unit_detail', property_id=property_id)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'unit_detail' with keyword arguments '{'property_id': 3}' not found. 1 pattern(s) tried: ['properties/units/(?P<unit_id>[0-9]+)/\\Z']
+2026-04-03 01:41:42,528 | ERROR | django.server | "POST /properties/properties/3/units/add/ HTTP/1.1" 500 99643

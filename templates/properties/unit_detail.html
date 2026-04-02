@@ -1,0 +1,116 @@
+{% extends "dashboard/base_dashboard.html" %} 
+{% block content %}
+<div class="container mt-4">
+  <h3 class="mb-4">Unit {{ unit.unit_number }}</h3>
+
+  <div class="row">
+    <!-- UNIT INFO -->
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5>Unit Info</h5>
+
+          <p><strong>Property:</strong> {{ unit.property.name }}</p>
+          <p><strong>Type:</strong> {{ unit.unit_type }}</p>
+          <p><strong>Floor:</strong> 
+            {{ unit.floor }}
+            {% if unit.floor == '1' %}
+                st
+            {% elif unit.floor == '2' %}
+                nd
+            {% elif unit.floor == '3' %}
+                rd
+            {% else %}
+                th
+            {% endif %}
+            </p>
+
+          <p>
+            <strong>Status:</strong>
+            <span class="badge bg-secondary">{{ unit.status }}</span>
+          </p>
+
+          <p>
+            <strong>Active:</strong>
+            {% if unit.is_active %}
+            <span class="text-success">Yes</span>
+            {% else %}
+            <span class="text-danger">No</span>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURRENT TENANCY -->
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5>Current Tenant</h5>
+
+          {% if active_tenancy %}
+          <p><strong>Tenant:</strong> {{ active_tenancy.tenant }}</p>
+          <p><strong>Rent:</strong> {{ active_tenancy.rent_amount }}</p>
+          <p><strong>Start:</strong> {{ active_tenancy.start_date }}</p>
+          {% else %}
+          <p class="text-muted">No active tenant</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="mb-4">
+    <a href="{% url 'edit_unit' unit.id %}" class="btn btn-primary">Edit</a>
+
+    {% if unit.status == "VACANT" %}
+    <a href="{% url 'assign_tenant' unit.id %}" class="btn btn-success"
+      >Assign Tenant</a
+    >
+    {% endif %} 
+
+    {% if unit.status == "OCCUPIED" %}
+    <a href="{% url 'vacate_unit' unit.id %}" class="btn btn-warning">Vacate</a>
+    {% endif %}
+
+    {% if unit.status == "VACANT" %}
+    <a href="{% url 'delete_unit' unit.id %}" class="btn btn-danger">Delete</a>
+    {% endif %}
+  </div>
+
+  <!-- HISTORY -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5>Tenant History</h5>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Tenant</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Rent</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in tenancies %}
+          <tr>
+            <td>{{ t.tenant }}</td>
+            <td>{{ t.start_date }}</td>
+            <td>{{ t.end_date|default:"-" }}</td>
+            <td>{{ t.rent_amount }}</td>
+            <td>{{ t.status }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center">No history</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

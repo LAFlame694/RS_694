@@ -6,12 +6,74 @@ from django.core.exceptions import ValidationError
 from tenants.models import Tenant
 from .models import Property, Unit
 from tenants.choices import TenancyStatus
-from .forms import AssignTenantForm
+from .forms import AssignTenantForm, EditUnitForm, UnitForm
 
 from .services.property_service import get_properties_for_user, get_property_stats
-from .services.unit_service import get_property_with_units, get_units_stats, assign_tenant_to_unit, vacate_unit, delete_unit
+from .services.unit_service import (
+    get_property_with_units, 
+    get_units_stats, assign_tenant_to_unit, 
+    vacate_unit, 
+    delete_unit,
+    update_unit,
+    get_unit_details,
+    create_unit
+)
 
 # Create your views here.
+@login_required
+def add_unit(request, property_id):
+    property = get_object_or_404(Property, id=property_id)
+
+    if request.method == 'POST':
+        form = UnitForm(request.POST)
+
+        if form.is_valid():
+            unit = create_unit(
+                property=property,
+                unit_number=form.cleaned_data['unit_number'],
+                unit_type=form.cleaned_data['unit_type'],
+                floor=form.cleaned_data['floor']
+            )
+            messages.success(request, f'Unit {unit.unit_number} created successfully.')
+            return redirect("unit_detail", unit_id=unit.id)
+    else:
+        form = UnitForm()
+    
+    return render(request, 'properties/add_unit.html', {
+        'form': form,
+        'property': property
+    })
+
+@login_required
+def unit_detail(request, unit_id):
+    data = get_unit_details(unit_id)
+
+    return render(request, 'properties/unit_detail.html', data)
+
+@login_required
+def edit_unit(request, unit_id):
+    unit = get_object_or_404(Unit, id=unit_id)
+
+    if request.method == 'POST':
+        form = EditUnitForm(request.POST, instance=unit)
+
+        if form.is_valid():
+            try:
+                update_unit(unit, **form.cleaned_data)
+
+                messages.success(request, f'Unit {unit.unit_number} updated successfully.')
+                return redirect('property_units', property_id=unit.property.id)
+            
+            except Exception as e:
+                messages.error(request, f"Something went wrong. Please try again. {str(e)}")
+    else:
+        form = EditUnitForm(instance=unit)
+    
+    return render(request, 'properties/edit_unit.html', {
+        'form': form,
+        'unit': unit
+    })
+
 @login_required
 def delete_unit_view(request, unit_id):
     unit = get_object_or_404(Unit, id=unit_id)
@@ -89,10 +151,12 @@ def property_list(request):
 
 @login_required
 def property_units(request, property_id):
-    property, units = get_property_with_units(request.user, property_id)
+    result = get_property_with_units(request.user, property_id)
 
-    if not property:
-        return render('property_list') # safety fallback
+    if not result:
+        return redirect('property_list') # safety fallback
+    
+    property, units = result
     
     stats = get_units_stats(units)
 

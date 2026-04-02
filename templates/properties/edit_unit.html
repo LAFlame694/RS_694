@@ -1,0 +1,79 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+
+            <h4 class="mb-3">Edit Unit</h4>
+            <p class="text-muted">Unit {{ unit.unit_number }}</p>
+
+            <!-- Read-only info -->
+            <div class="mb-3">
+                <label class="form-label">Property</label>
+                <input type="text" class="form-control" value="{{ unit.property.name }}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Status</label><br>
+                <span class="badge bg-secondary">{{ unit.status }}</span>
+            </div>
+
+            <!-- Errors -->
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Unit Number -->
+                <div class="mb-3">
+                    <label class="form-label">Unit Number</label>
+                    {{ form.unit_number }}
+                    {% if form.unit_number.errors %}
+                        <div class="text-danger small">
+                            {{ form.unit_number.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Unit Type -->
+                <div class="mb-3">
+                    <label class="form-label">Unit Type</label>
+                    {{ form.unit_type }}
+                </div>
+
+                <!-- Floor -->
+                <div class="mb-3">
+                    <label class="form-label">Floor</label>
+                    {{ form.floor }}
+                </div>
+
+                <!-- Active -->
+                <div class="form-check mb-3">
+                    {{ form.is_active }}
+                    <label class="form-check-label">Is Active</label>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'property_units' unit.property.id %}" class="btn btn-secondary">
+                        Back
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        Save Changes
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

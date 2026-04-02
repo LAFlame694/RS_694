@@ -1,6 +1,17 @@
 from django import forms
 from tenants.models import Tenant
 from tenants.choices import TenancyStatus
+from django.utils import timezone
+from .models import Unit
+
+class UnitForm(forms.ModelForm):
+    class Meta:
+        model = Unit
+        fields = ['unit_number', 'unit_type', 'floor']
+    
+    def clean_unit_number(self):
+        value = self.cleaned_data['unit_number']
+        return value.upper()
 
 class AssignTenantForm(forms.Form):
     tenant = forms.ModelChoiceField(
@@ -27,3 +38,44 @@ class AssignTenantForm(forms.Form):
 
         if available_tenants is not None:
             self.fields['tenant'].queryset = available_tenants
+    
+    def clean_start_date(self):
+        start_date = self.cleaned_data.get('start_date')
+
+        if not start_date:
+            return timezone.now().date()
+        
+        return start_date
+    
+    def clean_rent_amount(self):
+        rent = self.cleaned_data.get('rent_amount')
+
+        if rent is None or rent <= 0:
+            raise forms.ValidationError("Rent amount must be greater than 0.")
+        
+        return rent
+
+class EditUnitForm(forms.ModelForm):
+    class Meta:
+        model = Unit
+        fields = ['unit_number', 'unit_type', 'floor', 'is_active']
+
+        widgets = {
+            'unit_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'unit_type': forms.Select(attrs={'class': 'form-control'}),
+            'floor': forms.TextInput(attrs={'class': 'form-control'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+    
+    def clean_unit_number(self):
+        unit_number = self.cleaned_data.get('unit_number')
+        property = self.instance.property
+
+        # prevent duplicate within same property
+        if Unit.objects.filter(
+            property=property,
+            unit_number=unit_number
+        ).exclude(id=self.instance.id).exists():
+            raise forms.ValidationError("This unit number already exists in this property.")
+        
+        return unit_number

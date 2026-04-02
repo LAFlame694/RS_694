@@ -2,11 +2,68 @@ from django.db.models import Prefetch
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.db import transaction
+from django.shortcuts import get_object_or_404
 
 from tenants.models import Tenancy, Tenant
 from properties.models import Unit, Property
 from tenants.choices import TenancyStatus
 from properties.choices import UnitStatus
+
+@transaction.atomic
+def create_unit(*, property, unit_number, unit_type, floor):
+    """
+    Create a new unit with enforced defaults.
+    """
+
+    unit = Unit.objects.create(
+        property=property,
+        unit_number=unit_number,
+        unit_type=unit_type,
+        floor=floor,
+
+        # enforce business rules
+        status=UnitStatus.VACANT,
+        is_active=True
+    )
+
+    return unit
+
+def get_unit_details(unit_id):
+    """
+    Fetch unit with all related tenancy data.
+    Optimized for detail page.
+    """
+
+    unit = get_object_or_404(
+        Unit.objects.select_related('property'),
+        id=unit_id
+    )
+
+    tenancies = unit.tenancies.select_related('tenant').all()
+
+    active_tenancy = None
+    for tenancy in tenancies:
+        if tenancy.status == TenancyStatus.ACTIVE:
+            active_tenancy = tenancy
+            break
+    
+    return {
+        "unit": unit,
+        "active_tenancy": active_tenancy,
+        "tenancies": tenancies
+    }
+
+@transaction.atomic
+def update_unit(unit, **data):
+    """
+    Update unit structural details only.
+    """
+
+    for field, value in data.items():
+        setattr(unit, field, value)
+    
+    unit.save()
+    return unit
 
 @transaction.atomic
 def delete_unit(unit: Unit):
