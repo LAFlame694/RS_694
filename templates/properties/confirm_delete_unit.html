@@ -1,0 +1,26 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block content %}
+
+<div class="max-w-md mx-auto mt-20 bg-white shadow rounded p-6 text-center">
+    <h2 class="text-xl font-semibold mb-4 text-red-600">
+        Confirm Delete
+    </h2>
+
+    <p class="mb-4">
+        Are you sure you want to delete unit <strong>{{ unit }}</strong>?
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">
+            Confirm Delete
+        </button>
+    </form>
+
+    <a href="{% url 'property_units' unit.property.id %}"
+       class="inline-block mt-4 text-gray-600">
+        Cancel
+    </a>
+</div>
+
+{% endblock %}

@@ -32,40 +32,32 @@ def delete_unit(unit: Unit):
 
 
 @transaction.atomic
-def assign_tenant_to_unit(unit: Unit, tenant: Tenant, created_by) -> Tenancy:
+def assign_tenant_to_unit(unit: Unit, tenant: Tenant, rent_amount, start_date, created_by) -> Tenancy:
     """
     Assign a tenant to a unit.
     Creates a new tenancy and updates unit status.
     """
 
     # check if unit is already occupied
-    existing_active_unit = unit.tenancies.filter(
-        status=TenancyStatus.ACTIVE
-    ).exists()
-
-    if existing_active_unit:
+    if unit.tenancies.filter(status=TenancyStatus.ACTIVE).exists():
         raise ValidationError(f"Unit {unit} is already occupied.")
     
-    # check if tenant has active tenancy
-    existing_active_tenant = tenant.tenancies.filter(
-        status=TenancyStatus.ACTIVE
-    ).exists()
-
-    if existing_active_tenant:
+    # check if tenant has an active tenancy
+    if tenant.tenancies.filter(status=TenancyStatus.ACTIVE).exists():
         raise ValidationError(f"Tenant {tenant} already has an active tenancy.")
     
     # create tenancy
     tenancy = Tenancy.objects.create(
         tenant=tenant,
         unit=unit,
-        start_date=timezone.now().date(),
-        rent_amount=getattr(unit, 'default_rent', 0),
+        rent_amount=rent_amount,
+        start_date=start_date,
         status=TenancyStatus.ACTIVE,
         created_by=created_by
     )
 
     # sync unit status
-    unit.status = 'OCCUPIED'
+    unit.status = UnitStatus.OCCUPIED
     unit.save(update_fields=['status'])
 
     return tenancy
