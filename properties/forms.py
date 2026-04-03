@@ -8,10 +8,32 @@ class UnitForm(forms.ModelForm):
     class Meta:
         model = Unit
         fields = ['unit_number', 'unit_type', 'floor']
-    
+
+        widgets = {
+            'unit_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter unit number'}),
+            'unit_type': forms.Select(attrs={'class': 'form-control'}),
+            'floor': forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Enter floor number'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.property = kwargs.pop('property', None)
+        super().__init__(*args, **kwargs)
+
     def clean_unit_number(self):
-        value = self.cleaned_data['unit_number']
-        return value.upper()
+        unit_number = self.cleaned_data['unit_number'].upper()
+
+        if not self.property:
+            return unit_number  # skip validation safely
+
+        if Unit.objects.filter(
+            property=self.property,
+            unit_number=unit_number
+        ).exists():
+            raise forms.ValidationError(
+                "This unit number already exists for this property."
+            )
+
+        return unit_number
 
 class AssignTenantForm(forms.Form):
     tenant = forms.ModelChoiceField(

@@ -1,33 +1,27 @@
-{% extends 'dashboard/base_dashboard.html' %}
+{% extends "dashboard/base_dashboard.html" %}
 
 {% block content %}
-<h3>Assign Tenant to {{ unit.unit_number }}</h3>
+<div class="container mt-4">
+  <h3>Add Unit - {{ property.name }}</h3>
 
-<form method="POST">
-    {% csrf_token %}
-    <!-- Tenant Dropdown -->
-     <label for="tenant">Select Tenant</label>
-     <select name="tenant_id" required>
-        <option value="">-- Select Tenant --</option>
-        {% for tenant in tenants %}
-            <option value="{{ tenant.id }}">{{ tenant }}</option>
-        {% endfor %}
-     </select>
+  <form method="POST">
+    {% csrf_token %} {{ form.non_field_errors }}
 
-     <br><br>
+    <div class="mb-3">
+      {{ form.unit_number.label_tag }} {{ form.unit_number }} {{
+      form.unit_number.errors }}
+    </div>
 
-     <!-- Rent Amount -->
-    <label for="rent_amount">Rent Amount</label>
-    <input type="number" name="rent_amount" step="0.01" required>
+    <div class="mb-3">
+      {{ form.unit_type.label_tag }} {{ form.unit_type }} {{
+      form.unit_type.errors }}
+    </div>
 
-    <br><br>
+    <div class="mb-3">
+      {{ form.floor.label_tag }} {{ form.floor }} {{ form.floor.errors }}
+    </div>
 
-    <!-- Start Date -->
-    <label for="start_date">Start Date</label>
-    <input type="date" name="start_date" required>
-
-    <br><br>
-
-    <button type="submit" class="btn btn-primary">Assign Tenant</button>
-</form>
+    <button type="submit" class="btn btn-success">Create Unit</button>
+  </form>
+</div>
 {% endblock %}

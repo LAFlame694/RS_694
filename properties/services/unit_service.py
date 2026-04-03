@@ -1,8 +1,9 @@
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.shortcuts import get_object_or_404
+from django.db import IntegrityError
 
 from tenants.models import Tenancy, Tenant
 from properties.models import Unit, Property
@@ -14,19 +15,23 @@ def create_unit(*, property, unit_number, unit_type, floor):
     """
     Create a new unit with enforced defaults.
     """
+    try:
+        unit = Unit.objects.create(
+            property=property,
+            unit_number=unit_number,
+            unit_type=unit_type,
+            floor=floor,
 
-    unit = Unit.objects.create(
-        property=property,
-        unit_number=unit_number,
-        unit_type=unit_type,
-        floor=floor,
+            # enforce business rules
+            status=UnitStatus.VACANT,
+            is_active=True
+        )
 
-        # enforce business rules
-        status=UnitStatus.VACANT,
-        is_active=True
-    )
-
-    return unit
+        return unit
+    except IntegrityError:
+        raise ValidationError(
+            f"Unit number '{unit_number}' already exists in property '{property}'."
+        )
 
 def get_unit_details(unit_id):
     """
@@ -161,13 +166,7 @@ def vacate_unit(unit: Unit):
 
     return active_tenancy
 
-def get_property_with_units(user, property_id):
-    """
-    Ensures:
-    - The property belongs to the user
-    - Fetch related units
-    """
-
+def get_property_with_units(user, property_id, status=None, search=None):
     property = Property.objects.filter(
         id=property_id,
         landlord=user
@@ -177,10 +176,30 @@ def get_property_with_units(user, property_id):
         return None, None
     
     active_tenancies = Tenancy.objects.filter(
-        status='ACTIVE'
+        status=TenancyStatus.ACTIVE
     ).select_related('tenant')
 
-    units = property.units.prefetch_related(
+    units = property.units.all()
+
+    # filter
+    if status and status != 'ALL':
+        units = units.filter(status=status)
+    
+    # search (unit number or tenant name)
+    if search:
+        units = units.filter(
+            Q(unit_number__icontains=search) |
+            (
+                Q(tenancies__status=TenancyStatus.ACTIVE) &
+                (
+                    Q(tenancies__tenant__first_name__icontains=search) |
+                    Q(tenancies__tenant__last_name__icontains=search)
+                )
+            )
+    ).distinct()
+    
+    # prefetch (after filtering + search)
+    units = units.prefetch_related(
         Prefetch(
             'tenancies',
             queryset=active_tenancies,
@@ -193,7 +212,7 @@ def get_property_with_units(user, property_id):
         unit.active_tenancy = (
             unit.active_tenancies[0] if unit.active_tenancies else None
         )
-
+    
     return property, units
 
 def get_units_stats(units):

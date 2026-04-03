@@ -163,18 +163,36 @@
             ></span>
             <input
               type="text"
+              name="q"
               class="form-control bg-light border-0 shadow-none"
               placeholder="Search unit or tenant..."
+
+              hx-get="{% url 'property_units' property.id %}?page=1"
+              value="{{ request.GET.q }}"
+              hx-trigger="keyup changed delay:400ms"
+              hx-target="#units-table"
+              hx-include="[name='status']"
             />
           </div>
         </div>
         <div class="col-12 col-md-auto d-flex gap-2">
-          <select class="form-select border-light bg-light shadow-none">
-            <option selected>All Statuses</option>
-            <option>Occupied</option>
-            <option>Vacant</option>
-            <option>Maintenance</option>
-          </select>
+          <form method="GET">
+            <select 
+              name="status" 
+              class="form-select border-light bg-light shadow-none" 
+              onchange="this.form.submit()"
+
+              hx-get="{% url 'property_units' property.id %}?page=1"
+              hx-trigger="change"
+              hx-target="#units-table"
+              hx-include="[name='q']"
+            >
+              <option value="ALL" {% if selected_status == "ALL" %}selected{% endif %}>All Statuses</option>
+              <option value="OCCUPIED" {% if selected_status == "OCCUPIED" %}selected{% endif %}>Occupied</option>
+              <option value="VACANT" {% if selected_status == "VACANT" %}selected{% endif %}>Vacant</option>
+              <option value="MAINTENANCE" {% if selected_status == "MAINTENANCE" %}selected{% endif %}>Maintenance</option>
+            </select>
+          </form>
           <button
             class="btn btn-outline-secondary shadow-none d-flex align-items-center"
           >
@@ -183,170 +201,9 @@
         </div>
       </div>
     </div>
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="bg-light">
-          <tr>
-            <th
-              class="ps-4 py-3 border-0 text-muted small text-uppercase fw-bold"
-            >
-              Unit Number
-            </th>
 
-            <th class="py-3 border-0 text-muted small text-uppercase fw-bold">
-              Floor
-            </th>
-            
-            <th class="py-3 border-0 text-muted small text-uppercase fw-bold">
-              Type
-            </th>
-
-            <th class="py-3 border-0 text-muted small text-uppercase fw-bold">
-              Rent Amount
-            </th>
-
-            <th class="py-3 border-0 text-muted small text-uppercase fw-bold">
-              Status
-            </th>
-
-            <th class="py-3 border-0 text-muted small text-uppercase fw-bold">
-              Tenant Name
-            </th>
-
-            <th
-              class="pe-4 py-3 border-0 text-muted small text-uppercase fw-bold text-end"
-            >
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for unit in units %}
-            <tr>
-                <td class="ps-4 fw-bold text-dark">
-                Unit {{ unit.unit_number }}
-                </td>
-
-                <td>
-                {{ unit.floor }}
-                    {% if unit.floor == '1' %}
-                        st
-                    {% elif unit.floor == '2' %}
-                        nd
-                    {% elif unit.floor == '3' %}
-                        rd
-                    {% else %}
-                        th
-                    {% endif %}
-                 Floor
-                </td>
-
-                <td>
-                {{ unit.unit_type }}
-                </td>
-
-                <td>
-                <span class="fw-semibold">
-                    {% if unit.active_tenancy %}
-                        KES {{ unit.active_tenancy.rent_amount }}
-                    {% else %}
-                        <span class="text-muted small">--</span>
-                    {% endif %}
-                </span>
-                </td>
-
-                <td>
-                {% if unit.status == "OCCUPIED" %}
-                    <span class="badge rounded-pill bg-success-subtle text-success px-3 py-2">
-                    Occupied
-                    </span>
-                {% elif unit.status == "VACANT" %}
-                    <span class="badge rounded-pill bg-warning-subtle text-warning px-3 py-2">
-                    Vacant
-                    </span>
-                {% else %}
-                    <span class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2">
-                    Maintenance
-                    </span>
-                {% endif %}
-                </td>
-
-                <td>
-                {% if unit.active_tenancy %}
-                    {{ unit.active_tenancy.tenant.first_name }} {{ unit.active_tenancy.tenant.last_name }}
-                {% else %}
-                    <span class="text-muted small">-- No Tenant --</span>
-                {% endif %}
-                </td>
-
-                <td class="pe-4 text-end">
-                    <div class="btn-group" role="group">
-                        <!-- View Unit -->
-                        <a href="{% url 'unit_detail' unit.id %}" class="btn btn-sm btn-light text-primary" title="View">
-                            <i class="fa-solid fa-eye"></i>
-                        </a>
-
-                        <!-- Edit Unit -->
-                        <a href="{% url 'edit_unit' unit.id %}" class="btn btn-sm btn-light text-secondary" title="Edit">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-
-                        <!-- Delete Unit -->
-                        <a href="{% url 'delete_unit' unit.id %}" class="btn btn-sm btn-light text-danger" title="Delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-
-                        <!-- Assign Tenant (ONLY for VACANT or MAINTENANCE) -->
-                        {% if unit.status == "VACANT" or unit.status == "MAINTENANCE" %}
-                        <a href="{% url 'assign_tenant' unit.id %}" class="btn btn-sm btn-light text-success" title="Assign Tenant">
-                            <i class="fa-solid fa-user-plus"></i>
-                        </a>
-                        {% endif %}
-
-                        <!-- Vacate Unit (ONLY for OCCUPIED) -->
-                        {% if unit.status == "OCCUPIED" %}
-                        <a href="{% url 'vacate_unit' unit.id %}" class="btn btn-sm btn-light text-warning" title="Vacate">
-                            <i class="fa-solid fa-door-open"></i>
-                        </a>
-                        {% endif %}
-                    </div>
-                </td>
-            </tr>
-
-            {% empty %}
-            <tr>
-                <td colspan="6" class="text-center text-muted py-4">
-                No units found for this property.
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-      </table>
-    </div>
-    <!-- Pagination -->
-    <div class="card-footer bg-white border-0 py-3 px-4 border-top">
-      <div
-        class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3"
-      >
-        <span class="text-muted small">Showing 4 of 45 Units</span>
-        <ul class="pagination pagination-sm mb-0">
-          <li class="page-item disabled">
-            <a class="page-link shadow-none" href="#">Previous</a>
-          </li>
-          <li class="page-item active">
-            <a class="page-link shadow-none" href="#">1</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link shadow-none" href="#">2</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link shadow-none" href="#">3</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link shadow-none" href="#">Next</a>
-          </li>
-        </ul>
-      </div>
+    <div class="table-responsive" id="units-table">
+      {% include 'properties/partials/units_table.html' %}
     </div>
   </div>
 </div>

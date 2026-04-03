@@ -55,3 +55,4 @@
 2026-04-02 11:29:57,430 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=9
 2026-04-02 11:30:04,234 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=9
 2026-04-02 23:15:31,331 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=12
+2026-04-03 14:35:16,193 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=4

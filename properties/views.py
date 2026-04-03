@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 
 from tenants.models import Tenant
 from .models import Property, Unit
@@ -11,12 +12,13 @@ from .forms import AssignTenantForm, EditUnitForm, UnitForm
 from .services.property_service import get_properties_for_user, get_property_stats
 from .services.unit_service import (
     get_property_with_units, 
-    get_units_stats, assign_tenant_to_unit, 
+    get_units_stats, 
+    assign_tenant_to_unit, 
     vacate_unit, 
     delete_unit,
     update_unit,
     get_unit_details,
-    create_unit
+    create_unit,
 )
 
 # Create your views here.
@@ -28,14 +30,21 @@ def add_unit(request, property_id):
         form = UnitForm(request.POST)
 
         if form.is_valid():
-            unit = create_unit(
-                property=property,
-                unit_number=form.cleaned_data['unit_number'],
-                unit_type=form.cleaned_data['unit_type'],
-                floor=form.cleaned_data['floor']
-            )
-            messages.success(request, f'Unit {unit.unit_number} created successfully.')
-            return redirect("unit_detail", unit_id=unit.id)
+            try:
+                unit = create_unit(
+                    property=property,
+                    unit_number=form.cleaned_data['unit_number'],
+                    unit_type=form.cleaned_data['unit_type'],
+                    floor=form.cleaned_data['floor']
+                )
+                messages.success(request, f'Unit {unit.unit_number} created successfully.')
+                return redirect("unit_detail", unit_id=unit.id)
+            
+            except ValidationError as e:
+                form.add_error('unit_number', e.message)
+            
+            except Exception:
+                messages.error(request, "Something went wrong. Try again.")
     else:
         form = UnitForm()
     
@@ -151,19 +160,36 @@ def property_list(request):
 
 @login_required
 def property_units(request, property_id):
-    result = get_property_with_units(request.user, property_id)
+    status = request.GET.get("status")
+    search = request.GET.get("q")
 
-    if not result:
-        return redirect('property_list') # safety fallback
+    property, units = get_property_with_units(
+        request.user,
+        property_id,
+        status=status,
+        search=search
+    )
+
+    if not property:
+        return redirect('property_list')
     
-    property, units = result
-    
+    # pagination
+    paginator = Paginator(units, 10) # 10 units per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     stats = get_units_stats(units)
 
     context = {
         'property': property,
-        'units': units,
+        'units': page_obj,
+        'page_obj': page_obj,
         'stats': stats,
+        'selected_status': status or 'ALL'
     }
+
+    # HTMX request
+    if request.headers.get('HX-Request'):
+        return render(request, 'properties/partials/units_table.html', context)
 
     return render(request, 'properties/property_units.html', context)
