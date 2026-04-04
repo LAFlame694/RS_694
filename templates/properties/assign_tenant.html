@@ -1,5 +1,14 @@
 {% extends "dashboard/base_dashboard.html" %}
-
+<!---->
+{% load static %}
+<!---->
+{% block title %}Assign Tenant to Unit{% endblock %}
+<!---->
+{% block extra_css %}
+<!-- CSS block -->
+<link rel="stylesheet" href="{% static 'properties/css/assign_tenant.css' %}">
+{% endblock %}
+<!---->
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
@@ -7,7 +16,7 @@
             
             <!-- Breadcrumb/Back Link -->
             <nav aria-label="breadcrumb" class="mb-4">
-                <a href="#" class="text-decoration-none text-secondary small d-inline-flex align-items-center">
+                <a href="{% url 'property_units' unit.property.id %}" class="text-decoration-none text-secondary small d-inline-flex align-items-center">
                     <i class="fa-solid fa-chevron-left me-2"></i> Back to Unit List
                 </a>
             </nav>
@@ -90,7 +99,7 @@
                             <button type="submit" class="btn btn-primary py-2 fw-bold">
                                 Confirm Assignment
                             </button>
-                            <a href="#" class="btn btn-link text-muted text-decoration-none small">
+                            <a href="{% url 'property_units' unit.property.id %}" class="btn btn-link text-muted text-decoration-none small">
                                 Cancel and Return
                             </a>
                         </div>
@@ -110,42 +119,5 @@
         </div>
     </div>
 </div>
-
-<style>
-    /* Styling to ensure Django form widgets match Bootstrap aesthetics */
-    select, input[type="text"], input[type="number"], input[type="date"] {
-        display: block;
-        width: 100%;
-        padding: 0.5rem 0.75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #212529;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #dee2e6;
-        border-radius: 0.375rem;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    }
-    
-    select:focus, input:focus {
-        border-color: #86b7fe;
-        outline: 0;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
-    }
-
-    .card {
-        border-radius: 1rem;
-    }
-
-    .input-group-text {
-        border-right: none;
-    }
-
-    select, input {
-        border-top-left-radius: 0 !important;
-        border-bottom-left-radius: 0 !important;
-    }
-</style>
 {% endblock %}
 

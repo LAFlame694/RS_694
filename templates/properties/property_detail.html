@@ -1,0 +1,70 @@
+{% extends 'dashboard/base_dashboard.html' %}
+<!---->
+{% block content %}
+<div class="container py-4">
+
+  <h3 class="mb-4">Property Details</h3>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <div class="mb-3">
+        <label class="fw-bold">Name:</label>
+        <p>{{ property.name }}</p>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-bold">Description:</label>
+        <p>{{ property.description|default:"--" }}</p>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-bold">Address Line 1:</label>
+        <p>{{ property.address_line_1 }}</p>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-bold">Address Line 2:</label>
+        <p>{{ property.address_line_2|default:"--" }}</p>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-bold">Country:</label>
+        <p>{{ property.country }}</p>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-bold">County:</label>
+        <p>{{ property.county|default:"--" }}</p>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-bold">Postal Code:</label>
+        <p>{{ property.postal_code|default:"--" }}</p>
+      </div>
+
+      <!-- 🔥 Landlord (visible now) -->
+      <div class="mb-3">
+        <label class="fw-bold">Landlord:</label>
+        <p>{{ property.landlord.username }}</p>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-bold">Status:</label>
+        {% if property.is_active %}
+          <span class="badge bg-success">Active</span>
+        {% else %}
+          <span class="badge bg-secondary">Inactive</span>
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-bold">Created At:</label>
+        <p>{{ property.created_at }}</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

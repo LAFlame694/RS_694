@@ -3,13 +3,25 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from tenants.models import Tenant
 from .models import Property, Unit
 from tenants.choices import TenancyStatus
-from .forms import AssignTenantForm, EditUnitForm, UnitForm
+from .forms import (
+    AssignTenantForm, 
+    EditUnitForm, 
+    UnitForm,
+    PropertyForm
+)
 
-from .services.property_service import get_properties_for_user, get_property_stats
+from .services.property_service import (
+    get_properties_for_user, 
+    get_property_stats,
+    create_property,
+    update_property,
+    get_property_details
+)
 from .services.unit_service import (
     get_property_with_units, 
     get_units_stats, 
@@ -22,6 +34,71 @@ from .services.unit_service import (
 )
 
 # Create your views here.
+#===================================== property service =========================================================
+@login_required
+def property_detail(request, property_id):
+    property = get_property_details(
+        user=request.user,
+        property_id=property_id
+    )
+
+    return render(request, "properties/property_detail.html", {
+        "property": property
+    })
+
+@login_required
+def edit_property(request, property_id):
+    property = get_object_or_404(Property, id=property_id)
+
+    if request.method == 'POST':
+        form = PropertyForm(request.POST, instance=property)
+
+        if form.is_valid():
+            try:
+                update_property(
+                    user=request.user,
+                    property_id=property.id,
+                    **form.cleaned_data
+                )
+
+                messages.success(request, "Property updated successfully.")
+                return redirect("property_list")
+            
+            except Exception as e:
+                form.add_error(None, str(e))
+    else:
+        form = PropertyForm(instance=property)
+    
+    return render(request, "properties/edit_property.html", {
+        "form": form,
+        "property": property
+    })
+
+@login_required
+def add_property(request):
+    if request.method == 'POST':
+        form = PropertyForm(request.POST)
+        
+        if form.is_valid():
+            try:
+                create_property(
+                    user=request.user,
+                    **form.cleaned_data
+                )
+
+                messages.success(request, "Property created successfully.")
+                return redirect("property_list")
+            except Exception as e:
+                form.add_error(None, str(e))
+    
+    else:
+        form = PropertyForm()
+    
+    return render(request, "properties/add_property.html", {
+        "form": form
+    })
+
+#===================================== unit service =========================================================
 @login_required
 def add_unit(request, property_id):
     property = get_object_or_404(Property, id=property_id)
@@ -146,9 +223,22 @@ def vacate_unit_view(request, unit_id):
         messages.error(request, str(e))
     return redirect(request.META.get('HTTP_REFERER'))
 
+#===================================== property service =========================================================
 @login_required
 def property_list(request):
+    query = request.GET.get("q")
+
+    # base queryset from service
     properties = get_properties_for_user(request.user)
+
+    # apply search
+    if query:
+        properties = properties.filter(
+            Q(name__icontains=query) |
+            Q(county__icontains=query) |
+            Q(country__icontains=query)
+        )
+    
     stats = get_property_stats(request.user)
 
     context = {
@@ -156,8 +246,17 @@ def property_list(request):
         'stats': stats,
     }
 
+    # HTMX request -> return only table rows
+    if request.headers.get("HX-Request"):
+        return render(
+            request,
+            "properties/partials/property_table_rows.html",
+            context
+        )
+    
     return render(request, 'properties/property_list.html', context)
 
+#===================================== unit service =========================================================
 @login_required
 def property_units(request, property_id):
     status = request.GET.get("status")
@@ -172,7 +271,7 @@ def property_units(request, property_id):
 
     if not property:
         return redirect('property_list')
-    
+
     # pagination
     paginator = Paginator(units, 10) # 10 units per page
     page_number = request.GET.get("page")

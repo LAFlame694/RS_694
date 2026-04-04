@@ -1,0 +1,58 @@
+{% extends 'dashboard/base_dashboard.html' %}
+<!---->
+{% block content %}
+<div class="container py-4">
+
+  <h3 class="mb-4">Edit Property</h3>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <div class="mb-3">
+      <label>Name</label>
+      {{ form.name }}
+    </div>
+
+    <div class="mb-3">
+      <label>Description</label>
+      {{ form.description }}
+    </div>
+
+    <div class="mb-3">
+      <label>Address Line 1</label>
+      {{ form.address_line_1 }}
+    </div>
+
+    <div class="mb-3">
+      <label>Address Line 2</label>
+      {{ form.address_line_2 }}
+    </div>
+
+    <div class="mb-3">
+      <label>Country</label>
+      {{ form.country }}
+    </div>
+
+    <div class="mb-3">
+      <label>County</label>
+      {{ form.county }}
+    </div>
+
+    <div class="mb-3">
+      <label>Postal Code</label>
+      {{ form.postal_code }}
+    </div>
+
+    <div class="form-check mb-3">
+      {{ form.is_active }} <label>Active</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      Update Property
+    </button>
+
+  </form>
+</div>
+{% endblock %}

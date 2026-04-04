@@ -129,3 +129,29 @@
 2026-04-03 00:00:03,544 | INFO | billing | Skipping charge 3 - already generated this month
 2026-04-03 00:00:03,544 | INFO | billing | === Monthly billing job COMPLETED ===
 2026-04-03 00:00:03,644 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===
+2026-04-04 00:00:03,582 | INFO | billing | === Monthly billing job started ===
+2026-04-04 00:00:03,593 | INFO | billing | === Monthly billing job STARTED ===
+2026-04-04 00:00:03,598 | INFO | billing | Billing date: 2026-04-03
+2026-04-04 00:00:03,598 | INFO | billing | Generating RENT invoices for period 2026-04-01 to 2026-04-30
+2026-04-04 00:00:03,600 | INFO | billing | Found 9 active tenancies for rent billing
+2026-04-04 00:00:03,607 | INFO | billing | Invoice already exists for tenancy 11, category RENT
+2026-04-04 00:00:03,609 | INFO | billing | Invoice already exists for tenancy 13, category RENT
+2026-04-04 00:00:03,611 | INFO | billing | Invoice already exists for tenancy 8, category RENT
+2026-04-04 00:00:03,612 | INFO | billing | Invoice already exists for tenancy 7, category RENT
+2026-04-04 00:00:03,614 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-04-04 00:00:03,616 | INFO | billing | Invoice already exists for tenancy 2, category RENT
+2026-04-04 00:00:03,617 | INFO | billing | Invoice already exists for tenancy 3, category RENT
+2026-04-04 00:00:03,619 | INFO | billing | Invoice already exists for tenancy 4, category RENT
+2026-04-04 00:00:03,621 | INFO | billing | Invoice already exists for tenancy 5, category RENT
+2026-04-04 00:00:03,621 | INFO | billing | Starting recurring charge billing
+2026-04-04 00:00:03,635 | INFO | billing | Found 4 active recurring charges
+2026-04-04 00:00:03,638 | INFO | billing | Processing charge 4 | property=3 | amount=200.00
+2026-04-04 00:00:03,639 | INFO | billing | Skipping charge 4 - already generated this month
+2026-04-04 00:00:03,640 | INFO | billing | Processing charge 1 | property=1 | amount=150.00
+2026-04-04 00:00:03,640 | INFO | billing | Skipping charge 1 - already generated this month
+2026-04-04 00:00:03,641 | INFO | billing | Processing charge 2 | property=1 | amount=100.00
+2026-04-04 00:00:03,642 | INFO | billing | Skipping charge 2 - already generated this month
+2026-04-04 00:00:03,643 | INFO | billing | Processing charge 3 | property=1 | amount=750.00
+2026-04-04 00:00:03,643 | INFO | billing | Skipping charge 3 - already generated this month
+2026-04-04 00:00:03,644 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-04-04 00:00:03,644 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===

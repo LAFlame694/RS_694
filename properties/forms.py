@@ -2,7 +2,65 @@ from django import forms
 from tenants.models import Tenant
 from tenants.choices import TenancyStatus
 from django.utils import timezone
-from .models import Unit
+from .models import Unit, Property
+
+class PropertyForm(forms.ModelForm):
+    class Meta:
+        model = Property
+        fields = [
+            "name", 
+            "description",
+            "address_line_1",
+            "address_line_2",
+            "country",
+            "county",
+            "postal_code",
+            "is_active",
+        ]
+
+        widgets = {
+            "name": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter property name"
+            }),
+            "description": forms.Textarea(attrs={
+                "class": "form-control",
+                "rows": 3,
+                "placeholder": "Optional description"
+            }),
+            "address_line_1": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Address line 1"
+            }),
+            "address_line_2": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Address line 2 (optional)"
+            }),
+            "country": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Country"
+            }),
+            "county": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "County"
+            }),
+            "postal_code": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Postal code"
+            }),
+            "is_active": forms.CheckboxInput(attrs={
+                "class": "form-check-input"
+            }),
+        }
+    
+    # custom validation
+    def clean_name(self):
+        name = self.cleaned_data.get("name")
+
+        if not name:
+            raise forms.ValidationError("Property name is required.")
+        
+        return name.strip()
 
 class UnitForm(forms.ModelForm):
     class Meta:

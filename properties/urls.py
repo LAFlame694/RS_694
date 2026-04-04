@@ -4,6 +4,10 @@ from . import views
 
 urlpatterns = [
     path('', property_list, name='property_list'),
+    path('add/', views.add_property, name='add_property'),
+    path('<int:property_id>/edit/', views.edit_property, name='edit_property'),
+    path('<int:property_id>/', views.property_detail, name='property_detail'),
+
     path('properties/<int:property_id>/units/', views.property_units, name='property_units'),
     path('<int:unit_id>/assign-tenant/', views.assign_tenant, name='assign_tenant'),
     path('<int:unit_id>/vacate/', views.vacate_unit_view, name='vacate_unit'),

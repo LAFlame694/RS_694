@@ -1,0 +1,53 @@
+{% for property in properties %}
+<tr>
+    <td class="ps-4 fw-semibold text-dark">
+        {{ property.name }}
+    </td>
+
+    <td>
+        {{ property.county }}, {{ property.country }}
+    </td>
+
+    <td>
+        {{ property.units.count }}
+    </td>
+
+    <td>
+        {% if property.is_active %}
+        <span class="badge rounded-pill bg-success-subtle text-success px-3">
+            Active
+        </span>
+        {% else %}
+        <span class="badge rounded-pill bg-danger-subtle text-danger px-3">
+            Inactive
+        </span>
+        {% endif %}
+    </td>
+
+    <td class="text-muted small">
+        {{ property.created_at|date:"M d, Y" }}
+    </td>
+
+    <td class="pe-4 text-end">
+        <div class="btn-group shadow-sm">
+        <a href="{% url 'property_detail' property.id %}" class="btn btn-sm btn-white border text-primary" title="View">
+            <i class="fa-solid fa-eye"></i>
+        </a>
+
+        <a href="{% url 'edit_property' property.id %}" class="btn btn-sm btn-white border text-secondary" title="Edit">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+
+        <a href="{% url 'property_units' property.id %}" class="btn btn-sm btn-white border text-info" title="Units">
+            <i class="fa-solid fa-list-ul"></i>
+        </a>
+        </div>
+    </td>
+    </tr>
+    {% empty %}
+    <tr>
+    <td colspan="6" class="text-center text-muted py-4">
+        No properties found.
+    </td>
+</tr>
+{% endfor %}

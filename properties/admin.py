@@ -11,7 +11,7 @@ class PropertyAdmin(LandlordFilteredAdmin):
     list_display = (
         "name",
         "landlord",
-        "city",
+        "country",
         "is_active",
         "created_at"
     )
