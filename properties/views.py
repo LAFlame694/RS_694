@@ -227,17 +227,29 @@ def vacate_unit_view(request, unit_id):
 @login_required
 def property_list(request):
     query = request.GET.get("q")
+    page_number = request.GET.get("page")
+    status = request.GET.get("status")
 
     # base queryset from service
     properties = get_properties_for_user(request.user)
 
-    # apply search
+    # search
     if query:
         properties = properties.filter(
             Q(name__icontains=query) |
             Q(county__icontains=query) |
             Q(country__icontains=query)
         )
+    
+    # status filter
+    if status == "active":
+        properties = properties.filter(is_active=True)
+    elif status == "inactive":
+        properties = properties.filter(is_active=False)
+    
+    # pagination
+    paginator = Paginator(properties, 5) # 5 per page
+    properties = paginator.get_page(page_number)
     
     stats = get_property_stats(request.user)
 
@@ -250,7 +262,7 @@ def property_list(request):
     if request.headers.get("HX-Request"):
         return render(
             request,
-            "properties/partials/property_table_rows.html",
+            "properties/partials/property_table_container.html",
             context
         )
     

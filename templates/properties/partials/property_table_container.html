@@ -1,0 +1,152 @@
+<table class="table table-hover align-middle mb-0">
+    <thead class="bg-light">
+        <tr>
+            <th class="ps-4 border-0 text-muted small text-uppercase fw-bold">
+            Name
+            </th>
+            <th class="border-0 text-muted small text-uppercase fw-bold">
+            Location
+            </th>
+            <th class="border-0 text-muted small text-uppercase fw-bold">
+            Units
+            </th>
+            <th class="border-0 text-muted small text-uppercase fw-bold">
+            Status
+            </th>
+            <th class="border-0 text-muted small text-uppercase fw-bold">
+            Created
+            </th>
+            <th
+            class="pe-4 border-0 text-muted small text-uppercase fw-bold text-end"
+            >
+            Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody class="border-top-0" id="property-table-body">
+
+        {% for property in properties %}
+        <tr>
+            <td class="ps-4 fw-semibold text-dark">
+                {{ property.name }}
+            </td>
+
+            <td>
+                {{ property.county }}, {{ property.country }}
+            </td>
+
+            <td>
+                {{ property.units.count }}
+            </td>
+
+            <td>
+                {% if property.is_active %}
+                <span class="badge rounded-pill bg-success-subtle text-success px-3">
+                    Active
+                </span>
+                {% else %}
+                <span class="badge rounded-pill bg-danger-subtle text-danger px-3">
+                    Inactive
+                </span>
+                {% endif %}
+            </td>
+
+            <td class="text-muted small">
+                {{ property.created_at|date:"M d, Y" }}
+            </td>
+
+            <td class="pe-4 text-end">
+                <div class="btn-group shadow-sm">
+                <a href="{% url 'property_detail' property.id %}" class="btn btn-sm btn-white border text-primary" title="View">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+
+                <a href="{% url 'edit_property' property.id %}" class="btn btn-sm btn-white border text-secondary" title="Edit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+
+                <a href="{% url 'property_units' property.id %}" class="btn btn-sm btn-white border text-info" title="Units">
+                    <i class="fa-solid fa-list-ul"></i>
+                </a>
+                </div>
+            </td>
+            </tr>
+            {% empty %}
+            <tr>
+            <td colspan="6" class="text-center text-muted py-4">
+                No properties found.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="card-footer bg-white border-0 py-3"></div>
+
+    <nav class="d-flex justify-content-between align-items-center">
+        <span class="text-muted small">
+            Showing {{ properties.start_index }} to {{ properties.end_index }} of {{ properties.paginator.count }} properties
+        </span>
+
+        <ul class="pagination pagination-sm mb-0">
+
+            <!-- Previous -->
+            {% if properties.has_previous %}
+            <li class="page-item">
+            <a 
+                class="page-link"
+                hx-get="?page={{ properties.previous_page_number }}&q={{ request.GET.q }}"
+                hx-target="#property-table-container"
+                hx-push-url="true"
+            >
+                Previous
+            </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+            <span class="page-link">Previous</span>
+            </li>
+            {% endif %}
+
+            <!-- Page Numbers -->
+            {% for num in properties.paginator.page_range %}
+            {% if num == properties.number %}
+                <li class="page-item active">
+                <span class="page-link">{{ num }}</span>
+                </li>
+            {% else %}
+                <li class="page-item">
+                <a 
+                    class="page-link"
+                    hx-get="?page={{ num }}&q={{ request.GET.q }}"
+                    hx-target="#property-table-container"
+                    hx-push-url="true"
+                >
+                    {{ num }}
+                </a>
+                </li>
+            {% endif %}
+            {% endfor %}
+
+            <!-- Next -->
+            {% if properties.has_next %}
+            <li class="page-item">
+            <a 
+                class="page-link"
+                hx-get="?page={{ properties.next_page_number }}&q={{ request.GET.q }}"
+                hx-target="#property-table-container"
+                hx-push-url="true"
+            >
+                Next
+            </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+            <span class="page-link">Next</span>
+            </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+
+</div>
