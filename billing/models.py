@@ -1,14 +1,16 @@
 from random import choice
 from django.db import models, transaction
-from tenants.models import Tenancy
-from properties.models import Unit, Property
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from finance.choices import LedgerEntryCategory
-from properties.choices import UnitType
 from multiselectfield import MultiSelectField
+from decimal import Decimal, ROUND_HALF_UP
+
+from finance.choices import LedgerEntryCategory
+from properties.models import Unit, Property
+from properties.choices import UnitType
 from .choices import MeterReadingStatus, InvoiceStatus
+from tenants.models import Tenancy
 
 # Create your models here.
 class InvoiceSequence(models.Model):
@@ -193,7 +195,30 @@ class MeterReading(models.Model):
     
     def clean(self):
         if self.current_reading < self.previous_reading:
-            raise ValidationError("Current reading cannot be less than previous reading")
+            raise ValidationError("Current reading cannot be less than previous reading.")
+        
+        # get last reading for this meter
+        last_reading = (
+            MeterReading.objects
+            .filter(meter=self.meter)
+            .exclude(pk=self.pk)
+            .order_by('-reading_date')
+            .first()
+        )
+
+        if last_reading:
+            # enforce continuity
+            if self.previous_reading != last_reading.current_reading:
+                raise ValidationError(
+                    f"Previous reading must be {last_reading.current_reading} "
+                    f"(last recorded value for this meter)."
+                )
+            
+            # enforce chronological order
+            if self.reading_date <= last_reading.reading_date:
+                raise ValidationError(
+                    "Reading date must be after the last recorded reading date."
+                )
         
         return super().clean()
     
@@ -216,7 +241,8 @@ class MeterReading(models.Model):
         
         # always recalculate
         self.consumption = self.current_reading - self.previous_reading
-        self.amount = self.consumption * self.rate_per_unit
+        raw_amount = self.consumption * self.rate_per_unit
+        self.amount = raw_amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
         # run model validation
         self.full_clean()

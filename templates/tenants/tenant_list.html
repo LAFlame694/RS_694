@@ -1,0 +1,183 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% load static %}
+
+{% block title %}Tenants{% endblock %}
+
+{% block extra_css %}
+<!-- Custom CSS for Tenant List -->
+<link rel="stylesheet" href="{% static 'tenants/css/tenant_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- 1. HEADER SECTION -->
+    <div class="row align-items-center mb-4">
+    <div class="col-md-8">
+        <h1 class="h3 fw-bold mb-1">Tenants</h1>
+        <p class="text-muted mb-0">Manage all tenants in the system</p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <button class="btn btn-primary d-inline-flex align-items-center">
+        <i
+            data-lucide="plus"
+            class="me-2"
+            style="width: 18px; height: 18px"
+        ></i>
+        Add Tenant
+        </button>
+    </div>
+    </div>
+
+    <!-- 2. SEARCH & FILTER BAR -->
+    <div class="row g-3 mb-4">
+    <div class="col-md-9">
+        <div class="input-group">
+        <span class="input-group-text bg-white border-end-0">
+            <i
+            data-lucide="search"
+            class="text-muted"
+            style="width: 18px; height: 18px"
+            ></i>
+        </span>
+        <input
+            type="text"
+            class="form-control border-start-0 ps-0"
+            placeholder="Search by name or phone..."
+        />
+        </div>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select">
+        <option selected>All Tenants</option>
+        <option>Active</option>
+        <option>Inactive</option>
+        </select>
+    </div>
+    </div>
+
+    <!-- 3. TENANT TABLE SECTION -->
+    <div class="card overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr>
+            <th class="px-4 py-3">Tenant Name</th>
+            <th class="px-4 py-3">Contact Info</th>
+            <th class="px-4 py-3">ID Number</th>
+            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3">Current Unit</th>
+            <th class="px-4 py-3 text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tenant in tenants %}
+            <tr>
+            <td class="px-4 py-3 fw-medium">{{ tenant.first_name }} {{ tenant.last_name }}</td>
+            <td class="px-4 py-3">
+                <div class="small fw-semibold">{{ tenant.phone_number }}</div>
+                <div class="small text-muted">{{ tenant.email }}</div>
+            </td>
+            <td class="px-4 py-3 fw-medium">{{ tenant.id_number }}</td>
+
+            <td class="px-4 py-3">
+                {% if tenant.has_active_tenancy %}
+                <span class="badge badge-active rounded-pill px-3 py-2"
+                >Active</span
+                >
+                {% else %}
+                <span class="badge badge-inactive rounded-pill px-3 py-2"
+                >Inactive</span
+                >
+                {% endif %}
+            </td>
+            <td class="px-4 py-3">
+                {% if tenant.current_unit_name %}
+                <div class="d-flex align-items-center small">
+                <i
+                    data-lucide="home"
+                    class="me-2 text-muted"
+                    style="width: 14px; height: 14px"
+                ></i>
+                {{ tenant.current_unit_name }} - {{ tenant.current_property_name }}
+                </div>
+                {% else %}
+                <span class="text-muted">Not Assigned</span>
+                {% endif %}
+            </td>
+            <td class="px-4 py-3 text-end">
+                <button class="btn btn-link action-btn" title="View">
+                <i data-lucide="eye" style="width: 18px; height: 18px"></i>
+                </button>
+                <button class="btn btn-link action-btn" title="Edit">
+                <i
+                    data-lucide="edit-3"
+                    style="width: 18px; height: 18px"
+                ></i>
+                </button>
+                <button class="btn btn-link action-btn" title="Assign Unit">
+                <i data-lucide="link" style="width: 18px; height: 18px"></i>
+                </button>
+                <button
+                class="btn btn-link action-btn btn-vacate"
+                title="Vacate"
+                >
+                <i
+                    data-lucide="log-out"
+                    style="width: 18px; height: 18px"
+                ></i>
+                </button>
+            </td>
+            </tr>
+            {% empty %}
+            <div class="text-center py-5">
+                <div class="bg-light d-inline-block p-3 rounded-circle mb-3">
+                    <i data-lucide="users" class="text-muted" style="width: 48px; height: 48px;"></i>
+                </div>
+                <h5 class="fw-bold">No tenants found</h5>
+                <p class="text-muted">You haven't added any tenants to the system yet.</p>
+                <button class="btn btn-primary mt-2">Add Your First Tenant</button>
+            </div>
+            {% endfor %}
+        </tbody>
+        </table>
+
+        <!-- 5. EMPTY STATE (Hidden by default) -->
+        <!--
+        <div class="text-center py-5">
+            <div class="bg-light d-inline-block p-3 rounded-circle mb-3">
+                <i data-lucide="users" class="text-muted" style="width: 48px; height: 48px;"></i>
+            </div>
+            <h5 class="fw-bold">No tenants found</h5>
+            <p class="text-muted">You haven't added any tenants to the system yet.</p>
+            <button class="btn btn-primary mt-2">Add Your First Tenant</button>
+        </div>
+        -->
+    </div>
+    </div>
+
+    <!-- 6. PAGINATION -->
+    <div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4"
+    >
+    <p class="small text-muted mb-3 mb-md-0">
+        Showing 1 to 3 of 12 tenants
+    </p>
+    <nav aria-label="Tenant navigation">
+        <ul class="pagination pagination-sm mb-0">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item active">
+            <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+        </ul>
+    </nav>
+    </div>
+</div>
+{% endblock %}

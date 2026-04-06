@@ -3,236 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Management System</title>
-
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- FontAwesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <title>Tenants | Management System</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         body {
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
         }
-
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-                        url('https://images.unsplash.com/photo-1560518883-ce09059eeffa');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            color: white;
+        .card {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
         }
-
-        .feature-card {
-            transition: 0.3s;
+        .table thead th {
+            background-color: #f8fafc;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            color: #64748b;
+            border-top: none;
         }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
+        .btn-primary {
+            background-color: #4f46e5;
+            border-color: #4f46e5;
         }
-
-        .cta {
-            background-color: #0d6efd;
-            color: white;
+        .btn-primary:hover {
+            background-color: #4338ca;
+            border-color: #4338ca;
         }
-
-        footer {
-            background: #212529;
-            color: white;
+        .badge-active {
+            background-color: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+        .badge-inactive {
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+        .action-btn {
+            color: #94a3b8;
+            padding: 0.375rem;
+            transition: color 0.2s;
+        }
+        .action-btn:hover {
+            color: #4f46e5;
+        }
+        .action-btn.btn-vacate:hover {
+            color: #ef4444;
+        }
+        .pagination .page-link {
+            color: #64748b;
+            border-color: #e2e8f0;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #eef2ff;
+            border-color: #e2e8f0;
+            color: #4f46e5;
         }
     </style>
 </head>
+<body class="py-5">
 
-<body>
+<div class="container">
+    
+    <!-- 1. HEADER SECTION -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <h1 class="h3 fw-bold mb-1">Tenants</h1>
+            <p class="text-muted mb-0">Manage all tenants in the system</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <button class="btn btn-primary d-inline-flex align-items-center">
+                <i data-lucide="plus" class="me-2" style="width: 18px; height: 18px;"></i>
+                Add Tenant
+            </button>
+        </div>
+    </div>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">RentPro</a>
+    <!-- 2. SEARCH & FILTER BAR -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-9">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0">
+                    <i data-lucide="search" class="text-muted" style="width: 18px; height: 18px;"></i>
+                </span>
+                <input type="text" class="form-control border-start-0 ps-0" placeholder="Search by name or phone...">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select">
+                <option selected>All Tenants</option>
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+        </div>
+    </div>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <!-- 3. TENANT TABLE SECTION -->
+    <div class="card overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3">Tenant Name</th>
+                        <th class="px-4 py-3">Contact Info</th>
+                        <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3">Current Unit</th>
+                        <th class="px-4 py-3 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Row 1: Active Tenant -->
+                    <tr>
+                        <td class="px-4 py-3 fw-medium">Johnathan Doe</td>
+                        <td class="px-4 py-3">
+                            <div class="small fw-semibold">(555) 012-3456</div>
+                            <div class="small text-muted">john.doe@example.com</div>
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="badge badge-active rounded-pill px-3 py-2">Active</span>
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="d-flex align-items-center small">
+                                <i data-lucide="home" class="me-2 text-muted" style="width: 14px; height: 14px;"></i>
+                                Unit A - Green Apartments
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-end">
+                            <button class="btn btn-link action-btn" title="View"><i data-lucide="eye" style="width: 18px; height: 18px;"></i></button>
+                            <button class="btn btn-link action-btn" title="Edit"><i data-lucide="edit-3" style="width: 18px; height: 18px;"></i></button>
+                            <button class="btn btn-link action-btn" title="Assign Unit"><i data-lucide="link" style="width: 18px; height: 18px;"></i></button>
+                            <button class="btn btn-link action-btn btn-vacate" title="Vacate"><i data-lucide="log-out" style="width: 18px; height: 18px;"></i></button>
+                        </td>
+                    </tr>
 
-        <div class="collapse navbar-collapse" id="nav">
-            <ul class="navbar-nav ms-auto me-3">
-                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                    <!-- Row 2: Inactive Tenant -->
+                    <tr>
+                        <td class="px-4 py-3 fw-medium text-secondary">Sarah Jenkins</td>
+                        <td class="px-4 py-3">
+                            <div class="small fw-semibold text-secondary">(555) 987-6543</div>
+                            <div class="small text-muted">sarah.j@webmail.com</div>
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="badge badge-inactive rounded-pill px-3 py-2">Inactive</span>
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="text-muted fst-italic small">Not Assigned</span>
+                        </td>
+                        <td class="px-4 py-3 text-end">
+                            <button class="btn btn-link action-btn" title="View"><i data-lucide="eye" style="width: 18px; height: 18px;"></i></button>
+                            <button class="btn btn-link action-btn" title="Edit"><i data-lucide="edit-3" style="width: 18px; height: 18px;"></i></button>
+                            <button class="btn btn-link action-btn" title="Assign Unit"><i data-lucide="link" style="width: 18px; height: 18px;"></i></button>
+                            <button class="btn btn-link text-light cursor-not-allowed p-1 px-2" disabled title="Cannot Vacate"><i data-lucide="log-out" style="width: 18px; height: 18px;"></i></button>
+                        </td>
+                    </tr>
+
+                    <!-- Row 3: Active Tenant -->
+                    <tr>
+                        <td class="px-4 py-3 fw-medium">Michael Ross</td>
+                        <td class="px-4 py-3">
+                            <div class="small fw-semibold">(555) 444-2211</div>
+                            <div class="small text-muted">m.ross@services.org</div>
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="badge badge-active rounded-pill px-3 py-2">Active</span>
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="d-flex align-items-center small">
+                                <i data-lucide="home" class="me-2 text-muted" style="width: 14px; height: 14px;"></i>
+                                Studio 4 - Urban Lofts
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-end">
+                            <button class="btn btn-link action-btn" title="View"><i data-lucide="eye" style="width: 18px; height: 18px;"></i></button>
+                            <button class="btn btn-link action-btn" title="Edit"><i data-lucide="edit-3" style="width: 18px; height: 18px;"></i></button>
+                            <button class="btn btn-link action-btn" title="Assign Unit"><i data-lucide="link" style="width: 18px; height: 18px;"></i></button>
+                            <button class="btn btn-link action-btn btn-vacate" title="Vacate"><i data-lucide="log-out" style="width: 18px; height: 18px;"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 5. EMPTY STATE (Hidden by default) -->
+            <!--
+            <div class="text-center py-5">
+                <div class="bg-light d-inline-block p-3 rounded-circle mb-3">
+                    <i data-lucide="users" class="text-muted" style="width: 48px; height: 48px;"></i>
+                </div>
+                <h5 class="fw-bold">No tenants found</h5>
+                <p class="text-muted">You haven't added any tenants to the system yet.</p>
+                <button class="btn btn-primary mt-2">Add Your First Tenant</button>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <!-- 6. PAGINATION -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
+        <p class="small text-muted mb-3 mb-md-0">Showing 1 to 3 of 12 tenants</p>
+        <nav aria-label="Tenant navigation">
+            <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
             </ul>
-
-            <a href="#" class="btn btn-outline-primary me-2">Login</a>
-            <a href="#" class="btn btn-primary">Get Started</a>
-        </div>
+        </nav>
     </div>
-</nav>
 
-<!-- HERO -->
-<section class="hero d-flex align-items-center text-center">
-    <div class="container">
-        <h1 class="display-4 fw-bold mb-3">Manage Your Properties Smarter</h1>
-        <p class="lead mb-4">Automate billing, track payments, and manage tenants with ease.</p>
-        <a href="#" class="btn btn-primary btn-lg me-2">Get Started</a>
-        <a href="#" class="btn btn-outline-light btn-lg">Login</a>
-    </div>
-</section>
+</div>
 
-<!-- FEATURES -->
-<section class="py-5">
-    <div class="container text-center">
-        <h2 class="mb-5 fw-bold">Features</h2>
-
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card feature-card h-100 p-4">
-                    <i class="fa-solid fa-money-bill fa-2x mb-3 text-primary"></i>
-                    <h5>Automated Billing</h5>
-                    <p>Generate rent invoices automatically every month.</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card feature-card h-100 p-4">
-                    <i class="fa-solid fa-chart-line fa-2x mb-3 text-primary"></i>
-                    <h5>Payment Tracking</h5>
-                    <p>Track all payments and balances in real-time.</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card feature-card h-100 p-4">
-                    <i class="fa-solid fa-users fa-2x mb-3 text-primary"></i>
-                    <h5>Tenant Management</h5>
-                    <p>Manage tenant records and tenancy details easily.</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card feature-card h-100 p-4">
-                    <i class="fa-solid fa-water fa-2x mb-3 text-primary"></i>
-                    <h5>Utility Billing</h5>
-                    <p>Bill water, electricity, and other utilities seamlessly.</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card feature-card h-100 p-4">
-                    <i class="fa-solid fa-file-invoice fa-2x mb-3 text-primary"></i>
-                    <h5>Reports</h5>
-                    <p>Generate financial and operational reports instantly.</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card feature-card h-100 p-4">
-                    <i class="fa-solid fa-building fa-2x mb-3 text-primary"></i>
-                    <h5>Property Management</h5>
-                    <p>Organize units, properties, and occupancy efficiently.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="bg-light py-5">
-    <div class="container text-center">
-        <h2 class="mb-5 fw-bold">How It Works</h2>
-
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <i class="fa-solid fa-user-plus fa-2x text-primary mb-3"></i>
-                <h5>Add Properties</h5>
-                <p>Register your properties and units in minutes.</p>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <i class="fa-solid fa-users fa-2x text-primary mb-3"></i>
-                <h5>Manage Tenants</h5>
-                <p>Assign tenants and track their tenancy records.</p>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <i class="fa-solid fa-file-invoice-dollar fa-2x text-primary mb-3"></i>
-                <h5>Automate Billing</h5>
-                <p>Generate invoices and track payments effortlessly.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ABOUT -->
-<section class="py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6 mb-4">
-                <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296" class="img-fluid rounded">
-            </div>
-            <div class="col-md-6">
-                <h2 class="fw-bold mb-3">About Our System</h2>
-                <p>
-                    Our platform is designed for landlords, caretakers, and property managers to streamline operations,
-                    reduce manual work, and improve financial tracking.
-                </p>
-                <p>
-                    Whether you manage a single property or multiple units, our system gives you full control and visibility.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA -->
-<section class="cta py-5 text-center">
-    <div class="container">
-        <h2 class="fw-bold mb-3">Ready to Simplify Property Management?</h2>
-        <p class="mb-4">Start using our system today and take full control of your properties.</p>
-        <a href="#" class="btn btn-light btn-lg me-2">Get Started</a>
-        <a href="#" class="btn btn-outline-light btn-lg">Login</a>
-    </div>
-</section>
-
-<!-- CONTACT -->
-<section class="py-5">
-    <div class="container">
-        <h2 class="text-center mb-5 fw-bold">Contact Us</h2>
-
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <p><i class="fa-solid fa-envelope me-2"></i> email@example.com</p>
-                <p><i class="fa-solid fa-phone me-2"></i> +123 456 7890</p>
-            </div>
-
-            <div class="col-md-6">
-                <form>
-                    <input type="text" class="form-control mb-3" placeholder="Your Name">
-                    <input type="email" class="form-control mb-3" placeholder="Your Email">
-                    <textarea class="form-control mb-3" rows="4" placeholder="Message"></textarea>
-                    <button class="btn btn-primary w-100">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="py-4">
-    <div class="container text-center">
-        <div class="mb-3">
-            <a href="#" class="text-white me-3">Features</a>
-            <a href="#" class="text-white me-3">About</a>
-            <a href="#" class="text-white me-3">Contact</a>
-            <a href="#" class="text-white">Login</a>
-        </div>
-        <p class="mb-0">&copy; 2026 RentPro. All rights reserved.</p>
-    </div>
-</footer>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+</script>
 </body>
 </html>

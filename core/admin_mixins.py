@@ -103,7 +103,20 @@ class LandlordFilteredAdmin(admin.ModelAdmin):
         # ===== CREATE OBJECT =====
         if not change:
             if "created_by" in fields:
-                obj.created_by = request.user
+                
+                # system admin -> respect selected value
+                if request.user.role == Role.SYSTEM_ADMIN:
+                    if not obj.created_by:
+                        form.add_error("created_by", "This field is required.")
+                        return
+                
+                # landlord -> force to self
+                elif request.user.role == Role.LANDLORD:
+                    obj.created_by = request.user
+                
+                # caretaker -> assign landlord
+                elif request.user.role == Role.CARETAKER:
+                    obj.created_by = request.user.landlord
             
             if "landlord" in fields:
                 

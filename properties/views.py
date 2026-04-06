@@ -178,9 +178,14 @@ def delete_unit_view(request, unit_id):
 
 @login_required
 def assign_tenant(request, unit_id):
-    unit = get_object_or_404(Unit, id=unit_id)
+    unit = get_object_or_404(
+        Unit, 
+        id=unit_id,
+        property__landlord=request.user
+    )
 
     available_tenants = Tenant.objects.filter(
+        landlord=request.user,
         is_active=True
     ).exclude(
         tenancies__status=TenancyStatus.ACTIVE

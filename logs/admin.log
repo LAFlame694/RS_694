@@ -56,3 +56,15 @@
 2026-04-02 11:30:04,234 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=9
 2026-04-02 23:15:31,331 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=12
 2026-04-03 14:35:16,193 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=4
+2026-04-06 12:37:08,799 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=4
+2026-04-06 12:44:41,414 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=4
+2026-04-06 13:06:01,598 | INFO | admin | ADMIN UPDATE | user=Admin | model=MeterReading | id=4
+2026-04-06 13:18:36,939 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=10
+2026-04-06 13:19:44,668 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=11
+2026-04-06 13:19:49,002 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=11
+2026-04-06 13:47:08,594 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=11
+2026-04-06 13:49:18,180 | INFO | admin | ADMIN CREATE | user=landlord2 | model=Property | id=11
+2026-04-06 14:09:18,296 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=12
+2026-04-06 14:37:05,144 | INFO | admin | ADMIN UPDATE | user=Admin | model=PaymentAllocation | id=5
+2026-04-06 15:20:05,975 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=5
+2026-04-06 22:13:52,199 | WARNING | admin | ADMIN BULK DELETE | user=Admin | model=MeterReading | id=5

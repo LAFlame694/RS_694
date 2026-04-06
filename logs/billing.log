@@ -1,157 +1,32 @@
-2026-04-01 19:34:14,243 | INFO | billing | === Monthly billing job STARTED ===
-2026-04-01 19:34:14,253 | INFO | billing | Billing date: 2026-04-01
-2026-04-01 19:34:14,254 | INFO | billing | Generating RENT invoices for period 2026-04-01 to 2026-04-30
-2026-04-01 19:34:14,258 | INFO | billing | Found 7 active tenancies for rent billing
-2026-04-01 19:34:14,277 | INFO | billing | Creating RENT invoice | tenancy=8 | amount=0.00
-2026-04-01 19:34:14,282 | INFO | billing | Creating invoice + ledger | tenancy=8 | category=RENT | amount=0.00
-2026-04-01 19:34:14,293 | INFO | billing | Invoice created | id=21 | tenancy=8
-2026-04-01 19:34:14,296 | INFO | billing | Ledger entry created | invoice=21 | amount=0.00
-2026-04-01 19:34:14,464 | INFO | billing | Creating RENT invoice | tenancy=7 | amount=7000.00
-2026-04-01 19:34:14,466 | INFO | billing | Creating invoice + ledger | tenancy=7 | category=RENT | amount=7000.00
-2026-04-01 19:34:14,482 | INFO | billing | Invoice created | id=22 | tenancy=7
-2026-04-01 19:34:14,486 | INFO | billing | Ledger entry created | invoice=22 | amount=7000.00
-2026-04-01 19:34:14,633 | INFO | billing | Creating RENT invoice | tenancy=1 | amount=7000.00
-2026-04-01 19:34:14,634 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=RENT | amount=7000.00
-2026-04-01 19:34:14,640 | INFO | billing | Invoice created | id=23 | tenancy=1
-2026-04-01 19:34:14,644 | INFO | billing | Ledger entry created | invoice=23 | amount=7000.00
-2026-04-01 19:34:14,769 | INFO | billing | Creating RENT invoice | tenancy=2 | amount=10000.00
-2026-04-01 19:34:14,771 | INFO | billing | Creating invoice + ledger | tenancy=2 | category=RENT | amount=10000.00
-2026-04-01 19:34:14,786 | INFO | billing | Invoice created | id=24 | tenancy=2
-2026-04-01 19:34:14,791 | INFO | billing | Ledger entry created | invoice=24 | amount=10000.00
-2026-04-01 19:34:14,886 | INFO | billing | Creating RENT invoice | tenancy=3 | amount=12000.00
-2026-04-01 19:34:14,887 | INFO | billing | Creating invoice + ledger | tenancy=3 | category=RENT | amount=12000.00
-2026-04-01 19:34:14,894 | INFO | billing | Invoice created | id=25 | tenancy=3
-2026-04-01 19:34:14,897 | INFO | billing | Ledger entry created | invoice=25 | amount=12000.00
-2026-04-01 19:34:15,083 | INFO | billing | Creating RENT invoice | tenancy=4 | amount=70000.00
-2026-04-01 19:34:15,084 | INFO | billing | Creating invoice + ledger | tenancy=4 | category=RENT | amount=70000.00
-2026-04-01 19:34:15,099 | INFO | billing | Invoice created | id=26 | tenancy=4
-2026-04-01 19:34:15,105 | INFO | billing | Ledger entry created | invoice=26 | amount=70000.00
-2026-04-01 19:34:15,259 | INFO | billing | Creating RENT invoice | tenancy=5 | amount=7500.00
-2026-04-01 19:34:15,275 | INFO | billing | Creating invoice + ledger | tenancy=5 | category=RENT | amount=7500.00
-2026-04-01 19:34:15,281 | INFO | billing | Invoice created | id=27 | tenancy=5
-2026-04-01 19:34:15,283 | INFO | billing | Ledger entry created | invoice=27 | amount=7500.00
-2026-04-01 19:34:15,475 | INFO | billing | Starting recurring charge billing
-2026-04-01 19:34:15,479 | INFO | billing | Found 4 active recurring charges
-2026-04-01 19:34:15,486 | INFO | billing | Processing charge 4 | property=3 | amount=200.00
-2026-04-01 19:34:15,495 | INFO | billing | 2 tenancies eligible for charge 4
-2026-04-01 19:34:15,515 | INFO | billing | Creating charge invoice | tenancy=8 | charge=4 | amount=200.00
-2026-04-01 19:34:15,519 | INFO | billing | Creating invoice + ledger | tenancy=8 | category=WATER | amount=200.00
-2026-04-01 19:34:15,527 | INFO | billing | Invoice created | id=28 | tenancy=8
-2026-04-01 19:34:15,531 | INFO | billing | Ledger entry created | invoice=28 | amount=200.00
-2026-04-01 19:34:15,633 | INFO | billing | Creating charge invoice | tenancy=7 | charge=4 | amount=200.00
-2026-04-01 19:34:15,634 | INFO | billing | Creating invoice + ledger | tenancy=7 | category=WATER | amount=200.00
-2026-04-01 19:34:15,639 | INFO | billing | Invoice created | id=29 | tenancy=7
-2026-04-01 19:34:15,641 | INFO | billing | Ledger entry created | invoice=29 | amount=200.00
-2026-04-01 19:34:15,756 | INFO | billing | Charge 4 processed successfully
-2026-04-01 19:34:15,862 | INFO | billing | Processing charge 1 | property=1 | amount=150.00
-2026-04-01 19:34:15,868 | INFO | billing | 3 tenancies eligible for charge 1
-2026-04-01 19:34:15,876 | INFO | billing | Creating charge invoice | tenancy=1 | charge=1 | amount=150.00
-2026-04-01 19:34:15,877 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=GARBAGE | amount=150.00
-2026-04-01 19:34:15,909 | INFO | billing | Invoice created | id=30 | tenancy=1
-2026-04-01 19:34:15,912 | INFO | billing | Ledger entry created | invoice=30 | amount=150.00
-2026-04-01 19:34:16,019 | INFO | billing | Creating charge invoice | tenancy=2 | charge=1 | amount=150.00
-2026-04-01 19:34:16,019 | INFO | billing | Creating invoice + ledger | tenancy=2 | category=GARBAGE | amount=150.00
-2026-04-01 19:34:16,025 | INFO | billing | Invoice created | id=31 | tenancy=2
-2026-04-01 19:34:16,027 | INFO | billing | Ledger entry created | invoice=31 | amount=150.00
-2026-04-01 19:34:16,140 | INFO | billing | Creating charge invoice | tenancy=3 | charge=1 | amount=150.00
-2026-04-01 19:34:16,141 | INFO | billing | Creating invoice + ledger | tenancy=3 | category=GARBAGE | amount=150.00
-2026-04-01 19:34:16,155 | INFO | billing | Invoice created | id=32 | tenancy=3
-2026-04-01 19:34:16,161 | INFO | billing | Ledger entry created | invoice=32 | amount=150.00
-2026-04-01 19:34:16,267 | INFO | billing | Charge 1 processed successfully
-2026-04-01 19:34:16,360 | INFO | billing | Processing charge 2 | property=1 | amount=100.00
-2026-04-01 19:34:16,363 | INFO | billing | 4 tenancies eligible for charge 2
-2026-04-01 19:34:16,374 | INFO | billing | Creating charge invoice | tenancy=1 | charge=2 | amount=100.00
-2026-04-01 19:34:16,379 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=ELECTRICITY | amount=100.00
-2026-04-01 19:34:16,390 | INFO | billing | Invoice created | id=33 | tenancy=1
-2026-04-01 19:34:16,398 | INFO | billing | Ledger entry created | invoice=33 | amount=100.00
-2026-04-01 19:34:16,575 | INFO | billing | Creating charge invoice | tenancy=2 | charge=2 | amount=100.00
-2026-04-01 19:34:16,577 | INFO | billing | Creating invoice + ledger | tenancy=2 | category=ELECTRICITY | amount=100.00
-2026-04-01 19:34:16,592 | INFO | billing | Invoice created | id=34 | tenancy=2
-2026-04-01 19:34:16,598 | INFO | billing | Ledger entry created | invoice=34 | amount=100.00
-2026-04-01 19:34:16,792 | INFO | billing | Creating charge invoice | tenancy=3 | charge=2 | amount=100.00
-2026-04-01 19:34:16,793 | INFO | billing | Creating invoice + ledger | tenancy=3 | category=ELECTRICITY | amount=100.00
-2026-04-01 19:34:16,799 | INFO | billing | Invoice created | id=35 | tenancy=3
-2026-04-01 19:34:16,803 | INFO | billing | Ledger entry created | invoice=35 | amount=100.00
-2026-04-01 19:34:16,921 | INFO | billing | Creating charge invoice | tenancy=4 | charge=2 | amount=100.00
-2026-04-01 19:34:16,922 | INFO | billing | Creating invoice + ledger | tenancy=4 | category=ELECTRICITY | amount=100.00
-2026-04-01 19:34:16,930 | INFO | billing | Invoice created | id=36 | tenancy=4
-2026-04-01 19:34:16,933 | INFO | billing | Ledger entry created | invoice=36 | amount=100.00
-2026-04-01 19:34:17,128 | INFO | billing | Charge 2 processed successfully
-2026-04-01 19:34:17,236 | INFO | billing | Processing charge 3 | property=1 | amount=750.00
-2026-04-01 19:34:17,240 | INFO | billing | 4 tenancies eligible for charge 3
-2026-04-01 19:34:17,250 | INFO | billing | Creating charge invoice | tenancy=1 | charge=3 | amount=750.00
-2026-04-01 19:34:17,251 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=WATER | amount=750.00
-2026-04-01 19:34:17,263 | INFO | billing | Invoice created | id=37 | tenancy=1
-2026-04-01 19:34:17,267 | INFO | billing | Ledger entry created | invoice=37 | amount=750.00
-2026-04-01 19:34:17,450 | INFO | billing | Creating charge invoice | tenancy=2 | charge=3 | amount=750.00
-2026-04-01 19:34:17,452 | INFO | billing | Creating invoice + ledger | tenancy=2 | category=WATER | amount=750.00
-2026-04-01 19:34:17,464 | INFO | billing | Invoice created | id=38 | tenancy=2
-2026-04-01 19:34:17,467 | INFO | billing | Ledger entry created | invoice=38 | amount=750.00
-2026-04-01 19:34:17,618 | INFO | billing | Creating charge invoice | tenancy=3 | charge=3 | amount=750.00
-2026-04-01 19:34:17,619 | INFO | billing | Creating invoice + ledger | tenancy=3 | category=WATER | amount=750.00
-2026-04-01 19:34:17,634 | INFO | billing | Invoice created | id=39 | tenancy=3
-2026-04-01 19:34:17,639 | INFO | billing | Ledger entry created | invoice=39 | amount=750.00
-2026-04-01 19:34:17,809 | INFO | billing | Creating charge invoice | tenancy=4 | charge=3 | amount=750.00
-2026-04-01 19:34:17,810 | INFO | billing | Creating invoice + ledger | tenancy=4 | category=WATER | amount=750.00
-2026-04-01 19:34:17,815 | INFO | billing | Invoice created | id=40 | tenancy=4
-2026-04-01 19:34:17,818 | INFO | billing | Ledger entry created | invoice=40 | amount=750.00
-2026-04-01 19:34:17,976 | INFO | billing | Charge 3 processed successfully
-2026-04-01 19:34:18,084 | INFO | billing | === Monthly billing job COMPLETED ===
-2026-04-03 00:00:03,432 | INFO | billing | === Monthly billing job started ===
-2026-04-03 00:00:03,472 | INFO | billing | === Monthly billing job STARTED ===
-2026-04-03 00:00:03,477 | INFO | billing | Billing date: 2026-04-02
-2026-04-03 00:00:03,477 | INFO | billing | Generating RENT invoices for period 2026-04-01 to 2026-04-30
-2026-04-03 00:00:03,480 | INFO | billing | Found 9 active tenancies for rent billing
-2026-04-03 00:00:03,489 | INFO | billing | Creating RENT invoice | tenancy=11 | amount=18000.00
-2026-04-03 00:00:03,489 | INFO | billing | Creating invoice + ledger | tenancy=11 | category=RENT | amount=18000.00
-2026-04-03 00:00:03,495 | INFO | billing | Invoice created | id=41 | tenancy=11
-2026-04-03 00:00:03,497 | INFO | billing | Ledger entry created | invoice=41 | amount=18000.00
-2026-04-03 00:00:03,499 | INFO | billing | Creating RENT invoice | tenancy=13 | amount=6000.00
-2026-04-03 00:00:03,500 | INFO | billing | Creating invoice + ledger | tenancy=13 | category=RENT | amount=6000.00
-2026-04-03 00:00:03,502 | INFO | billing | Invoice created | id=42 | tenancy=13
-2026-04-03 00:00:03,504 | INFO | billing | Ledger entry created | invoice=42 | amount=6000.00
-2026-04-03 00:00:03,506 | INFO | billing | Invoice already exists for tenancy 8, category RENT
-2026-04-03 00:00:03,507 | INFO | billing | Invoice already exists for tenancy 7, category RENT
-2026-04-03 00:00:03,510 | INFO | billing | Invoice already exists for tenancy 1, category RENT
-2026-04-03 00:00:03,512 | INFO | billing | Invoice already exists for tenancy 2, category RENT
-2026-04-03 00:00:03,514 | INFO | billing | Invoice already exists for tenancy 3, category RENT
-2026-04-03 00:00:03,515 | INFO | billing | Invoice already exists for tenancy 4, category RENT
-2026-04-03 00:00:03,517 | INFO | billing | Invoice already exists for tenancy 5, category RENT
-2026-04-03 00:00:03,517 | INFO | billing | Starting recurring charge billing
-2026-04-03 00:00:03,535 | INFO | billing | Found 4 active recurring charges
-2026-04-03 00:00:03,538 | INFO | billing | Processing charge 4 | property=3 | amount=200.00
-2026-04-03 00:00:03,539 | INFO | billing | Skipping charge 4 - already generated this month
-2026-04-03 00:00:03,540 | INFO | billing | Processing charge 1 | property=1 | amount=150.00
-2026-04-03 00:00:03,540 | INFO | billing | Skipping charge 1 - already generated this month
-2026-04-03 00:00:03,541 | INFO | billing | Processing charge 2 | property=1 | amount=100.00
-2026-04-03 00:00:03,542 | INFO | billing | Skipping charge 2 - already generated this month
-2026-04-03 00:00:03,543 | INFO | billing | Processing charge 3 | property=1 | amount=750.00
-2026-04-03 00:00:03,544 | INFO | billing | Skipping charge 3 - already generated this month
-2026-04-03 00:00:03,544 | INFO | billing | === Monthly billing job COMPLETED ===
-2026-04-03 00:00:03,644 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===
-2026-04-04 00:00:03,582 | INFO | billing | === Monthly billing job started ===
-2026-04-04 00:00:03,593 | INFO | billing | === Monthly billing job STARTED ===
-2026-04-04 00:00:03,598 | INFO | billing | Billing date: 2026-04-03
-2026-04-04 00:00:03,598 | INFO | billing | Generating RENT invoices for period 2026-04-01 to 2026-04-30
-2026-04-04 00:00:03,600 | INFO | billing | Found 9 active tenancies for rent billing
-2026-04-04 00:00:03,607 | INFO | billing | Invoice already exists for tenancy 11, category RENT
-2026-04-04 00:00:03,609 | INFO | billing | Invoice already exists for tenancy 13, category RENT
-2026-04-04 00:00:03,611 | INFO | billing | Invoice already exists for tenancy 8, category RENT
-2026-04-04 00:00:03,612 | INFO | billing | Invoice already exists for tenancy 7, category RENT
-2026-04-04 00:00:03,614 | INFO | billing | Invoice already exists for tenancy 1, category RENT
-2026-04-04 00:00:03,616 | INFO | billing | Invoice already exists for tenancy 2, category RENT
-2026-04-04 00:00:03,617 | INFO | billing | Invoice already exists for tenancy 3, category RENT
-2026-04-04 00:00:03,619 | INFO | billing | Invoice already exists for tenancy 4, category RENT
-2026-04-04 00:00:03,621 | INFO | billing | Invoice already exists for tenancy 5, category RENT
-2026-04-04 00:00:03,621 | INFO | billing | Starting recurring charge billing
-2026-04-04 00:00:03,635 | INFO | billing | Found 4 active recurring charges
-2026-04-04 00:00:03,638 | INFO | billing | Processing charge 4 | property=3 | amount=200.00
-2026-04-04 00:00:03,639 | INFO | billing | Skipping charge 4 - already generated this month
-2026-04-04 00:00:03,640 | INFO | billing | Processing charge 1 | property=1 | amount=150.00
-2026-04-04 00:00:03,640 | INFO | billing | Skipping charge 1 - already generated this month
-2026-04-04 00:00:03,641 | INFO | billing | Processing charge 2 | property=1 | amount=100.00
-2026-04-04 00:00:03,642 | INFO | billing | Skipping charge 2 - already generated this month
-2026-04-04 00:00:03,643 | INFO | billing | Processing charge 3 | property=1 | amount=750.00
-2026-04-04 00:00:03,643 | INFO | billing | Skipping charge 3 - already generated this month
-2026-04-04 00:00:03,644 | INFO | billing | === Monthly billing job COMPLETED ===
-2026-04-04 00:00:03,644 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===
+2026-04-06 13:15:15,809 | WARNING | billing | No active tenancy for meter reading 4
+2026-04-06 14:24:43,358 | INFO | billing | Water invoice created | reading=4 | invoice=INV-2026-0043
+2026-04-07 00:00:04,608 | INFO | billing | === Monthly billing job started ===
+2026-04-07 00:00:04,613 | INFO | billing | === Monthly billing job STARTED ===
+2026-04-07 00:00:04,619 | INFO | billing | Billing date: 2026-04-06
+2026-04-07 00:00:04,620 | INFO | billing | Generating RENT invoices for period 2026-04-01 to 2026-04-30
+2026-04-07 00:00:04,622 | INFO | billing | Found 10 active tenancies for rent billing
+2026-04-07 00:00:04,630 | INFO | billing | Creating RENT invoice | tenancy=14 | amount=80000.00
+2026-04-07 00:00:04,632 | INFO | billing | Creating invoice + ledger | tenancy=14 | category=RENT | amount=80000.00
+2026-04-07 00:00:04,639 | INFO | billing | Invoice created | id=44 | tenancy=14
+2026-04-07 00:00:04,642 | INFO | billing | Ledger entry created | invoice=44 | amount=80000.00
+2026-04-07 00:00:04,645 | INFO | billing | Invoice already exists for tenancy 11, category RENT
+2026-04-07 00:00:04,649 | INFO | billing | Invoice already exists for tenancy 13, category RENT
+2026-04-07 00:00:04,651 | INFO | billing | Invoice already exists for tenancy 8, category RENT
+2026-04-07 00:00:04,653 | INFO | billing | Invoice already exists for tenancy 7, category RENT
+2026-04-07 00:00:04,657 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-04-07 00:00:04,659 | INFO | billing | Invoice already exists for tenancy 2, category RENT
+2026-04-07 00:00:04,661 | INFO | billing | Invoice already exists for tenancy 3, category RENT
+2026-04-07 00:00:04,664 | INFO | billing | Invoice already exists for tenancy 4, category RENT
+2026-04-07 00:00:04,666 | INFO | billing | Invoice already exists for tenancy 5, category RENT
+2026-04-07 00:00:04,666 | INFO | billing | Starting recurring charge billing
+2026-04-07 00:00:04,681 | INFO | billing | Found 4 active recurring charges
+2026-04-07 00:00:04,685 | INFO | billing | Processing charge 4 | property=3 | amount=200.00
+2026-04-07 00:00:04,685 | INFO | billing | Skipping charge 4 - already generated this month
+2026-04-07 00:00:04,686 | INFO | billing | Processing charge 1 | property=1 | amount=150.00
+2026-04-07 00:00:04,687 | INFO | billing | Skipping charge 1 - already generated this month
+2026-04-07 00:00:04,687 | INFO | billing | Processing charge 2 | property=1 | amount=100.00
+2026-04-07 00:00:04,688 | INFO | billing | Skipping charge 2 - already generated this month
+2026-04-07 00:00:04,689 | INFO | billing | Processing charge 3 | property=1 | amount=750.00
+2026-04-07 00:00:04,689 | INFO | billing | Skipping charge 3 - already generated this month
+2026-04-07 00:00:04,690 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-04-07 00:00:04,809 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===

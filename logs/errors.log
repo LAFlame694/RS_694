@@ -1,22 +1,210 @@
-2026-04-04 15:15:34,206 | ERROR | django.request | Internal Server Error: /properties/
+2026-04-07 00:23:50,069 | ERROR | django.request | Internal Server Error: /tenants
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1960, in transform
+    return self.try_transform(wrapped, name)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1488, in try_transform
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Unsupported lookup 'name' for BigAutoField or join on the field not permitted.
+
+During handling of the above exception, another exception occurred:
+
 Traceback (most recent call last):
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
-    return view_func(request, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\properties\views.py", line 251, in property_list
-    return render(
-        request,
-        "properties/partials/propert_table_rows.html",
-        context
+  File "C:\Users\GEORGE\Desktop\RS_694\tenants\views.py", line 8, in tenant_list_view
+    tenants = get_tenants_for_user(request.user)
+  File "C:\Users\GEORGE\Desktop\RS_694\tenants\services\tenant_service.py", line 33, in get_tenants_for_user
+    active_tenancy.values("unit__name")[:1]
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1414, in values
+    clone = self._values(*fields, **expressions)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1409, in _values
+    clone.query.set_values(fields)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 2615, in set_values
+    self.add_fields(field_names, True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 2298, in add_fields
+    cols.append(join_info.transform_function(targets[0], final_alias))
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1964, in transform
+    raise last_field_exception
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1937, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ~~~~~~~~~~~~~~~~~~^
+        names[:pivot],
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fail_on_missing=True,
+        ^^^^^^^^^^^^^^^^^^^^^
     )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1842, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'name' into field. Choices are: created_at, floor, id, is_active, meters, property, property_id, status, tenancies, unit_number, unit_type
+2026-04-07 00:23:50,080 | ERROR | django.server | "GET /tenants HTTP/1.1" 500 128469
+2026-04-07 00:26:01,109 | ERROR | django.request | Internal Server Error: /tenants
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1960, in transform
+    return self.try_transform(wrapped, name)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1488, in try_transform
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Unsupported lookup 'number' for BigAutoField or join on the field not permitted.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\tenants\views.py", line 8, in tenant_list_view
+    tenants = get_tenants_for_user(request.user)
+  File "C:\Users\GEORGE\Desktop\RS_694\tenants\services\tenant_service.py", line 33, in get_tenants_for_user
+    active_tenancy.values("unit__number")[:1]
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1414, in values
+    clone = self._values(*fields, **expressions)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1409, in _values
+    clone.query.set_values(fields)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 2615, in set_values
+    self.add_fields(field_names, True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 2298, in add_fields
+    cols.append(join_info.transform_function(targets[0], final_alias))
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1964, in transform
+    raise last_field_exception
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1937, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ~~~~~~~~~~~~~~~~~~^
+        names[:pivot],
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fail_on_missing=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\query.py", line 1842, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'number' into field. Choices are: created_at, floor, id, is_active, meters, property, property_id, status, tenancies, unit_number, unit_type
+2026-04-07 00:26:01,121 | ERROR | django.server | "GET /tenants HTTP/1.1" 500 128535
+2026-04-07 00:26:22,899 | ERROR | django.request | Internal Server Error: /tenants
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\tenants\views.py", line 8, in tenant_list_view
+    tenants = get_tenants_for_user(request.user)
+  File "C:\Users\GEORGE\Desktop\RS_694\tenants\services\tenant_service.py", line 30, in get_tenants_for_user
+    tenants = tenants.annotate(
+        is_active=Exists(active_tenancy),
+    ...<5 lines>...
+        )
+    )
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1699, in annotate
+    return self._annotate(args, kwargs, select=True)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1744, in _annotate
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The annotation 'is_active' conflicts with a field on the model.
+2026-04-07 00:26:22,906 | ERROR | django.server | "GET /tenants HTTP/1.1" 500 85662
+2026-04-07 00:29:53,972 | ERROR | django.request | Internal Server Error: /tenants
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'empty'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\tenants\views.py", line 10, in tenant_list_view
+    return render(request, "tenants/tenant_list.html", {
+        "tenants": tenants
+    })
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
     content = loader.render_to_string(template_name, context, request, using=using)
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
     template = get_template(template_name, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
-    raise TemplateDoesNotExist(template_name, chain=chain)
-django.template.exceptions.TemplateDoesNotExist: properties/partials/propert_table_rows.html
-2026-04-04 15:15:34,215 | ERROR | django.server | "GET /properties/?q=ggggg HTTP/1.1" 500 93128
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 1008, in do_if
+    nodelist = parser.parse(("endif",))
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 634, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\GEORGE\Desktop\RS_694\templates\tenants\tenant_list.html, Invalid block tag on line 127: 'empty', expected 'endif'. Did you forget to register or load this tag?
+2026-04-07 00:29:53,994 | ERROR | django.server | "GET /tenants HTTP/1.1" 500 220472
