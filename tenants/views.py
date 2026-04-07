@@ -1,9 +1,87 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+from django.views.decorators.http import require_POST
+
+from .forms import TenantForm
+from .models import Tenant
+from properties.models import Unit
+from properties.choices import UnitStatus
+from properties.services.unit_service import assign_tenant_to_unit, vacate_unit
 from .services.tenant_service import (
-    get_tenants_for_user
+    get_tenants_for_user,
+    create_tenant
 )
 
 # Create your views here.
+@login_required
+def assign_tenant_view(request, tenant_id):
+    tenant = get_object_or_404(Tenant, id=tenant_id)
+
+    # get available units (same landlord + vacant units only)
+    available_units = Unit.objects.filter(
+        property__landlord=tenant.landlord,
+        status=UnitStatus.VACANT
+    ).select_related("property")
+
+    if request.method == "POST":
+        unit_id = request.POST.get("unit")
+        rent_amount = request.POST.get("rent_amount")
+        start_date = request.POST.get("start_date")
+
+        try:
+            unit = Unit.objects.get(id=unit_id)
+
+            assign_tenant_to_unit(
+                unit=unit,
+                tenant=tenant,
+                rent_amount=rent_amount,
+                start_date=start_date,
+                created_by=request.user
+            )
+
+            messages.success(request, "Tenant assigned successfully.")
+            return redirect("tenant_list")
+        except ValidationError as e:
+            messages.error(request, e.message)
+        
+        except Unit.DoesNotExist:
+            messages.error(request, "Invalid unit selected.")
+    
+    return render(request, "tenants/assign_tenant.html", {
+        "tenant": tenant,
+        "available_units": available_units
+    })
+
+def add_tenant_view(request):
+    if request.method == "POST":
+        form = TenantForm(request.POST, user=request.user)
+        
+        if form.is_valid():
+            try:
+                create_tenant(
+                    first_name=form.cleaned_data["first_name"],
+                    last_name=form.cleaned_data["last_name"],
+                    phone_number=form.cleaned_data["phone_number"],
+                    email=form.cleaned_data.get("email"),
+                    id_number=form.cleaned_data.get("id_number"),
+                    landlord=form.cleaned_data.get("landlord"),
+                    created_by=request.user
+                )
+                
+                messages.success(request, "Tenant created successfully.")
+                return redirect("tenant_list")
+            
+            except ValidationError as e:
+                form.add_error(None, e.message)
+    else:
+        form = TenantForm(user=request.user)
+    
+    return render(request, "tenants/add_tenant.html", {
+        "form": form
+    })
+
 def tenant_list_view(request):
     tenants = get_tenants_for_user(request.user)
 

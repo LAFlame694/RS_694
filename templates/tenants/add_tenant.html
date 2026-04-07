@@ -1,0 +1,255 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Add Tenant{%endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <!-- Header Section -->
+  <div class="row mb-4 align-items-end">
+    <div class="col-sm-6">
+      <h1 class="h3 mb-1 fw-bold text-dark">Add Tenant</h1>
+      <p class="text-muted mb-0">
+        Create a new tenant profile for your property.
+      </p>
+    </div>
+    <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+      <a
+        href="{% url 'tenant_list' %}"
+        class="btn btn-outline-secondary btn-sm px-3 shadow-sm"
+      >
+        <i class="bi bi-arrow-left me-1"></i> Back to Tenants
+      </a>
+    </div>
+  </div>
+
+  <!-- Error Messages Placeholder -->
+  {% if form.errors %}
+  <div class="alert alert-danger border-0 shadow-sm mb-4" role="alert">
+    <div class="d-flex">
+      <div class="me-2">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+      </div>
+      <div>
+        <h6 class="alert-heading fw-bold mb-1">
+          Please correct the following errors:
+        </h6>
+        <ul class="mb-0 small">
+          {% for field, errors in form.errors.items %} 
+          {% for error in errors %}
+          <li>{{ field.label|default:field|capfirst }}: {{ error }}</li>
+          {% endfor %} 
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Form Card -->
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-4 p-md-5">
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="row g-4">
+              <!-- First Name -->
+              <div class="col-md-6">
+                <label
+                  for="first_name"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >First Name</label
+                >
+                <input
+                  type="text"
+                  name="first_name"
+                  value="{{ form.first_name.value|default:'' }}"
+                  id="first_name"
+                  class="form-control form-control-lg shadow-none {% if form.first_name.errors %}is-invalid{% endif %}"
+                  placeholder="Enter first name"
+                  required
+                />
+                <div class="invalid-feedback">First name is required.</div>
+              </div>
+
+              <!-- Last Name -->
+              <div class="col-md-6">
+                <label
+                  for="last_name"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >Last Name</label
+                >
+                <input
+                  type="text"
+                  name="last_name"
+                  value="{{ form.last_name.value|default:'' }}"
+                  id="last_name"
+                  class="form-control form-control-lg shadow-none {% if form.last_name.errors %}is-invalid{% endif %}"
+                  placeholder="Enter last name"
+                  required
+                />
+                <div class="invalid-feedback">Last name is required.</div>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="col-md-6">
+                <label
+                  for="phone"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >Phone Number</label
+                >
+                <div class="input-group">
+                  <span
+                    class="input-group-text bg-light border-end-0 text-muted"
+                    ><i class="bi bi-telephone"></i
+                  ></span>
+                  <input
+                    type="tel"
+                    name="phone_number"
+                    value="{{ form.phone_number.value|default:'' }}"
+                    id="phone"
+                    class="form-control form-control-lg border-start-0 shadow-none {% if form.phone.errors %}is-invalid{% endif %}"
+                    placeholder="07..."
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback d-block">
+                  {% if form.phone.errors %}{{ form.phone.errors.0 }}{% endif %}
+                </div>
+              </div>
+
+              <!-- Email Address -->
+              <div class="col-md-6">
+                <label
+                  for="email"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >Email Address (Optional)</label
+                >
+                <div class="input-group">
+                  <span
+                    class="input-group-text bg-light border-end-0 text-muted"
+                    ><i class="bi bi-envelope"></i
+                  ></span>
+                  <input
+                    type="email"
+                    name="email"
+                    value="{{ form.email.value|default:'' }}"
+                    id="email"
+                    class="form-control form-control-lg border-start-0 shadow-none"
+                    placeholder="example@email.com"
+                  />
+                </div>
+              </div>
+
+              <!-- ID Number -->
+              <div class="col-md-6">
+                <label
+                  for="id_number"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >ID Number (Optional)</label
+                >
+                <input
+                  type="text"
+                  name="id_number"
+                  value="{{ form.id_number.value|default:'' }}"
+                  id="id_number"
+                  class="form-control form-control-lg shadow-none"
+                  placeholder="National ID or Passport"
+                />
+              </div>
+
+              <!-- Landlord Dropdown -->
+                {% if form.landlord %}
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-secondary small text-uppercase">
+                        Assigned Landlord
+                    </label>
+
+                    {{ form.landlord }}
+
+                    {% if form.landlord.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.landlord.errors.0 }}
+                    </div>
+                {% endif %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="row mt-5">
+              <div class="col-12 d-flex justify-content-end gap-3">
+                <a
+                  href="{% url 'tenant_list' %}"
+                  class="btn btn-light btn-lg px-4 fw-medium border"
+                  >Cancel</a
+                >
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg px-5 fw-medium shadow-sm"
+                >
+                  Save Tenant
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <p class="text-center text-muted mt-4 small">
+        All data is encrypted and handled according to privacy policy.
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Subtle dashboard enhancements */
+  body {
+    background-color: #f8f9fa; /* Light neutral background */
+  }
+
+  .form-control,
+  .form-select,
+  .input-group-text {
+    border-color: #e0e6ed;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #3b82f6; /* Soft primary blue */
+    box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.1);
+  }
+
+  .card {
+    border-radius: 12px;
+  }
+
+  .btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-primary:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.15);
+  }
+
+  .form-label {
+    letter-spacing: 0.025em;
+  }
+
+  /* Bootstrap Icon alignment fix */
+  .input-group-text i {
+    font-size: 1.1rem;
+  }
+</style>
+
+<!-- Bootstrap Icons CDN (Optional, recommended for the icons used above) -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+/>
+{% endblock %}

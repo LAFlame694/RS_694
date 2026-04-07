@@ -1,0 +1,62 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Assign Tenant{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <h3 class="mb-3">
+        Assign {{ tenant.first_name }} {{ tenant.last_name }}
+    </h3>
+
+    <div class="card p-4 shadow-sm">
+
+        {% if not available_units %}
+        <div class="alert alert-warning">
+            No vacant units available for this tenant's landlord.
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Unit Selection -->
+            <div class="mb-3">
+                <label class="form-label">Select Unit</label>
+                <select name="unit" class="form-select" required>
+                    <option value="">-- Select Unit --</option>
+                    {% for unit in available_units %}
+                        <option value="{{ unit.id }}">
+                            {{ unit.unit_number }} - {{ unit.unit_type }} - {{ unit.property.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Rent -->
+            <div class="mb-3">
+                <label class="form-label">Rent Amount</label>
+                <input type="number" name="rent_amount" class="form-control" required>
+            </div>
+
+            <!-- Start Date -->
+            <div class="mb-3">
+                <label class="form-label">Start Date</label>
+                <input type="date" name="start_date" class="form-control" required>
+            </div>
+
+            <!-- Actions -->
+            <div class="d-flex justify-content-end gap-2">
+                <a href="{% url 'tenant_list' %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    Assign Tenant
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+{% endblock %}

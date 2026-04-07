@@ -18,14 +18,14 @@
         <p class="text-muted mb-0">Manage all tenants in the system</p>
     </div>
     <div class="col-md-4 text-md-end mt-3 mt-md-0">
-        <button class="btn btn-primary d-inline-flex align-items-center">
+        <a href="{% url 'add_tenant' %}" class="btn btn-primary d-inline-flex align-items-center">
         <i
             data-lucide="plus"
             class="me-2"
             style="width: 18px; height: 18px"
         ></i>
         Add Tenant
-        </button>
+        </a>
     </div>
     </div>
 
@@ -58,102 +58,90 @@
 
     <!-- 3. TENANT TABLE SECTION -->
     <div class="card overflow-hidden">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-        <thead>
-            <tr>
-            <th class="px-4 py-3">Tenant Name</th>
-            <th class="px-4 py-3">Contact Info</th>
-            <th class="px-4 py-3">ID Number</th>
-            <th class="px-4 py-3">Status</th>
-            <th class="px-4 py-3">Current Unit</th>
-            <th class="px-4 py-3 text-end">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for tenant in tenants %}
-            <tr>
-            <td class="px-4 py-3 fw-medium">{{ tenant.first_name }} {{ tenant.last_name }}</td>
-            <td class="px-4 py-3">
-                <div class="small fw-semibold">{{ tenant.phone_number }}</div>
-                <div class="small text-muted">{{ tenant.email }}</div>
-            </td>
-            <td class="px-4 py-3 fw-medium">{{ tenant.id_number }}</td>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3">Tenant Name</th>
+                        <th class="px-4 py-3">Contact Info</th>
+                        <th class="px-4 py-3">ID Number</th>
+                        <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3">Current Unit</th>
+                        <th class="px-4 py-3 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tenant in tenants %}
+                    <tr>
+                        <td class="px-4 py-3 fw-medium">{{ tenant.first_name }} {{ tenant.last_name }}</td>
+                        <td class="px-4 py-3">
+                            <div class="small fw-semibold">{{ tenant.phone_number }}</div>
+                            <div class="small text-muted">{{ tenant.email }}</div>
+                        </td>
+                        <td class="px-4 py-3 fw-medium">{{ tenant.id_number }}</td>
 
-            <td class="px-4 py-3">
-                {% if tenant.has_active_tenancy %}
-                <span class="badge badge-active rounded-pill px-3 py-2"
-                >Active</span
-                >
-                {% else %}
-                <span class="badge badge-inactive rounded-pill px-3 py-2"
-                >Inactive</span
-                >
-                {% endif %}
-            </td>
-            <td class="px-4 py-3">
-                {% if tenant.current_unit_name %}
-                <div class="d-flex align-items-center small">
-                <i
-                    data-lucide="home"
-                    class="me-2 text-muted"
-                    style="width: 14px; height: 14px"
-                ></i>
-                {{ tenant.current_unit_name }} - {{ tenant.current_property_name }}
-                </div>
-                {% else %}
-                <span class="text-muted">Not Assigned</span>
-                {% endif %}
-            </td>
-            <td class="px-4 py-3 text-end">
-                <button class="btn btn-link action-btn" title="View">
-                <i data-lucide="eye" style="width: 18px; height: 18px"></i>
-                </button>
-                <button class="btn btn-link action-btn" title="Edit">
-                <i
-                    data-lucide="edit-3"
-                    style="width: 18px; height: 18px"
-                ></i>
-                </button>
-                <button class="btn btn-link action-btn" title="Assign Unit">
-                <i data-lucide="link" style="width: 18px; height: 18px"></i>
-                </button>
-                <button
-                class="btn btn-link action-btn btn-vacate"
-                title="Vacate"
-                >
-                <i
-                    data-lucide="log-out"
-                    style="width: 18px; height: 18px"
-                ></i>
-                </button>
-            </td>
-            </tr>
-            {% empty %}
-            <div class="text-center py-5">
-                <div class="bg-light d-inline-block p-3 rounded-circle mb-3">
-                    <i data-lucide="users" class="text-muted" style="width: 48px; height: 48px;"></i>
-                </div>
-                <h5 class="fw-bold">No tenants found</h5>
-                <p class="text-muted">You haven't added any tenants to the system yet.</p>
-                <button class="btn btn-primary mt-2">Add Your First Tenant</button>
-            </div>
-            {% endfor %}
-        </tbody>
-        </table>
+                        <td class="px-4 py-3">
+                            {% if tenant.has_active_tenancy %}
+                            <span class="badge badge-active rounded-pill px-3 py-2"
+                            >Active</span
+                            >
+                            {% else %}
+                            <span class="badge badge-inactive rounded-pill px-3 py-2"
+                            >Inactive</span
+                            >
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-3">
+                            {% if tenant.current_unit_name %}
+                            <div class="d-flex align-items-center small">
+                            <i
+                                data-lucide="home"
+                                class="me-2 text-muted"
+                                style="width: 14px; height: 14px"
+                            ></i>
+                            {{ tenant.current_unit_name }} - {{ tenant.current_property_name }}
+                            </div>
+                            {% else %}
+                            <span class="text-muted">Not Assigned</span>
+                            {% endif %}
+                        </td>
+                        
+                        <td class="pe-4 text-end">
+                            <!-- View -->
+                            <a href="#" class="btn btn-sm btn-white border text-primary" title="View">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
 
-        <!-- 5. EMPTY STATE (Hidden by default) -->
-        <!--
-        <div class="text-center py-5">
-            <div class="bg-light d-inline-block p-3 rounded-circle mb-3">
-                <i data-lucide="users" class="text-muted" style="width: 48px; height: 48px;"></i>
-            </div>
-            <h5 class="fw-bold">No tenants found</h5>
-            <p class="text-muted">You haven't added any tenants to the system yet.</p>
-            <button class="btn btn-primary mt-2">Add Your First Tenant</button>
+                            <!-- Edit -->
+                            <a href="#" class="btn btn-sm btn-white border text-secondary" title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+
+                            <!-- Assign (ONLY if NO active tenancy) -->
+                            {% if not tenant.has_active_tenancy %}
+                            <a
+                                href="{% url 'assign_tenant' tenant.id %}"
+                                class="btn btn-sm btn-light text-success"
+                                title="Assign Tenant"
+                            >
+                                <i class="fa-solid fa-user-plus"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <div class="text-center py-5">
+                        <div class="bg-light d-inline-block p-3 rounded-circle mb-3">
+                            <i data-lucide="users" class="text-muted" style="width: 48px; height: 48px;"></i>
+                        </div>
+                        <h5 class="fw-bold">No tenants found</h5>
+                        <p class="text-muted">You haven't added any tenants to the system yet.</p>
+                        <button class="btn btn-primary mt-2">Add Your First Tenant</button>
+                    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        -->
-    </div>
     </div>
 
     <!-- 6. PAGINATION -->

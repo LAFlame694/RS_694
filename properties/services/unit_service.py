@@ -100,6 +100,10 @@ def assign_tenant_to_unit(unit: Unit, tenant: Tenant, rent_amount, start_date, c
     Creates a new tenancy and updates unit status.
     """
 
+    # ensure same landlord
+    if tenant.landlord != unit.property.landlord:
+        raise ValidationError("Tenant and Unit belong to diffrent landlords.")
+
     # check if unit is already occupied
     if unit.tenancies.filter(status=TenancyStatus.ACTIVE).exists():
         raise ValidationError(f"Unit {unit} is already occupied.")

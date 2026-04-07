@@ -83,6 +83,10 @@ class Tenant(models.Model):
             UniqueConstraint(
                 fields=["id_number", "landlord"],
                 name="unique_id_per_landlord"
+            ),
+            UniqueConstraint(
+                fields=["phone_number", "landlord"],
+                name="unique_phone_per_landlord"
             )
         ]
 
