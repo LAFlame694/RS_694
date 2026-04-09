@@ -1,0 +1,57 @@
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
+    <nav>
+        <ul class="pagination pagination-sm mb-0">
+
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a 
+                        class="page-link"
+                        hx-get="?page={{ page_obj.previous_page_number }}"
+                        hx-target="#tenant-table-body"
+                        hx-swap="innerHTML"
+                        hx-include="[name='q'], [name='status']"
+                    >
+                        Previous
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a 
+                        class="page-link"
+                        hx-get="?page={{ num }}"
+                        hx-target="#tenant-table-body"
+                        hx-swap="innerHTML"
+                        hx-include="[name='q'], [name='status']"
+                    >
+                        {{ num }}
+                    </a>
+                </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a 
+                        class="page-link"
+                        hx-get="?page={{ page_obj.next_page_number }}"
+                        hx-target="#tenant-table-body"
+                        hx-swap="innerHTML"
+                        hx-include="[name='q'], [name='status']"
+                    >
+                        Next
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>

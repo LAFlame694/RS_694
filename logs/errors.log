@@ -1,103 +1,13 @@
-2026-04-09 10:03:36,551 | ERROR | django.request | Internal Server Error: /tenants
+2026-04-09 16:40:29,715 | ERROR | django.request | Internal Server Error: /tenantsadd/
 Traceback (most recent call last):
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
   File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\tenants\views.py", line 106, in tenant_list_view
-    return render(request, "tenants/tenant_list.html", {
-        "tenants": tenants
-    })
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
-    content = loader.render_to_string(template_name, context, request, using=using)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
-    return template.render(context, request)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
-    return self.template.render(context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
-    return self._render(context)
-           ~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
-    return self.nodelist.render(context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
-    return SafeString("".join([node.render_annotated(context) for node in self]))
-                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
-    return self.render(context)
-           ~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
-    return compiled_parent._render(context)
-           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
-    return self.nodelist.render(context)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
-    return SafeString("".join([node.render_annotated(context) for node in self]))
-                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
-    return self.render(context)
-           ~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
-    result = block.nodelist.render(context)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1091, in render
-    return SafeString("".join([node.render_annotated(context) for node in self]))
-                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
-    return self.render(context)
-           ~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
-    nodelist.append(node.render_annotated(context))
-                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
-    return self.render(context)
-           ~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
-    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
-    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
-    raise NoReverseMatch(msg)
-django.urls.exceptions.NoReverseMatch: Reverse for 'edit_tenant' with arguments '('',)' not found. 1 pattern(s) tried: ['tenantstenants/(?P<tenant_id>[0-9]+)/edit/\\Z']
-2026-04-09 10:03:36,559 | ERROR | django.server | "GET /tenants HTTP/1.1" 500 175071
-2026-04-09 11:09:49,463 | ERROR | django.request | Internal Server Error: /tenantstenants/13/edit/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\tenants\views.py", line 21, in edit_tenant
-    form = TenantForm(request.POST, instance=tenant)
-  File "C:\Users\GEORGE\Desktop\RS_694\tenants\forms.py", line 45, in __init__
-    self.fields["landlord"].queryset = User.objects.filter(role=Role.LANDLORD)
-    ~~~~~~~~~~~^^^^^^^^^^^^
-KeyError: 'landlord'
-2026-04-09 11:09:49,468 | ERROR | django.server | "POST /tenantstenants/13/edit/ HTTP/1.1" 500 76336
-2026-04-09 11:12:00,759 | ERROR | django.request | Internal Server Error: /tenantstenants/13/edit/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\tenants\views.py", line 21, in edit_tenant
-    form = TenantForm(request.POST, instance=tenant)
-  File "C:\Users\GEORGE\Desktop\RS_694\tenants\forms.py", line 45, in __init__
-    self.fields["landlord"].queryset = User.objects.filter(role=Role.LANDLORD)
-    ~~~~~~~~~~~^^^^^^^^^^^^
-KeyError: 'landlord'
-2026-04-09 11:12:00,767 | ERROR | django.server | "POST /tenantstenants/13/edit/ HTTP/1.1" 500 76293
-2026-04-09 11:12:52,308 | ERROR | django.request | Internal Server Error: /tenantstenants/13/edit/
-Traceback (most recent call last):
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "C:\Users\GEORGE\Desktop\RS_694\tenants\views.py", line 21, in edit_tenant
-    form = TenantForm(request.POST, instance=tenant)
-  File "C:\Users\GEORGE\Desktop\RS_694\tenants\forms.py", line 45, in __init__
-    self.fields["landlord"].queryset = User.objects.filter(role=Role.LANDLORD)
-    ~~~~~~~~~~~^^^^^^^^^^^^
-KeyError: 'landlord'
-2026-04-09 11:12:52,311 | ERROR | django.server | "POST /tenantstenants/13/edit/ HTTP/1.1" 500 76293
+  File "C:\Users\GEORGE\Desktop\RS_694\tenants\views.py", line 101, in add_tenant_view
+    form = TenantForm(user=request.user)
+  File "C:\Users\GEORGE\Desktop\RS_694\tenants\forms.py", line 38, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+TypeError: BaseModelForm.__init__() got an unexpected keyword argument 'user'
+2026-04-09 16:40:29,722 | ERROR | django.server | "GET /tenantsadd/ HTTP/1.1" 500 74581

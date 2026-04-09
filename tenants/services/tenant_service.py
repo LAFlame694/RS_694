@@ -1,8 +1,8 @@
-from django.db.models import OuterRef, Subquery, Exists
+from django.db.models import OuterRef, Subquery, Exists, Q, Value
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
-from django.db.models import Q
 from django.db import transaction
+from django.db.models.functions import Concat
 
 from tenants.models import Tenancy, Tenant
 from accounts.choices import Role
@@ -81,9 +81,11 @@ def create_tenant(
 
     return tenant
 
-def get_tenants_for_user(user):
+def get_tenants_for_user(user, search_query=None, status=None):
     """
     Return tenants scoped to the current user
+    + optional search filtering
+    + optional status filter
     """
 
     if user.role == Role.SYSTEM_ADMIN:
@@ -98,6 +100,17 @@ def get_tenants_for_user(user):
     
     else:
         return Tenant.objects.none()
+    
+    # search logic
+    if search_query:
+        tenants = tenants.annotate(
+            full_name=Concat("first_name", Value(" "), "last_name")
+        ).filter(
+            Q(first_name__icontains=search_query) |
+            Q(last_name__icontains=search_query) |
+            Q(phone_number__icontains=search_query) |
+            Q(full_name__icontains=search_query)
+        )
     
     # find active tenant for this tenant
     active_tenancy = Tenancy.objects.filter(
@@ -115,5 +128,12 @@ def get_tenants_for_user(user):
             active_tenancy.values("unit__property__name")[:1]
         )
     )
+
+    # filter by status
+    if status == "active":
+        tenants = tenants.filter(has_active_tenancy=True)
+    
+    elif status == "inactive":
+        tenants = tenants.filter(has_active_tenancy=False)
 
     return tenants.order_by("-id").distinct()

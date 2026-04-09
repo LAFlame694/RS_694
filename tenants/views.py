@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 
 from .forms import TenantForm
 from .models import Tenant
@@ -104,8 +105,26 @@ def add_tenant_view(request):
     })
 
 def tenant_list_view(request):
-    tenants = get_tenants_for_user(request.user)
+    search_query = request.GET.get("q")
+    status = request.GET.get("status")
+    page_number = request.GET.get("page")
 
-    return render(request, "tenants/tenant_list.html", {
-        "tenants": tenants
-    })
+    tenants_qs = get_tenants_for_user(
+        user=request.user,
+        search_query=search_query,
+        status=status
+    )
+
+    paginator = Paginator(tenants_qs, 10) # 10 per page
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "tenants": page_obj,
+        "page_obj": page_obj,
+    }
+
+    # HTMX request
+    if request.headers.get("HX-Request"):
+        return render(request, "tenants/partials/tenant_table_rows.html", context)
+
+    return render(request, "tenants/tenant_list.html", context)

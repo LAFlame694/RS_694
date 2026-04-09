@@ -1,8 +1,6 @@
 from django import forms
 
 from tenants.models import Tenant
-from accounts.models import User
-from accounts.choices import Role
 
 # ceate your forms here.
 class TenantForm(forms.ModelForm):
@@ -35,4 +33,8 @@ class TenantForm(forms.ModelForm):
         }
     
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
+
+        if self.user:
+            pass
