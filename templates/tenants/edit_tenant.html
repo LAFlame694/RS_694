@@ -1,0 +1,190 @@
+{% extends 'dashboard/base_dashboard.html' %} 
+
+{% block title %}Edit Tenant | Dashboard{% endblock %} 
+
+{% block content %}
+<div class="container-fluid py-4">
+  <!-- Header Section -->
+  <div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3"
+  >
+    <div>
+      <h1 class="h3 mb-1 fw-bold text-dark">Edit Tenant</h1>
+      <p class="text-muted mb-0">
+        Update information for the selected tenant profile.
+      </p>
+    </div>
+    <div>
+      <a
+        href="{% url 'tenant_list' %}"
+        class="btn btn-link text-decoration-none text-secondary p-0"
+      >
+        <i class="fas fa-arrow-left me-1"></i> Back to Tenants
+      </a>
+    </div>
+  </div>
+
+  <!-- Form Card -->
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-8">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+          <form method="post" novalidate>
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <!-- Row 1: Names -->
+            <div class="row g-4 mb-4">
+              <div class="col-md-6">
+                <label
+                  for="{{ form.first_name.id_for_label }}"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >First Name</label
+                >
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"
+                    ><i class="fas fa-user text-muted"></i
+                  ></span>
+                  {{ form.first_name }}
+                </div>
+                {% if form.first_name.errors %}
+                <div class="text-danger small mt-1">
+                  {{ form.first_name.errors|first }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label
+                  for="{{ form.last_name.id_for_label }}"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >Last Name</label
+                >
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"
+                    ><i class="fas fa-user text-muted"></i
+                  ></span>
+                  {{ form.last_name }}
+                </div>
+                {% if form.last_name.errors %}
+                <div class="text-danger small mt-1">
+                  {{ form.last_name.errors|first }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Row 2: Contact Info -->
+            <div class="row g-4 mb-4">
+              <div class="col-md-6">
+                <label
+                  for="{{ form.phone_number.id_for_label }}"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >Phone Number</label
+                >
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"
+                    ><i class="fas fa-phone text-muted"></i
+                  ></span>
+                  {{ form.phone_number }}
+                </div>
+                {% if form.phone_number.errors %}
+                <div class="text-danger small mt-1">
+                  {{ form.phone_number.errors|first }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label
+                  for="{{ form.email.id_for_label }}"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >Email Address</label
+                >
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"
+                    ><i class="fas fa-envelope text-muted"></i
+                  ></span>
+                  {{ form.email }}
+                </div>
+                {% if form.email.errors %}
+                <div class="text-danger small mt-1">
+                  {{ form.email.errors|first }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Row 3: ID Number -->
+            <div class="row g-4 mb-5">
+              <div class="col-md-12">
+                <label
+                  for="{{ form.id_number.id_for_label }}"
+                  class="form-label fw-semibold text-secondary small text-uppercase"
+                  >ID Number / Passport</label
+                >
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"
+                    ><i class="fas fa-id-card text-muted"></i
+                  ></span>
+                  {{ form.id_number }}
+                </div>
+                {% if form.id_number.errors %}
+                <div class="text-danger small mt-1">
+                  {{ form.id_number.errors|first }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div
+              class="d-flex align-items-center justify-content-end gap-3 border-top pt-4"
+            >
+              <a
+                href="{% url 'tenant_list' %}"
+                class="btn btn-light px-4 fw-medium border"
+              >
+                Cancel
+              </a>
+              <button
+                type="submit"
+                class="btn btn-primary px-4 fw-medium shadow-sm"
+              >
+                <i class="fas fa-check-circle me-1"></i> Update Tenant
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Styling to ensure Django form widgets match Bootstrap look */
+  .form-control {
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #dee2e6;
+  }
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #0d6efd;
+  }
+  .input-group-text {
+    border-radius: 0.5rem 0 0 0.5rem;
+    border: 1px solid #dee2e6;
+    color: #6c757d;
+  }
+  .card {
+    background-color: #ffffff;
+  }
+  body {
+    background-color: #f8f9fa; /* Subtle light background */
+  }
+</style>
+{% endblock %}

@@ -2,11 +2,33 @@ from django.db.models import OuterRef, Subquery, Exists
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.db.models import Q
+from django.db import transaction
 
 from tenants.models import Tenancy, Tenant
 from accounts.choices import Role
 
 # create your services here.
+@transaction.atomic
+def update_tenant(tenant: Tenant, data: dict) -> Tenant:
+    # validate id number
+    id_number = data.get("id_number")
+
+    if id_number:
+        exists = Tenant.objects.exclude(id=tenant.id).filter(id_number=id_number).exists()
+        if exists:
+            raise ValidationError("A tenant with this ID number already exists.")
+        
+        # update fields
+        tenant.first_name = data.get("first_name", tenant.first_name)
+        tenant.last_name = data.get("last_name", tenant.last_name)
+        tenant.phone_number = data.get("phone_number", tenant.phone_number)
+        tenant.email = data.get("email", tenant.email)
+        tenant.id_number = data.get("id_number", tenant.id_number)
+
+        tenant.save()
+
+        return tenant
+
 def create_tenant(
         *,
         first_name,
@@ -94,4 +116,4 @@ def get_tenants_for_user(user):
         )
     )
 
-    return tenants.order_by("-id")
+    return tenants.order_by("-id").distinct()

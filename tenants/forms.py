@@ -14,14 +14,25 @@ class TenantForm(forms.ModelForm):
             "phone_number",
             "email",
             "id_number",
-            "landlord" # only used by system admin
         ]
-    
-    def __init__(self, *args, user=None, **kwargs):
-        super().__init__(*args, **kwargs)
 
-        # hide landlord field unless system admin
-        if user and user.role != Role.SYSTEM_ADMIN:
-            self.fields.pop("landlord")
-        else:
-            self.fields["landlord"].queryset = User.objects.filter(role=Role.LANDLORD)
+        widgets = {
+            "first_name": forms.TextInput(attrs={
+                "class": "form-control",
+            }),
+            "last_name": forms.TextInput(attrs={
+                "class": "form-control",
+            }),
+            "phone_number": forms.TextInput(attrs={
+                "class": "form-control",
+            }),
+            "email": forms.EmailInput(attrs={
+                "class": "form-control",
+            }),
+            "id_number": forms.TextInput(attrs={
+                "class": "form-control",
+            }),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

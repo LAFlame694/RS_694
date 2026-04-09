@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.views.decorators.http import require_POST
 
 from .forms import TenantForm
 from .models import Tenant
@@ -15,6 +14,28 @@ from .services.tenant_service import (
 )
 
 # Create your views here.
+def edit_tenant(request, tenant_id):
+    tenant = get_object_or_404(Tenant, id=tenant_id)
+
+    if request.method == 'POST':
+        form = TenantForm(request.POST, instance=tenant)
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, "Tenant updated successfully.")
+            return redirect('tenant_list')
+        else:
+            print(form.errors)
+
+    else:
+        form = TenantForm(instance=tenant)
+
+    return render(request, 'tenants/edit_tenant.html', {
+        'form': form,
+        'tenant': tenant
+    })
+
 @login_required
 def assign_tenant_view(request, tenant_id):
     tenant = get_object_or_404(Tenant, id=tenant_id)
