@@ -68,3 +68,9 @@
 2026-04-06 14:37:05,144 | INFO | admin | ADMIN UPDATE | user=Admin | model=PaymentAllocation | id=5
 2026-04-06 15:20:05,975 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=5
 2026-04-06 22:13:52,199 | WARNING | admin | ADMIN BULK DELETE | user=Admin | model=MeterReading | id=5
+2026-04-09 23:14:40,240 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=25
+2026-04-09 23:15:00,650 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=26
+2026-04-10 01:02:13,304 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=6
+2026-04-10 01:02:13,305 | INFO | admin | FIELD CHANGE | user=Admin | model=Tenant | id=6 | field=phone_number | from=070000000 | to=070090000
+2026-04-10 01:04:27,917 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=5
+2026-04-10 01:05:39,074 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=5

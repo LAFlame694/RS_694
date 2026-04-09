@@ -11,6 +11,7 @@ from properties.models import Unit, Property
 from properties.choices import UnitType
 from .choices import MeterReadingStatus, InvoiceStatus
 from tenants.models import Tenancy
+from .utils import get_previous_month_period
 
 # Create your models here.
 class InvoiceSequence(models.Model):
@@ -156,6 +157,8 @@ class MeterReading(models.Model):
         decimal_places=2,
         editable=False
     )
+    billing_period_start = models.DateField(null=True, blank=True)
+    billing_period_end = models.DateField(null=True, blank=True)
     status = models.CharField(
         max_length=20,
         choices=MeterReadingStatus.choices,
@@ -188,6 +191,10 @@ class MeterReading(models.Model):
             models.UniqueConstraint(
                 fields=["meter", "reading_date"],
                 name="unique_meter_reading_per_day"
+            ),
+            models.UniqueConstraint(
+                fields=["meter", "billing_period_start"],
+                name="unique_meter_reading_per_month"
             )
         ]
 
@@ -243,6 +250,12 @@ class MeterReading(models.Model):
         self.consumption = self.current_reading - self.previous_reading
         raw_amount = self.consumption * self.rate_per_unit
         self.amount = raw_amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+        # assign billing period if not set
+        if not self.billing_period_start or not self.billing_period_end:
+            start, end = get_previous_month_period(self.reading_date)
+            self.billing_period_start = start
+            self.billing_period_end = end
 
         # run model validation
         self.full_clean()

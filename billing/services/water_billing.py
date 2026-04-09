@@ -47,7 +47,10 @@ def generate_invoice_from_meter_reading(reading):
                 due_date=timezone.now().date(),
                 total_amount=reading.amount,
                 status=InvoiceStatus.ISSUED,
-                created_by=system_user
+                created_by=system_user,
+
+                billing_period_start=reading.billing_period_start,
+                billing_period_end=reading.billing_period_end
             )
 
             # create ledger entry
