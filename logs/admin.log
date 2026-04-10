@@ -74,3 +74,6 @@
 2026-04-10 01:02:13,305 | INFO | admin | FIELD CHANGE | user=Admin | model=Tenant | id=6 | field=phone_number | from=070000000 | to=070090000
 2026-04-10 01:04:27,917 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=5
 2026-04-10 01:05:39,074 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=5
+2026-04-10 14:49:34,237 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=1
+2026-04-10 15:03:10,012 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
+2026-04-10 15:03:22,600 | INFO | admin | ADMIN UPDATE | user=Admin | model=RecurringCharge | id=1

@@ -3,18 +3,21 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
+from django.db import IntegrityError
 
 from .forms import TenantForm
 from .models import Tenant
 from properties.models import Unit
 from properties.choices import UnitStatus
-from properties.services.unit_service import assign_tenant_to_unit, vacate_unit
+from properties.services.unit_service import assign_tenant_to_unit
 from .services.tenant_service import (
     get_tenants_for_user,
-    create_tenant
+    create_tenant,
+    update_tenant
 )
 
 # Create your views here.
+@login_required
 def edit_tenant(request, tenant_id):
     tenant = get_object_or_404(Tenant, id=tenant_id)
 
@@ -22,17 +25,24 @@ def edit_tenant(request, tenant_id):
         form = TenantForm(request.POST, instance=tenant)
 
         if form.is_valid():
-            form.save()
+            try:
+                update_tenant(tenant, form.cleaned_data)
 
-            messages.success(request, "Tenant updated successfully.")
-            return redirect('tenants:tenant_list')
+                messages.success(request, "Tenant updated successfully.")
+                return redirect('tenants:tenant_list')
+            
+            except ValidationError as e:
+                form.add_error(None, e.message)
+            
+            except IntegrityError:
+                # handle db constraint
+                form.add_error("phone_number", "This phone number is already used by another tenant.")
         else:
             print(form.errors)
-
     else:
         form = TenantForm(instance=tenant)
-
-    return render(request, 'tenants/edit_tenant.html', {
+    
+    return render(request, "tenants/edit_tenant.html", {
         'form': form,
         'tenant': tenant
     })

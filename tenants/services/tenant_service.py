@@ -10,9 +10,20 @@ from accounts.choices import Role
 # create your services here.
 @transaction.atomic
 def update_tenant(tenant: Tenant, data: dict) -> Tenant:
+
+    # phone number validation
+    phone_number = data.get("phone_number")
+    if phone_number:
+        exists = Tenant.objects.exclude(id=tenant.id).filter(
+            phone_number=phone_number,
+            landlord=tenant.landlord
+        ).exists()
+
+        if exists:
+            raise ValidationError("A tenant with this phone number already exists.")
+
     # validate id number
     id_number = data.get("id_number")
-
     if id_number:
         exists = Tenant.objects.exclude(id=tenant.id).filter(id_number=id_number).exists()
         if exists:
@@ -26,7 +37,6 @@ def update_tenant(tenant: Tenant, data: dict) -> Tenant:
         tenant.id_number = data.get("id_number", tenant.id_number)
 
         tenant.save()
-
         return tenant
 
 def create_tenant(
