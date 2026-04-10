@@ -36,7 +36,7 @@
       </nav>
     </div>
     <div>
-      <a href="{% url 'add_unit' property.id %}" class="btn btn-primary px-4 py-2 shadow-sm fw-semibold">
+      <a href="{% url 'properties:add_unit' property.id %}" class="btn btn-primary px-4 py-2 shadow-sm fw-semibold">
         <i class="fa-solid fa-plus me-2"></i> Add Unit
       </a>
     </div>
@@ -167,7 +167,7 @@
               class="form-control bg-light border-0 shadow-none"
               placeholder="Search unit or tenant..."
 
-              hx-get="{% url 'property_units' property.id %}?page=1"
+              hx-get="{% url 'properties:property_units' property.id %}?page=1"
               value="{{ request.GET.q }}"
               hx-trigger="keyup changed delay:400ms"
               hx-target="#units-table"
@@ -182,7 +182,7 @@
               class="form-select border-light bg-light shadow-none" 
               onchange="this.form.submit()"
 
-              hx-get="{% url 'property_units' property.id %}?page=1"
+              hx-get="{% url 'properties:property_units' property.id %}?page=1"
               hx-trigger="change"
               hx-target="#units-table"
               hx-include="[name='q']"

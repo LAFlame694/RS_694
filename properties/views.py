@@ -62,7 +62,7 @@ def edit_property(request, property_id):
                 )
 
                 messages.success(request, "Property updated successfully.")
-                return redirect("property_list")
+                return redirect("properties:property_list")
             
             except Exception as e:
                 form.add_error(None, str(e))
@@ -87,7 +87,7 @@ def add_property(request):
                 )
 
                 messages.success(request, "Property created successfully.")
-                return redirect("property_list")
+                return redirect("properties:property_list")
             except Exception as e:
                 form.add_error(None, str(e))
     
@@ -115,13 +115,14 @@ def add_unit(request, property_id):
                     floor=form.cleaned_data['floor']
                 )
                 messages.success(request, f'Unit {unit.unit_number} created successfully.')
-                return redirect("unit_detail", unit_id=unit.id)
+                return redirect("properties:unit_detail", unit_id=unit.id)
             
             except ValidationError as e:
                 form.add_error('unit_number', e.message)
             
-            except Exception:
-                messages.error(request, "Something went wrong. Try again.")
+            except Exception as e:
+                messages.error(request, f"Error: {str(e)}")
+                raise
     else:
         form = UnitForm()
     
@@ -148,7 +149,7 @@ def edit_unit(request, unit_id):
                 update_unit(unit, **form.cleaned_data)
 
                 messages.success(request, f'Unit {unit.unit_number} updated successfully.')
-                return redirect('property_units', property_id=unit.property.id)
+                return redirect('properties:property_units', property_id=unit.property.id)
             
             except Exception as e:
                 messages.error(request, f"Something went wrong. Please try again. {str(e)}")
@@ -168,11 +169,11 @@ def delete_unit_view(request, unit_id):
         try:
             delete_unit(unit)
             messages.success(request, "Unit deleted successfully.")
-            return redirect('property_units', property_id=unit.property.id)
+            return redirect('properties:property_units', property_id=unit.property.id)
         
         except ValidationError as e:
             messages.error(request, str(e))
-            return redirect('property_units', property_id=unit.property.id)
+            return redirect('properties:property_units', property_id=unit.property.id)
         
     return render(request, 'properties/confirm_delete_unit.html', {'unit': unit})
 
@@ -205,7 +206,7 @@ def assign_tenant(request, unit_id):
                 )
 
                 messages.success(request, f'Tenant assigned to {unit}.')
-                return redirect('property_units', property_id=unit.property.id)
+                return redirect('properties:property_units', property_id=unit.property.id)
 
             except ValidationError as e:
                 form.add_error(None, e.message)
@@ -287,7 +288,7 @@ def property_units(request, property_id):
     )
 
     if not property:
-        return redirect('property_list')
+        return redirect('properties:property_list')
 
     # pagination
     paginator = Paginator(units, 10) # 10 units per page

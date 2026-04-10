@@ -16,7 +16,7 @@
             
             <!-- Breadcrumb/Back Link -->
             <nav aria-label="breadcrumb" class="mb-4">
-                <a href="{% url 'property_units' unit.property.id %}" class="text-decoration-none text-secondary small d-inline-flex align-items-center">
+                <a href="{% url 'properties:property_units' unit.property.id %}" class="text-decoration-none text-secondary small d-inline-flex align-items-center">
                     <i class="fa-solid fa-chevron-left me-2"></i> Back to Unit List
                 </a>
             </nav>
@@ -99,7 +99,7 @@
                             <button type="submit" class="btn btn-primary py-2 fw-bold">
                                 Confirm Assignment
                             </button>
-                            <a href="{% url 'property_units' unit.property.id %}" class="btn btn-link text-muted text-decoration-none small">
+                            <a href="{% url 'properties:property_units' unit.property.id %}" class="btn btn-link text-muted text-decoration-none small">
                                 Cancel and Return
                             </a>
                         </div>

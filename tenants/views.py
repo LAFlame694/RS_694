@@ -25,7 +25,7 @@ def edit_tenant(request, tenant_id):
             form.save()
 
             messages.success(request, "Tenant updated successfully.")
-            return redirect('tenant_list')
+            return redirect('tenants:tenant_list')
         else:
             print(form.errors)
 
@@ -64,14 +64,14 @@ def assign_tenant_view(request, tenant_id):
             )
 
             messages.success(request, "Tenant assigned successfully.")
-            return redirect("tenant_list")
+            return redirect("tenants:tenant_list")
         except ValidationError as e:
             messages.error(request, e.message)
         
         except Unit.DoesNotExist:
             messages.error(request, "Invalid unit selected.")
     
-    return render(request, "tenants/assign_tenant.html", {
+    return render(request, "tenants/assign_tenant_to_unit.html", {
         "tenant": tenant,
         "available_units": available_units
     })
@@ -93,7 +93,7 @@ def add_tenant_view(request):
                 )
                 
                 messages.success(request, "Tenant created successfully.")
-                return redirect("tenant_list")
+                return redirect("tenants:tenant_list")
             
             except ValidationError as e:
                 form.add_error(None, e.message)

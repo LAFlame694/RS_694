@@ -63,20 +63,20 @@
 
   <!-- ACTIONS -->
   <div class="mb-4">
-    <a href="{% url 'edit_unit' unit.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'properties:edit_unit' unit.id %}" class="btn btn-primary">Edit</a>
 
     {% if unit.status == "VACANT" %}
-    <a href="{% url 'assign_tenant' unit.id %}" class="btn btn-success"
+    <a href="{% url 'properties:assign_tenant' unit.id %}" class="btn btn-success"
       >Assign Tenant</a
     >
     {% endif %} 
 
     {% if unit.status == "OCCUPIED" %}
-    <a href="{% url 'vacate_unit' unit.id %}" class="btn btn-warning">Vacate</a>
+    <a href="{% url 'properties:vacate_unit' unit.id %}" class="btn btn-warning">Vacate</a>
     {% endif %}
 
     {% if unit.status == "VACANT" %}
-    <a href="{% url 'delete_unit' unit.id %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'properties:delete_unit' unit.id %}" class="btn btn-danger">Delete</a>
     {% endif %}
   </div>
 

@@ -24,7 +24,7 @@
         </ol>
       </nav>
     </div>
-    <a href="{% url 'add_property' %}" class="btn btn-primary px-4 py-2 fw-semibold shadow-sm">
+    <a href="{% url 'properties:add_property' %}" class="btn btn-primary px-4 py-2 fw-semibold shadow-sm">
       <i class="fa-solid fa-plus me-2"></i> Add Property
     </a>
   </div>
@@ -110,7 +110,7 @@
               class="form-control bg-light border-0 shadow-none"
               placeholder="Search properties..."
 
-              hx-get="{% url 'property_list' %}"
+              hx-get="{% url 'properties:property_list' %}"
               hx-trigger="keyup delay:400ms"
               hx-target="#property-table-container"
               hx-push-url="true"
@@ -125,7 +125,7 @@
             class="form-select d-inline-block w-auto border-light shadow-none"
             name="status"
 
-            hx-get="{% url 'property_list' %}"
+            hx-get="{% url 'properties:property_list' %}"
             hx-trigger="change"
             hx-target="#property-table-container"
             hx-push-url="true"

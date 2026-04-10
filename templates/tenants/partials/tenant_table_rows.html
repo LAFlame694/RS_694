@@ -53,14 +53,14 @@
                     </a>
 
                     <!-- Edit -->
-                    <a href="{% url 'edit_tenant' tenant.id %}" class="btn btn-sm btn-white border text-secondary" title="Edit">
+                    <a href="{% url 'tenants:edit_tenant' tenant.id %}" class="btn btn-sm btn-white border text-secondary" title="Edit">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a>
 
                     <!-- Assign (ONLY if NO active tenancy) -->
                     {% if not tenant.has_active_tenancy %}
                     <a
-                        href="{% url 'assign_tenant' tenant.id %}"
+                        href="{% url 'tenants:assign_tenant' tenant.id %}"
                         class="btn btn-sm btn-light text-success"
                         title="Assign Tenant"
                     >

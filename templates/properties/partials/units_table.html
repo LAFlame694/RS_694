@@ -94,7 +94,7 @@
         <div class="btn-group" role="group">
           <!-- View Unit -->
           <a
-            href="{% url 'unit_detail' unit.id %}"
+            href="{% url 'properties:unit_detail' unit.id %}"
             class="btn btn-sm btn-light text-primary"
             title="View"
           >
@@ -103,7 +103,7 @@
 
           <!-- Edit Unit -->
           <a
-            href="{% url 'edit_unit' unit.id %}"
+            href="{% url 'properties:edit_unit' unit.id %}"
             class="btn btn-sm btn-light text-secondary"
             title="Edit"
           >
@@ -112,7 +112,7 @@
 
           <!-- Delete Unit -->
           <a
-            href="{% url 'delete_unit' unit.id %}"
+            href="{% url 'properties:delete_unit' unit.id %}"
             class="btn btn-sm btn-light text-danger"
             title="Delete"
           >
@@ -122,7 +122,7 @@
           <!-- Assign Tenant (ONLY for VACANT or MAINTENANCE) -->
           {% if unit.status == "VACANT" or unit.status == "MAINTENANCE" %}
           <a
-            href="{% url 'assign_tenant' unit.id %}"
+            href="{% url 'properties:assign_tenant' unit.id %}"
             class="btn btn-sm btn-light text-success"
             title="Assign Tenant"
           >
@@ -133,7 +133,7 @@
           <!-- Vacate Unit (ONLY for OCCUPIED) -->
           {% if unit.status == "OCCUPIED" %}
           <a
-            href="{% url 'vacate_unit' unit.id %}"
+            href="{% url 'properties:vacate_unit' unit.id %}"
             class="btn btn-sm btn-light text-warning"
             title="Vacate"
           >

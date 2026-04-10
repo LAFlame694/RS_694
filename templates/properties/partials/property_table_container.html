@@ -57,15 +57,15 @@
 
             <td class="pe-4 text-end">
                 <div class="btn-group shadow-sm">
-                <a href="{% url 'property_detail' property.id %}" class="btn btn-sm btn-white border text-primary" title="View">
+                <a href="{% url 'properties:property_detail' property.id %}" class="btn btn-sm btn-white border text-primary" title="View">
                     <i class="fa-solid fa-eye"></i>
                 </a>
 
-                <a href="{% url 'edit_property' property.id %}" class="btn btn-sm btn-white border text-secondary" title="Edit">
+                <a href="{% url 'properties:edit_property' property.id %}" class="btn btn-sm btn-white border text-secondary" title="Edit">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
 
-                <a href="{% url 'property_units' property.id %}" class="btn btn-sm btn-white border text-info" title="Units">
+                <a href="{% url 'properties:property_units' property.id %}" class="btn btn-sm btn-white border text-info" title="Units">
                     <i class="fa-solid fa-list-ul"></i>
                 </a>
                 </div>
