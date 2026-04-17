@@ -77,3 +77,17 @@
 2026-04-10 14:49:34,237 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=1
 2026-04-10 15:03:10,012 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
 2026-04-10 15:03:22,600 | INFO | admin | ADMIN UPDATE | user=Admin | model=RecurringCharge | id=1
+2026-04-17 10:15:01,233 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=4
+2026-04-17 10:15:51,913 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=2
+2026-04-17 10:16:22,416 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=4
+2026-04-17 10:16:49,828 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=3
+2026-04-17 10:17:16,505 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=4
+2026-04-17 10:17:16,505 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=4 | field=status | from=VACANT | to=OCCUPIED
+2026-04-17 21:02:46,963 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=5
+2026-04-17 21:17:34,052 | INFO | admin | ADMIN CREATE | user=Admin | model=LedgerEntry | id=6
+2026-04-17 21:48:36,125 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=6
+2026-04-17 21:51:49,682 | INFO | admin | ADMIN CREATE | user=Admin | model=LedgerEntry | id=7
+2026-04-17 22:46:29,804 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=2
+2026-04-17 23:30:16,144 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=7
+2026-04-17 23:30:56,122 | INFO | admin | ADMIN CREATE | user=Admin | model=LedgerEntry | id=9
+2026-04-17 23:35:21,070 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=3

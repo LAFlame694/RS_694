@@ -55,11 +55,16 @@ def apply_payment_to_invoices(payment: Payment):
                     break
 
                 # calculate current balance safely
-                allocated_sum = invoice.payment_allocations.aggregate(
+                payment_allocated = invoice.payment_allocations.aggregate(
                     total=Sum("amount_applied")
                 )["total"] or Decimal("0.00")
 
-                balance = invoice.total_amount - allocated_sum
+                credit_allocated = invoice.credit_allocations.aggregate(
+                    total=Sum("amount_applied")
+                )["total"] or Decimal("0.00")
+
+                total_paid = payment_allocated + credit_allocated
+                balance = invoice.total_amount - total_paid
 
                 if balance <= 0:
                     continue
@@ -75,7 +80,7 @@ def apply_payment_to_invoices(payment: Payment):
                 )
 
                 # update invoice.amount_paid
-                invoice.amount_paid += amount_to_apply
+                invoice.amount_paid = total_paid + amount_to_apply
 
                 # update invoice.status
                 if invoice.amount_paid == invoice.total_amount:

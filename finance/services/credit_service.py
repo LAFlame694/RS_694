@@ -1,11 +1,13 @@
 from decimal import Decimal
-from django.db import transaction, models
 from django.db.models import Sum
+from django.db import models, transaction
 
-from finance.models import LedgerEntry
-from billing.models import Invoice
+from finance.models import LedgerEntry, CreditAllocation, PaymentAllocation
 from finance.choices import LedgerEntryType
+
+from billing.models import Invoice
 from billing.choices import InvoiceStatus
+from finance.models import CreditAllocation
 
 import logging
 
@@ -13,27 +15,40 @@ logger = logging.getLogger("billing")
 
 def get_available_credit(ledger_account):
     """
-    Calculate available credit from ledger:
-    credit = total credits - total charges
+    Available credit = total credits - total used 
+    (payments + allocations)
     """
 
-    totals = LedgerEntry.objects.filter(
+    total_credit = LedgerEntry.objects.filter(
+        ledger_account=ledger_account,
+        entry_type=LedgerEntryType.CREDIT
+    ).aggregate(
+        total=Sum("amount")
+    )["total"] or Decimal("0.00")
+
+    # payments already applied via PaymentAllocation
+    payment_used = PaymentAllocation.objects.filter(
+        payment__ledger_account=ledger_account
+    ).aggregate(
+        total=Sum("amount_applied")
+    )["total"] or Decimal("0.00")
+
+    # money already applied via CreditAllocation
+    used_credit = CreditAllocation.objects.filter(
         ledger_account=ledger_account
     ).aggregate(
-        total_credit=Sum("amount", filter=models.Q(entry_type=LedgerEntryType.CREDIT)),
-        total_charge=Sum("amount", filter=models.Q(entry_type=LedgerEntryType.CHARGE))
-    )
+        total=Sum("amount_applied")
+    )["total"] or Decimal("0.00")
 
-    total_credit = totals["total_credit"] or Decimal("0.00")
-    total_charge = totals["total_charge"] or Decimal("0.00")
+    total_used = payment_used + used_credit
 
-    return total_credit -total_charge
+    return total_credit - total_used
 
 @transaction.atomic
 def apply_credit_to_invoices(ledger_account):
     """
-    Applies existing credit to unpaid invoices.
-    Runs after invoices creation.
+    Applies available credit safely using CreditAllocation.
+    Prevents double application.
     """
 
     available_credit = get_available_credit(ledger_account)
@@ -57,24 +72,38 @@ def apply_credit_to_invoices(ledger_account):
         if remaining_credit <= 0:
             break
 
-        # calculate already allocated
-        allocated_sum = invoice.payment_allocations.aggregate(
+        # payments already applied
+        payment_allocated = invoice.payment_allocations.aggregate(
             total=Sum("amount_applied")
         )["total"] or Decimal("0.00")
 
-        balance = invoice.total_amount - allocated_sum
+        # credit already applied
+        credit_allocated = invoice.credit_allocations.aggregate(
+            total=Sum("amount_applied")
+        )["total"] or Decimal("0.00")
+
+        total_paid = payment_allocated + credit_allocated
+
+        balance = invoice.total_amount - total_paid
 
         if balance <= 0:
             continue
 
         amount_to_apply = min(balance, remaining_credit)
 
-        # avoid duplicate allocations
-        invoice.amount_paid += amount_to_apply
+        # credit allocation
+        CreditAllocation.objects.create(
+            ledger_account=ledger_account,
+            invoice=invoice,
+            amount_applied=amount_to_apply
+        )
+
+        # update invoice
+        invoice.amount_paid = total_paid + amount_to_apply
 
         if invoice.amount_paid == invoice.total_amount:
             invoice.status = InvoiceStatus.PAID
-        elif invoice.amount_paid > 0:
+        else:
             invoice.status = InvoiceStatus.PARTIAL
         
         invoice.save(update_fields=["amount_paid", "status"])
@@ -84,7 +113,7 @@ def apply_credit_to_invoices(ledger_account):
         logger.info(
             f"Credit applied {amount_to_apply} | invoice={invoice.id}"
         )
-
+    
     logger.info(
         f"Credit application complete | ledger={ledger_account.id}"
     )

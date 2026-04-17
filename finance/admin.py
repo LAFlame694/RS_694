@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import LedgerAccount, LedgerEntry, Payment, PaymentAllocation
+from .models import (
+    LedgerAccount, 
+    LedgerEntry, 
+    Payment, 
+    PaymentAllocation,
+    CreditAllocation
+)
 from core.admin_mixins import LandlordFilteredAdmin
 from accounts.models import Role
 
@@ -81,5 +87,22 @@ class PaymentAllocationAdmin(LandlordFilteredAdmin):
     list_filter = ("created_at",)
     search_fields = (
         "payment__id",
+        "invoice__id",
+    )
+
+@admin.register(CreditAllocation)
+class CreditAllocationAdmin(LandlordFilteredAdmin):
+    landlord_lookup = "ledger_account__tenancy__unit__property__landlord"
+
+    list_display = (
+        "ledger_account",
+        "invoice",
+        "amount_applied",
+        "created_at",
+    )
+
+    list_filter = ("created_at",)
+
+    search_fields = (
         "invoice__id",
     )

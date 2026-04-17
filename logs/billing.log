@@ -39,3 +39,35 @@
 2026-04-10 15:04:33,005 | INFO | billing | Ledger entry created | invoice=4 | amount=200.00
 2026-04-10 15:04:33,146 | INFO | billing | Charge 1 processed successfully
 2026-04-10 15:04:33,269 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-04-11 00:08:17,088 | INFO | billing | === Monthly billing job started ===
+2026-04-11 00:08:18,486 | INFO | billing | === Monthly billing job STARTED ===
+2026-04-11 00:08:18,586 | INFO | billing | Billing date: 2026-04-10
+2026-04-11 00:08:18,587 | INFO | billing | Generating RENT invoices for period 2026-04-01 to 2026-04-30
+2026-04-11 00:08:18,591 | INFO | billing | Found 2 active tenancies for rent billing
+2026-04-11 00:08:18,627 | INFO | billing | Invoice already exists for tenancy 2, category RENT
+2026-04-11 00:08:18,633 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-04-11 00:08:18,633 | INFO | billing | Starting recurring charge billing
+2026-04-11 00:08:18,640 | INFO | billing | Found 1 active recurring charges
+2026-04-11 00:08:18,726 | INFO | billing | Processing charge 1 | property=1 | amount=200.00
+2026-04-11 00:08:18,728 | INFO | billing | Skipping charge 1 - already generated this month
+2026-04-11 00:08:18,728 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-04-11 00:08:18,729 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===
+2026-04-17 21:44:27,905 | INFO | billing | Applying credit | ledger=2 | credit=2600.00
+2026-04-17 21:44:27,923 | INFO | billing | Credit applied 200.00 | invoice=4
+2026-04-17 21:44:27,930 | INFO | billing | Credit applied 1200.00 | invoice=5
+2026-04-17 21:44:27,931 | INFO | billing | Credit application complete | ledger=2
+2026-04-17 21:54:11,264 | INFO | billing | No available credit for ledger 2
+2026-04-17 22:42:40,833 | INFO | billing | Applying credit | ledger=2 | credit=2600
+2026-04-17 22:42:40,848 | INFO | billing | Credit applied 2600 | invoice=6
+2026-04-17 22:42:40,851 | INFO | billing | Credit application complete | ledger=2
+2026-04-17 22:50:28,822 | INFO | billing | Starting allocation | payment=2 | amount=7000.00
+2026-04-17 22:50:28,831 | INFO | billing | Allocated 4000.00 | payment=2 -> invoice=6
+2026-04-17 22:50:28,832 | INFO | billing | Overpayment detected | payment=2 | remaining=3000.00
+2026-04-17 22:50:28,833 | INFO | billing | Allocation comlpete | payment=2
+2026-04-17 23:34:19,950 | INFO | billing | Applying credit | ledger=2 | credit=3000
+2026-04-17 23:34:19,994 | INFO | billing | Credit applied 3000 | invoice=7
+2026-04-17 23:34:19,995 | INFO | billing | Credit application complete | ledger=2
+2026-04-17 23:37:15,249 | INFO | billing | Starting allocation | payment=3 | amount=6000.00
+2026-04-17 23:37:15,263 | INFO | billing | Allocated 2000.00 | payment=3 -> invoice=7
+2026-04-17 23:37:15,263 | INFO | billing | Overpayment detected | payment=3 | remaining=4000.00
+2026-04-17 23:37:15,267 | INFO | billing | Allocation comlpete | payment=3

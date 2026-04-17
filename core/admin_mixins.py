@@ -49,6 +49,11 @@ class LandlordFilteredAdmin(admin.ModelAdmin):
             from finance.models import LedgerAccount
             kwargs["queryset"] = LedgerAccount.objects.filter(tenancy__unit__property__landlord=landlord)
         
+        # invoice filter
+        if db_field.name == "invoice" and landlord:
+            from billing.models import Invoice
+            kwargs["queryset"] = Invoice.objects.filter(tenancy__unit__property__landlord=landlord)
+        
         # tenant filter
         if db_field.name == "tenant" and landlord:
             from tenants.models import Tenant
