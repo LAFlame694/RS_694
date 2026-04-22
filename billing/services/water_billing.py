@@ -8,10 +8,11 @@ from billing.models import Invoice, MeterReading
 from tenants.models import Tenancy
 from tenants.choices import TenancyStatus
 from billing.choices import MeterReadingStatus, InvoiceStatus
+from finance.services.accounting_service import settle_account
 
 from accounts.utils import get_system_user
 
-logger = logging.getLogger("billing")
+logger = logging.getLogger("waterbilling")
 
 def generate_invoice_from_meter_reading(reading):
     """
@@ -76,7 +77,9 @@ def generate_invoice_from_meter_reading(reading):
                 f"Water invoice created | reading={reading.id} | invoice={invoice.invoice_number}"
             )
 
-            return invoice
+        settle_account(tenancy.ledger_account)
+
+        return invoice
     
     except Exception as e:
         logger.error(

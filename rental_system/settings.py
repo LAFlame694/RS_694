@@ -150,6 +150,46 @@ LOGGING = {
             'backupCount': 5,
             'formatter': 'standard',
         },
+        'credit_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'credit.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'payment_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'payment.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'reverse_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'reverse.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'accounting_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'accounting.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'waterbilling_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'waterbilling.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
         'system_file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -190,6 +230,31 @@ LOGGING = {
     'loggers': {
         'billing': {
             'handlers': ['billing_file', 'error_file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'credit': {
+            'handlers': ['credit_file', 'error_file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'payment': {
+            'handlers': ['payment_file', 'error_file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'reverse': {
+            'handlers': ['reverse_file', 'error_file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'accounting': {
+            'handlers': ['accounting_file', 'error_file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'waterbilling': {
+            'handlers': ['waterbilling_file', 'error_file', 'console'],
             'level': 'INFO',
             'propagate': False,
         },

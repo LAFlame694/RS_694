@@ -152,12 +152,18 @@ class PaymentAllocation(models.Model):
 
 class CreditAllocation(models.Model):
     """
-    Tracks how available credit is applied to invoice.
-    Prevents double usage of credits.
+    Tracks how CREDIT from a specific payment
+    is applied to invoices.
     """
     ledger_account = models.ForeignKey(
         LedgerAccount,
         on_delete=models.CASCADE,
+        related_name="credit_allocations"
+    )
+
+    payment = models.ForeignKey(
+        Payment,
+        on_delete=models.PROTECT,
         related_name="credit_allocations"
     )
 
@@ -172,11 +178,12 @@ class CreditAllocation(models.Model):
 
     class Meta:
         constraints = [
+            # prevents duplicate allocations per payment + invoice
             models.UniqueConstraint(
-                fields=["invoice"],
-                name="unique_invoice_allocation"
+                fields=["payment", "invoice"],
+                name="unique_payment_invoice_credit_allocation"
             )
         ]
 
     def __str__(self):
-        return f"Credit {self.amount_applied} -> Invoice {self.invoice.id}"
+        return f"Credit {self.amount_applied} from payment {self.payment.id} -> Invoice {self.invoice.id}"

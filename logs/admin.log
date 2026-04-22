@@ -1,93 +1,12 @@
-2026-03-20 18:32:38,575 | INFO | admin | ADMIN CREATE | user=3 | model=Tenant | id=5
- 2026-03-20 18:38:00,088 | INFO | admin | ADMIN CREATE | user=3 | model=Property | id=2
-2026-03-20 18:40:47,319 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Unit | id=5
-2026-03-20 19:36:50,832 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=5
-2026-03-25 06:37:20,586 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Meter | id=1
-2026-03-25 06:37:59,700 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Meter | id=2
-2026-03-25 06:39:38,788 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=MeterReading | id=1
-2026-03-25 06:41:52,127 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=MeterReading | id=2
-2026-03-25 16:38:36,858 | INFO | admin | ADMIN UPDATE | user=Landlord1 | model=MeterReading | id=1
-2026-03-25 16:38:36,858 | INFO | admin | FIELD CHANGE | user=Landlord1 | model=MeterReading | id=1 | field=billed_by | from=2 | to=Landlord1 (LANDLORD)
-2026-03-25 16:56:40,022 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Meter | id=3
-2026-03-25 16:57:26,421 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=MeterReading | id=3
-2026-03-25 23:03:18,780 | INFO | admin | ADMIN CREATE | user=Landlord1 | model=Payment | id=2
-2026-03-27 21:02:38,315 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=5
-2026-03-27 21:02:38,338 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=5 | field=status | from=VACCANT | to=OCCUPIED
-2026-03-27 21:02:54,646 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=1
-2026-03-27 21:02:54,646 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=1 | field=status | from=VACCANT | to=OCCUPIED
-2026-03-27 21:03:04,240 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=2
-2026-03-27 21:03:04,240 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=2 | field=status | from=VACCANT | to=OCCUPIED
-2026-03-27 21:03:14,191 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=3
-2026-03-27 21:03:14,192 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=3 | field=status | from=VACCANT | to=OCCUPIED
-2026-03-27 21:03:25,283 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=4
-2026-03-27 21:03:25,284 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=4 | field=status | from=VACCANT | to=OCCUPIED
-2026-03-30 23:20:58,172 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=3
-2026-03-30 23:21:11,065 | INFO | admin | ADMIN UPDATE | user=Admin | model=Property | id=3
-2026-03-31 14:13:03,005 | INFO | admin | ADMIN UPDATE | user=Admin | model=Property | id=2
-2026-03-31 14:13:03,006 | INFO | admin | FIELD CHANGE | user=Admin | model=Property | id=2 | field=is_active | from=True | to=False
-2026-03-31 18:17:42,518 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=6
-2026-03-31 18:18:40,367 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=6
-2026-03-31 18:19:59,977 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=6
-2026-03-31 18:21:26,473 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=6
-2026-03-31 18:24:31,827 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=6
-2026-03-31 18:24:31,827 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=6 | field=status | from=VACCANT | to=OCCUPIED
-2026-03-31 18:24:37,701 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=6
-2026-03-31 18:24:37,701 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=6 | field=status | from=OCCUPIED | to=VACCANT
-2026-03-31 18:25:05,170 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=6
-2026-03-31 18:25:05,170 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=6 | field=status | from=VACCANT | to=OCCUPIED
-2026-03-31 21:54:03,131 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=6
-2026-03-31 21:54:03,131 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=6 | field=status | from=VACANT | to=OCCUPIED
-2026-03-31 23:40:42,552 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=6
-2026-03-31 23:40:42,553 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=6 | field=status | from=VACANT | to=OCCUPIED
-2026-03-31 23:44:16,340 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=7
-2026-03-31 23:44:27,773 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=7
-2026-03-31 23:44:27,773 | INFO | admin | FIELD CHANGE | user=Admin | model=Tenant | id=7 | field=is_active | from=False | to=True
-2026-03-31 23:45:13,277 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=7
-2026-04-01 00:22:57,487 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenancy | id=7
-2026-04-01 00:22:57,488 | INFO | admin | FIELD CHANGE | user=Admin | model=Tenancy | id=7 | field=rent_amount | from=0.00 | to=7000
-2026-04-01 19:31:37,131 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=4
-2026-04-01 19:37:47,179 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=8
-2026-04-01 19:39:41,989 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=8
-2026-04-01 21:03:38,569 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=9
-2026-04-01 21:24:01,797 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=10
-2026-04-02 09:44:42,381 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=11
-2026-04-02 10:59:41,007 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenancy | id=11
-2026-04-02 11:29:57,430 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=9
-2026-04-02 11:30:04,234 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=9
-2026-04-02 23:15:31,331 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=12
-2026-04-03 14:35:16,193 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=4
-2026-04-06 12:37:08,799 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=4
-2026-04-06 12:44:41,414 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=4
-2026-04-06 13:06:01,598 | INFO | admin | ADMIN UPDATE | user=Admin | model=MeterReading | id=4
-2026-04-06 13:18:36,939 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=10
-2026-04-06 13:19:44,668 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=11
-2026-04-06 13:19:49,002 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=11
-2026-04-06 13:47:08,594 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=11
-2026-04-06 13:49:18,180 | INFO | admin | ADMIN CREATE | user=landlord2 | model=Property | id=11
-2026-04-06 14:09:18,296 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=12
-2026-04-06 14:37:05,144 | INFO | admin | ADMIN UPDATE | user=Admin | model=PaymentAllocation | id=5
-2026-04-06 15:20:05,975 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=5
-2026-04-06 22:13:52,199 | WARNING | admin | ADMIN BULK DELETE | user=Admin | model=MeterReading | id=5
-2026-04-09 23:14:40,240 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=25
-2026-04-09 23:15:00,650 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=26
-2026-04-10 01:02:13,304 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenant | id=6
-2026-04-10 01:02:13,305 | INFO | admin | FIELD CHANGE | user=Admin | model=Tenant | id=6 | field=phone_number | from=070000000 | to=070090000
-2026-04-10 01:04:27,917 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=5
-2026-04-10 01:05:39,074 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=5
-2026-04-10 14:49:34,237 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=1
-2026-04-10 15:03:10,012 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
-2026-04-10 15:03:22,600 | INFO | admin | ADMIN UPDATE | user=Admin | model=RecurringCharge | id=1
-2026-04-17 10:15:01,233 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=4
-2026-04-17 10:15:51,913 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=2
-2026-04-17 10:16:22,416 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=4
-2026-04-17 10:16:49,828 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=3
-2026-04-17 10:17:16,505 | INFO | admin | ADMIN UPDATE | user=Admin | model=Unit | id=4
-2026-04-17 10:17:16,505 | INFO | admin | FIELD CHANGE | user=Admin | model=Unit | id=4 | field=status | from=VACANT | to=OCCUPIED
-2026-04-17 21:02:46,963 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=5
-2026-04-17 21:17:34,052 | INFO | admin | ADMIN CREATE | user=Admin | model=LedgerEntry | id=6
-2026-04-17 21:48:36,125 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=6
-2026-04-17 21:51:49,682 | INFO | admin | ADMIN CREATE | user=Admin | model=LedgerEntry | id=7
-2026-04-17 22:46:29,804 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=2
-2026-04-17 23:30:16,144 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=7
-2026-04-17 23:30:56,122 | INFO | admin | ADMIN CREATE | user=Admin | model=LedgerEntry | id=9
-2026-04-17 23:35:21,070 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=3
+2026-04-22 19:55:45,432 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=1
+2026-04-22 19:56:09,108 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=2
+2026-04-22 19:57:22,421 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=1
+2026-04-22 20:18:42,319 | INFO | admin | ADMIN UPDATE | user=Admin | model=MeterReading | id=1
+2026-04-22 20:27:52,119 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=3
+2026-04-22 20:28:15,819 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=3
+2026-04-22 20:28:48,002 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=3
+2026-04-22 20:29:15,339 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=3
+2026-04-22 20:38:03,587 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=4
+2026-04-22 20:38:20,160 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=4
+2026-04-22 20:38:52,380 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=4
+2026-04-22 20:43:20,670 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=4

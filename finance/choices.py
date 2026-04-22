@@ -1,5 +1,6 @@
 from django.db import models
 
+# business meaning choices
 class LedgerEntryCategory(models.TextChoices):
     RENT = "RENT", "Rent"
     WATER = "WATER", "Water"
@@ -9,12 +10,12 @@ class LedgerEntryCategory(models.TextChoices):
     PENALTY = "PENALTY", "Penalty"
     OTHER = "OTHER", "Other"
     PAYMENT = "PAYMENT", "Payment"
-
-class LedgerEntryType(models.TextChoices):
-    CHARGE = "CHARGE", "Charge"
-    PAYMENT = "PAYMENT", "Payment"
     ADJUSTMENT = "ADJUSTMENT", "Adjustment"
     REVERSAL = "REVERSAL", "Reversal"
+
+# direction of money flow
+class LedgerEntryType(models.TextChoices):
+    CHARGE = "CHARGE", "Charge"
     CREDIT = "CREDIT", "Credit"
 
 class PaymentMethod(models.TextChoices):

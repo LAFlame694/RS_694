@@ -14,6 +14,7 @@ from finance.choices import LedgerEntryType, LedgerEntryCategory
 from billing.models import Invoice, RecurringCharge
 from billing.choices import InvoiceStatus
 from accounts.utils import get_system_user
+from finance.services.accounting_service import settle_account
 
 logger = logging.getLogger("billing")
 
@@ -238,7 +239,10 @@ def create_invoice_and_ledger_entry(
                 description=f"{category} charge for {billing_start} - {billing_end}",
                 created_by=system_user
             )
-            logger.info(f"Ledger entry created | invoice={invoice.id} | amount={amount}")
+
+        settle_account(ledger_account)
+        
+        logger.info(f"Ledger entry created | invoice={invoice.id} | amount={amount}")
         
     except Exception as e:
         logger.error(

@@ -1,0 +1,6 @@
+2026-04-22 20:02:33,623 | INFO | accounting | --- Settling account 1 ---
+2026-04-22 20:02:33,624 | INFO | accounting | Applying available credit
+2026-04-22 20:02:33,684 | INFO | accounting | --- Settlement complete for LA-4A51706583 - Moises Caicedo - Thika Road Apartments - A100 - BEDSITTER - ACTIVE ---
+2026-04-22 20:32:22,933 | INFO | accounting | --- Settling account 3 ---
+2026-04-22 20:32:22,933 | INFO | accounting | Applying available credit
+2026-04-22 20:32:22,955 | INFO | accounting | --- Settlement complete for LA-9BF41368A7 - Cole Palmer - Thika Road Apartments - A102 - BEDSITTER - ACTIVE ---

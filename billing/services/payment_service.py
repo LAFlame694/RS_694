@@ -9,7 +9,7 @@ from finance.choices import LedgerEntryType, LedgerEntryCategory
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
 
-logger = logging.getLogger("billing")
+logger = logging.getLogger("payment")
 
 def apply_payment_to_invoices(payment: Payment):
     """
@@ -30,6 +30,7 @@ def apply_payment_to_invoices(payment: Payment):
                 category=LedgerEntryCategory.PAYMENT,
                 amount=payment.amount,
                 entry_type=LedgerEntryType.CREDIT,
+                payment=payment,
                 entry_date=payment.payment_date,
                 created_by=payment.created_by
             )
