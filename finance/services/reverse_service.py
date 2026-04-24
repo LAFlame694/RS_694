@@ -15,79 +15,83 @@ logger = logging.getLogger("reverse")
 @transaction.atomic
 def reverse_payment(payment):
     """
-    Reverse a payment safely.
-    - Blocks reversal if any credit has already been used
+    Fully reverses a payment.
 
-    steps:
-    1. validate reversal safety
-    2. reverse ledger entry
-    3. Undo payment allocations
-    4. Recalculate invoices
+    1. Reverse credit allocations (internal)
+    2. Reverse payment allocations (external)
+    3. Reverse ledger entries
+    4. Recalculate invices
     """
 
-    logger.info(f"Starting reversal | payment={payment.id}")
+    logger.info(f" Starting FULL reversal | payment ID={payment.id} | amount={payment.amount}")
 
-    # 1. get ledger entry
+    # get ledger entry
     try:
         ledger_entry = payment.ledger_entry
     except LedgerEntry.DoesNotExist:
+        logger.error(f" No ledger entry found for payment ID={payment.id}")
         raise Exception("No ledger entry found for this payment")
     
-    # 2. prevent double reversal
+    # prevent double reversal
     if ledger_entry.reversals.exists():
+        logger.error(f" Payment ID={payment.id} has already been reversed")
         raise Exception("This payment has already been reversed")
     
-    # 3. PROTECTION: Block if credit has already been used
-    credit_used = CreditAllocation.objects.filter(
-        ledger_account=payment.ledger_account
-    ).exists()
-
-    if credit_used:
-        raise Exception(
-            "Cannot reverse payment. Credit has already been applied to invoices."
-        )
-    
-    # 4. create reversal ledger entry
-    reversal_entry = LedgerEntry.objects.create(
-        ledger_account=ledger_entry.ledger_account,
-        category=LedgerEntryCategory.REVERSAL,
-        amount=ledger_entry.amount,
-        entry_type=LedgerEntryType.CHARGE, # reverse CREDIT
-        related_entry=ledger_entry,
-        entry_date=ledger_entry.entry_date,
-        created_by=ledger_entry.created_by
-    )
-
-    logger.info(
-        f"Reversal ledger created | original={ledger_entry.id} | reversal={reversal_entry.id}"
-    )
-
-    # 5. get all allocations
-    allocations = PaymentAllocation.objects.filter(payment=payment)
-
     affected_invoices = set()
 
-    for allocation in allocations:
+    # 1. Reverse credit allocations (internal)
+    credit_allocations = CreditAllocation.objects.filter(payment=payment)
+
+    for allocation in credit_allocations:
         invoice = allocation.invoice
         affected_invoices.add(invoice.id)
 
         logger.info(
-            f"Reversing allocation | payment={payment.id} -> invoice={invoice.id} | amount={allocation.amount_applied}"
+            f" Reversing credit allocation ID={payment.id} -> invoice={invoice.id} | amount={allocation.amount_applied}"
         )
 
         allocation.delete()
+    
+    # 2. Reverse payment allocations (external)
+    payment_allocations = PaymentAllocation.objects.filter(payment=payment)
 
-    # 6. recalculate affected invoices
+    for allocation in payment_allocations:
+        invoice = allocation.invoice
+        affected_invoices.add(invoice.id)
+
+        logger.info(
+            f" Reversing payment allocation ID={payment.id} -> invoice={invoice.id} | amount={allocation.amount_applied}"
+        )
+
+        allocation.delete()
+    
+    # 3. Reverse ledger entry
+    reversal_entry = LedgerEntry.objects.create(
+        ledger_account=ledger_entry.ledger_account,
+        category=LedgerEntryCategory.REVERSAL,
+        amount=-ledger_entry.amount,
+        entry_type=LedgerEntryType.CHARGE,
+        related_entry=ledger_entry,
+        entry_date=ledger_entry.entry_date,
+        description=f"Reversal of payment ID={payment.id}",
+        created_by=ledger_entry.created_by
+    )
+
+    logger.info(
+        f"Ledger reversed | original={ledger_entry.id} | reversal={reversal_entry.id}"
+        )
+    
+    # 4. Recalculate invoices
     for invoice_id in affected_invoices:
         invoice = Invoice.objects.get(id=invoice_id)
 
         payment_total = invoice.payment_allocations.aggregate(
-            total=Sum("amount_applied")
-        )["total"] or Decimal("0.00")
+            total=Sum('amount_applied')
+        )['total'] or Decimal('0.00')
 
         credit_total = invoice.credit_allocations.aggregate(
-            total=Sum("amount_applied")
-        )["total"] or Decimal("0.00")
+            total=Sum('amount_applied')
+        )['total'] or Decimal('0.00')
 
         total_paid = payment_total + credit_total
 
@@ -99,13 +103,11 @@ def reverse_payment(payment):
             invoice.status = InvoiceStatus.PARTIAL
         else:
             invoice.status = InvoiceStatus.PAID
-
-        invoice.save(update_fields=["amount_paid", "status"])
+        
+        invoice.save(update_fields=['amount_paid', 'status'])
 
         logger.info(
-            f"Invoice recalculated | invoice={invoice.id} | paid={total_paid} | status={invoice.status}"
+            f"Invoice recalculated | invoice={invoice.id} | paid={total_paid}"
         )
-    
-    logger.info(
-        f"Payment reversal complete | payment={payment.id}"
-    )
+
+    logger.info(f" FULL reversal completed | payment ID={payment.id}")

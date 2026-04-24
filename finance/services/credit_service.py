@@ -16,7 +16,8 @@ logger = logging.getLogger("credit")
 def get_available_credit(ledger_account):
     payments = Payment.objects.filter(
         ledger_account=ledger_account,
-        ledger_entry__reversals__isnull=True
+        ledger_entry__reversals__isnull=True,
+        ledger_entry__related_entry__isnull=True
     )
 
     total_available = Decimal("0.00")
