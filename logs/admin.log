@@ -10,3 +10,10 @@
 2026-04-22 20:38:20,160 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=4
 2026-04-22 20:38:52,380 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=4
 2026-04-22 20:43:20,670 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=4
+2026-04-27 10:22:14,416 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=1
+2026-04-27 10:22:51,412 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=1
+2026-04-27 10:23:42,972 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=1
+2026-04-27 10:24:03,062 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=1
+2026-04-27 10:31:58,292 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
+2026-04-27 10:33:52,815 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=1
+2026-04-27 11:04:19,778 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=2

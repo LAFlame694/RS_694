@@ -4,3 +4,21 @@
 2026-04-22 20:32:22,939 | INFO | credit | Processing payment credit | payment=3 | remaining=12000.00
 2026-04-22 20:32:22,950 | INFO | credit | Credit applied 7000.00 | payment=3 -> invoice=6 | remaining_credit=5000.00
 2026-04-22 20:32:22,952 | INFO | credit | Credit application complete | ledger=3
+2026-04-26 22:19:45,914 | INFO | credit | Processing payment credit | payment=4 | remaining=15000.00
+2026-04-26 22:19:45,934 | INFO | credit | Credit applied 7000.00 | payment=4 -> invoice=7 | remaining_credit=8000.00
+2026-04-26 22:19:45,935 | INFO | credit | Credit application complete | ledger=4
+2026-04-26 23:17:27,245 | INFO | credit | Processing payment credit | payment=3 | remaining=12000.00
+2026-04-26 23:17:27,258 | INFO | credit | Credit applied 7000.00 | payment=3 -> invoice=6 | remaining_credit=5000.00
+2026-04-26 23:17:27,261 | INFO | credit | Credit applied 140.00 | payment=3 -> invoice=8 | remaining_credit=4860.00
+2026-04-26 23:17:27,262 | INFO | credit | Credit application complete | ledger=3
+2026-04-26 23:17:27,527 | INFO | credit | Processing payment credit | payment=4 | remaining=8000.00
+2026-04-26 23:17:27,540 | INFO | credit | Credit applied 140.00 | payment=4 -> invoice=9 | remaining_credit=7860.00
+2026-04-26 23:17:27,540 | INFO | credit | Credit application complete | ledger=4
+2026-04-27 10:28:18,029 | INFO | credit | Credit application complete | ledger=1
+2026-04-27 10:32:57,833 | INFO | credit | Credit application complete | ledger=1
+2026-04-27 10:52:42,686 | INFO | credit | Processing payment credit | payment=1 | remaining=5000.00
+2026-04-27 10:52:42,700 | INFO | credit | Credit applied 600.00 | payment=1 -> invoice=2 | remaining_credit=4400.00
+2026-04-27 10:52:42,700 | INFO | credit | Credit application complete | ledger=1
+2026-04-27 11:05:17,361 | INFO | credit | Processing payment credit | payment=1 | remaining=4400.00
+2026-04-27 11:05:17,386 | INFO | credit | Credit applied 400.00 | payment=1 -> invoice=3 | remaining_credit=4000.00
+2026-04-27 11:05:17,387 | INFO | credit | Credit application complete | ledger=1

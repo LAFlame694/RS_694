@@ -115,17 +115,6 @@ def generate_recurring_charge_invoices(today, system_user):
         logger.info(
             f"Processing charge {charge.id} | property={charge.property.id} | amount={charge.amount}"
         )
-
-        # prevent duplicate monthly runs
-        if charge.last_generated_date:
-            if (
-                charge.last_generated_date.month == today.month and
-                charge.last_generated_date.year == today.year
-            ):
-                logger.info(
-                    f"Skipping charge {charge.id} - already generated this month"
-                )
-                continue
         
         if charge.day_of_month and today.day < charge.day_of_month:
             logger.info(

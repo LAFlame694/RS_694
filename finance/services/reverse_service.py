@@ -4,6 +4,7 @@ from django.db import transaction
 
 from finance.models import LedgerEntry, CreditAllocation, PaymentAllocation
 from finance.choices import LedgerEntryType, LedgerEntryCategory
+from finance.services.reversal_utils import validate_credit_lifo, validate_payment_lifo, block_payment_if_credit_exists
 
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
@@ -11,6 +12,112 @@ from billing.choices import InvoiceStatus
 import logging
 
 logger = logging.getLogger("reverse")
+
+@transaction.atomic
+def reverse_payment_allocation(allocation_id):
+    """
+    RULE:
+    - Block if this payment has credit allocations
+    """
+
+    try:
+        allocation = PaymentAllocation.objects.select_related("invoice", "payment").get(id=allocation_id)
+    except PaymentAllocation.DoesNotExist:
+        logger.error(
+            f"Payment allocation ID={allocation_id} does not exist"
+        )
+        raise Exception("Payment allocation not found")
+    
+    payment = allocation.payment
+    invoice = allocation.invoice
+
+    # Check for credit allocations on this payment
+    credit_used = CreditAllocation.objects.filter(payment=payment).exists()
+
+    if credit_used:
+        logger.error(
+            f"Cannot reverse payment allocation ID={allocation_id} because payment ID={payment.id} has credit allocations"
+        )
+        raise Exception(
+            "Cannot reverse payment allocation with credit allocations."
+            "Please reverse credit allocations first."
+            )
+    
+    logger.info(
+        f"Reversing payment allocation | allocation={allocation.id} | invoice={invoice.id} | amount={allocation.amount_applied}"
+    )
+
+    # delete the allocation
+    allocation.delete()
+
+    # recalculate invoice
+    payment_total = invoice.payment_allocations.aggregate(
+        total=Sum('amount_applied')
+    )['total'] or Decimal('0.00')
+
+    credit_total = invoice.credit_allocations.aggregate(
+        total=Sum('amount_applied')
+    )['total'] or Decimal('0.00')
+
+    total_paid = payment_total + credit_total
+
+    invoice.amount_paid = total_paid
+
+    if total_paid == 0:
+        invoice.status = InvoiceStatus.ISSUED
+    elif total_paid < invoice.total_amount:
+        invoice.status = InvoiceStatus.PARTIAL
+    else:
+        invoice.status = InvoiceStatus.PAID
+    
+    invoice.save(update_fields=['amount_paid', 'status'])
+
+    logger.info(
+        f"Payment allocation reversed successfully | invoice={invoice.id} | new paid={total_paid}"
+    )
+
+@transaction.atomic
+def reverse_credit_allocation(allocation_id):
+    try:
+        allocation = CreditAllocation.objects.select_related("invoice").get(id=allocation_id)
+    except CreditAllocation.DoesNotExist:
+        logger.error(f"Credit allocation ID={allocation_id} does not exist")
+        raise Exception("Credit allocation not found")
+    
+    invoice = allocation.invoice
+
+    logger.info(
+        f"Reversing CREDIT allocation | allocation={allocation.id} | invoice={invoice.id} | amount={allocation.amount_applied}"
+    )
+
+    # Delete the allocation
+    allocation.delete()
+
+    # Recalculate invoice
+    payment_total = invoice.payment_allocations.aggregate(
+        total=Sum('amount_applied')
+    )['total'] or Decimal('0.00')
+
+    credit_total = invoice.credit_allocations.aggregate(
+        total=Sum('amount_applied')
+    )['total'] or Decimal('0.00')
+
+    total_paid = payment_total + credit_total
+
+    invoice.amount_paid = total_paid
+
+    if total_paid == 0:
+        invoice.status = InvoiceStatus.ISSUED
+    elif total_paid < invoice.total_amount:
+        invoice.status = InvoiceStatus.PARTIAL
+    else:
+        invoice.status = InvoiceStatus.PAID
+    
+    invoice.save(update_fields=['amount_paid', 'status'])
+
+    logger.info(
+        f"Credit allocation reversed successfully | invoice={invoice.id} | new paid={total_paid}"
+    )
 
 @transaction.atomic
 def reverse_payment(payment):

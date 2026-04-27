@@ -141,12 +141,21 @@ class PaymentAllocation(models.Model):
 
     class Meta:
         constraints = [
+            # prevent duplicate allocation for same payment -> invoice
             models.UniqueConstraint(
                 fields=["payment", "invoice"],
                 name="unique_payment_invoice_allocation"
-            )
+            ),
+            # prevent zero or negative allocations
+            models.CheckConstraint(
+                condition=models.Q(amount_applied__gt=0),
+                name="payment_allocation_amount_positive"
+            ),
         ]
-    
+
+        # enforce ordering at DB query level (helps LIFO logic)
+        ordering = ["-created_at"]
+
     def __str__(self):
         return f"{self.payment} -> {self.invoice} ({self.amount_applied})"
 
@@ -182,8 +191,16 @@ class CreditAllocation(models.Model):
             models.UniqueConstraint(
                 fields=["payment", "invoice"],
                 name="unique_payment_invoice_credit_allocation"
+            ),
+
+            # enforce positive credit allocations
+            models.CheckConstraint(
+                condition=models.Q(amount_applied__gt=0),
+                name="credit_allocation_amount_positive"
             )
         ]
+
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"Credit {self.amount_applied} from payment {self.payment.id} -> Invoice {self.invoice.id}"

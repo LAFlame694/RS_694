@@ -1,11 +1,5 @@
-2026-04-24 07:44:17,345 | INFO | reverse |  Starting FULL reversal | payment ID=3 | amount=12000.00
-2026-04-24 07:44:17,349 | ERROR | reverse |  No ledger entry found for payment ID=3
-2026-04-24 07:52:33,493 | INFO | reverse |  Starting FULL reversal | payment ID=2 | amount=10000.00
-2026-04-24 07:52:33,500 | INFO | reverse |  Reversing credit allocation ID=2 -> invoice=1 | amount=6000.00
-2026-04-24 07:52:33,548 | INFO | reverse |  Reversing credit allocation ID=2 -> invoice=3 | amount=140.00
-2026-04-24 07:52:33,550 | INFO | reverse |  Reversing credit allocation ID=2 -> invoice=5 | amount=210.00
-2026-04-24 07:52:33,557 | INFO | reverse | Ledger reversed | original=5 | reversal=10
-2026-04-24 07:52:33,563 | INFO | reverse | Invoice recalculated | invoice=1 | paid=0.00
-2026-04-24 07:52:33,569 | INFO | reverse | Invoice recalculated | invoice=3 | paid=0.00
-2026-04-24 07:52:33,575 | INFO | reverse | Invoice recalculated | invoice=5 | paid=0.00
-2026-04-24 07:52:33,575 | INFO | reverse |  FULL reversal completed | payment ID=2
+2026-04-27 10:41:54,857 | INFO | reverse | Reversing payment allocation | allocation=2 | invoice=2 | amount=600.00
+2026-04-27 10:41:54,865 | INFO | reverse | Payment allocation reversed successfully | invoice=2 | new paid=0.00
+2026-04-27 11:02:06,545 | ERROR | reverse | Cannot reverse payment allocation ID=1 because payment ID=1 has credit allocations
+2026-04-27 11:13:40,233 | INFO | reverse | Reversing CREDIT allocation | allocation=1 | invoice=2 | amount=600.00
+2026-04-27 11:13:40,242 | INFO | reverse | Credit allocation reversed successfully | invoice=2 | new paid=0.00

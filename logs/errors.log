@@ -1,1 +1,2 @@
 2026-04-24 07:44:17,349 | ERROR | reverse |  No ledger entry found for payment ID=3
+2026-04-27 11:02:06,545 | ERROR | reverse | Cannot reverse payment allocation ID=1 because payment ID=1 has credit allocations
