@@ -1,10 +1,8 @@
 from decimal import Decimal
 from django.db.models import Sum
-from django.db import models, transaction
+from django.db import transaction
 
-from finance.models import LedgerEntry, CreditAllocation, PaymentAllocation, Payment
-from finance.choices import LedgerEntryType
-
+from finance.models import DepositAllocation, CreditAllocation, PaymentAllocation, Payment
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
 from finance.models import CreditAllocation
@@ -37,7 +35,14 @@ def get_available_credit(ledger_account):
             total=Sum("amount_applied")
         )["total"] or Decimal("0.00")
 
-        remaining = payment.amount - (payment_used + credit_used)
+        # deposit reserved from this payment (not available for credit)
+        deposit_used = DepositAllocation.objects.filter(
+            payment=payment
+        ).aggregate(
+            total=Sum("amount")
+        )["total"] or Decimal("0.00")
+
+        remaining = payment.amount - (payment_used + credit_used + deposit_used)
 
         if remaining > 0:
             total_available += remaining
@@ -78,7 +83,13 @@ def apply_credit_to_invoices(ledger_account):
             total=Sum("amount_applied")
         )["total"] or Decimal("0.00")
 
-        remaining_credit = payment.amount - (payment_used + credit_used)
+        deposit_used = DepositAllocation.objects.filter(
+            payment=payment
+        ).aggregate(
+            total=Sum("amount")
+        )["total"] or Decimal("0.00")
+
+        remaining_credit = payment.amount - (payment_used + credit_used + deposit_used)
 
         if remaining_credit <= 0:
             continue

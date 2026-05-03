@@ -109,7 +109,7 @@ def apply_payment_to_invoices(payment: Payment):
             logger.info(
                 f"Allocation comlpete | payment={payment.id}"
             )
-    
+ 
     except Exception as e:
         logger.error(
             f"Payment allocation failed | payment={payment.id} | error={str(e)}",

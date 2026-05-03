@@ -12,6 +12,7 @@ class LedgerEntryCategory(models.TextChoices):
     PAYMENT = "PAYMENT", "Payment"
     ADJUSTMENT = "ADJUSTMENT", "Adjustment"
     REVERSAL = "REVERSAL", "Reversal"
+    REFUND = "REFUND", "Refund"
 
 # direction of money flow
 class LedgerEntryType(models.TextChoices):

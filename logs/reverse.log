@@ -1,5 +1,0 @@
-2026-04-27 10:41:54,857 | INFO | reverse | Reversing payment allocation | allocation=2 | invoice=2 | amount=600.00
-2026-04-27 10:41:54,865 | INFO | reverse | Payment allocation reversed successfully | invoice=2 | new paid=0.00
-2026-04-27 11:02:06,545 | ERROR | reverse | Cannot reverse payment allocation ID=1 because payment ID=1 has credit allocations
-2026-04-27 11:13:40,233 | INFO | reverse | Reversing CREDIT allocation | allocation=1 | invoice=2 | amount=600.00
-2026-04-27 11:13:40,242 | INFO | reverse | Credit allocation reversed successfully | invoice=2 | new paid=0.00

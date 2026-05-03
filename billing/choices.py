@@ -11,3 +11,11 @@ class InvoiceStatus(models.TextChoices):
     PAID = "PAID", "Paid"
     OVERDUE = "OVERDUE", "Overdue"
     CANCELLED = "CANCELLED", "Cancelled"
+
+class InvoiceCategory(models.TextChoices):
+    RENT = "RENT", "Rent"   
+    WATER = "WATER", "Water"
+    ELECTRICITY = "ELECTRICITY", "Electricity"
+    GARBAGE = "GARBAGE", "Garbage"
+    PENALTY = "PENALTY", "Penalty"
+    OTHER = "OTHER", "Other"

@@ -1,8 +1,11 @@
 import uuid
+
 from django.db import models
+from django.conf import settings
+from django.db.models import Q, Sum
+
 from tenants.models import Tenancy
 from billing.models import Invoice
-from django.conf import settings
 from .choices import LedgerEntryCategory, LedgerEntryType, PaymentMethod
 
 # Create your models here.
@@ -204,3 +207,42 @@ class CreditAllocation(models.Model):
 
     def __str__(self):
         return f"Credit {self.amount_applied} from payment {self.payment.id} -> Invoice {self.invoice.id}"
+    
+class DepositAllocation(models.Model):
+    """
+    Tracks how much of a payment is reserved as DEPOSIT.
+    This amount is NOT available for invoice settlement.
+    """
+
+    ledger_account = models.ForeignKey(
+        LedgerAccount,
+        on_delete=models.CASCADE,
+        related_name="deposit_allocations"
+    )
+
+    payment = models.ForeignKey(
+        Payment,
+        on_delete=models.PROTECT,
+        related_name="deposit_allocations"
+    )
+
+    amount = models.DecimalField(
+        max_digits=20,
+        decimal_places=2
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            # prevent -ve or zero deposits
+            models.CheckConstraint(
+                condition=Q(amount__gt=0),
+                name="deposit_amount_positive"
+            ),
+
+            # Prevent over-allocation beyond payment amount (enforced at service level)
+        ]
+    
+    def __str__(self):
+        return f"Deposit {self.amount} from payment {self.payment.id}"

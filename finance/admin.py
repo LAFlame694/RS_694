@@ -4,7 +4,8 @@ from .models import (
     LedgerEntry, 
     Payment, 
     PaymentAllocation,
-    CreditAllocation
+    CreditAllocation,
+    DepositAllocation,
 )
 from core.admin_mixins import LandlordFilteredAdmin
 from accounts.models import Role
@@ -106,3 +107,14 @@ class CreditAllocationAdmin(LandlordFilteredAdmin):
     search_fields = (
         "invoice__id",
     )
+@admin.register(DepositAllocation)
+class DepositAllocationAdmin(LandlordFilteredAdmin):
+    landlord_lookup = "ledger_account__tenancy__unit__property__landlord"
+
+    list_display = (
+        "ledger_account",
+        "amount",
+        "created_at",
+    )
+
+    list_filter = ("created_at",)

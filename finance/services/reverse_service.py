@@ -5,6 +5,7 @@ from django.db import transaction
 from finance.models import LedgerEntry, CreditAllocation, PaymentAllocation
 from finance.choices import LedgerEntryType, LedgerEntryCategory
 from finance.services.reversal_utils import validate_credit_lifo, validate_payment_lifo, block_payment_if_credit_exists
+from finance.services.accounting_service import settle_account
 
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
@@ -15,13 +16,10 @@ logger = logging.getLogger("reverse")
 
 @transaction.atomic
 def reverse_payment_allocation(allocation_id):
-    """
-    RULE:
-    - Block if this payment has credit allocations
-    """
-
     try:
-        allocation = PaymentAllocation.objects.select_related("invoice", "payment").get(id=allocation_id)
+        allocation = PaymentAllocation.objects.select_related(
+            "invoice", "payment"
+        ).get(id=allocation_id)
     except PaymentAllocation.DoesNotExist:
         logger.error(
             f"Payment allocation ID={allocation_id} does not exist"
@@ -31,32 +29,43 @@ def reverse_payment_allocation(allocation_id):
     payment = allocation.payment
     invoice = allocation.invoice
 
-    # Check for credit allocations on this payment
-    credit_used = CreditAllocation.objects.filter(payment=payment).exists()
+    # block if credit allocations exist
+    credit_exists = CreditAllocation.objects.filter(payment=payment).exists()
 
-    if credit_used:
+    if credit_exists:
         logger.error(
-            f"Cannot reverse payment allocation ID={allocation_id} because payment ID={payment.id} has credit allocations"
+            f"Cannot reverse payment allocation | payment={payment.id} has credit allocations"
         )
         raise Exception(
-            "Cannot reverse payment allocation with credit allocations."
-            "Please reverse credit allocations first."
-            )
+            "Reverse credit allocations first before reversing payment allocations"
+        )
+    
+    # LIFO check
+    last_allocation = PaymentAllocation.objects.filter(
+        payment=payment
+    ).order_by('-created_at', '-id').first()
+
+    if last_allocation.id != allocation.id:
+        logger.error(
+            f"LIFO violation | allocation={allocation.id} is not for payment={payment.id}"
+        )
+        raise Exception("Only the most recent allocation can be reversed")
     
     logger.info(
-        f"Reversing payment allocation | allocation={allocation.id} | invoice={invoice.id} | amount={allocation.amount_applied}"
+        f"Reversing payment allocation | allocation={allocation.id} | "
+        f"payment={payment.id} | invoice={invoice.id} | amount={allocation.amount_applied}"
     )
 
-    # delete the allocation
+    # Delete allocation
     allocation.delete()
 
-    # recalculate invoice
+    # Recalculate invoice
     payment_total = invoice.payment_allocations.aggregate(
-        total=Sum('amount_applied')
+        total=Sum("amount_applied")
     )['total'] or Decimal('0.00')
 
     credit_total = invoice.credit_allocations.aggregate(
-        total=Sum('amount_applied')
+        total=Sum("amount_applied")
     )['total'] or Decimal('0.00')
 
     total_paid = payment_total + credit_total
@@ -69,7 +78,7 @@ def reverse_payment_allocation(allocation_id):
         invoice.status = InvoiceStatus.PARTIAL
     else:
         invoice.status = InvoiceStatus.PAID
-    
+
     invoice.save(update_fields=['amount_paid', 'status'])
 
     logger.info(
@@ -79,27 +88,44 @@ def reverse_payment_allocation(allocation_id):
 @transaction.atomic
 def reverse_credit_allocation(allocation_id):
     try:
-        allocation = CreditAllocation.objects.select_related("invoice").get(id=allocation_id)
+        allocation = CreditAllocation.objects.select_related(
+            "invoice", "payment"
+        ).get(id=allocation_id)
     except CreditAllocation.DoesNotExist:
-        logger.error(f"Credit allocation ID={allocation_id} does not exist")
+        logger.error(
+            f"Credit allocation ID={allocation_id} does not exist"
+        )
         raise Exception("Credit allocation not found")
     
+    payment = allocation.payment
     invoice = allocation.invoice
 
+    # LIFO check
+    last_allocation = CreditAllocation.objects.filter(
+        payment=payment
+    ).order_by('-created_at', '-id').first()
+
+    if last_allocation.id != allocation.id:
+        logger.error(
+            f"LIFO violation | allocation={allocation.id} is not for payment={payment.id}"
+        )
+        raise Exception("Only the most recent allocation can be reversed")
+    
     logger.info(
-        f"Reversing CREDIT allocation | allocation={allocation.id} | invoice={invoice.id} | amount={allocation.amount_applied}"
+        f"Reversing credit allocation | allocation={allocation.id} | "
+        f"payment={payment.id} | invoice={invoice.id} | amount={allocation.amount_applied}"
     )
 
-    # Delete the allocation
+    # Delete allocation
     allocation.delete()
 
     # Recalculate invoice
     payment_total = invoice.payment_allocations.aggregate(
-        total=Sum('amount_applied')
+        total=Sum("amount_applied")
     )['total'] or Decimal('0.00')
 
     credit_total = invoice.credit_allocations.aggregate(
-        total=Sum('amount_applied')
+        total=Sum("amount_applied")
     )['total'] or Decimal('0.00')
 
     total_paid = payment_total + credit_total
@@ -112,7 +138,7 @@ def reverse_credit_allocation(allocation_id):
         invoice.status = InvoiceStatus.PARTIAL
     else:
         invoice.status = InvoiceStatus.PAID
-    
+
     invoice.save(update_fields=['amount_paid', 'status'])
 
     logger.info(

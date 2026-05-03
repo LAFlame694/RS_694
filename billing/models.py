@@ -9,7 +9,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from finance.choices import LedgerEntryCategory
 from properties.models import Unit, Property
 from properties.choices import UnitType
-from .choices import MeterReadingStatus, InvoiceStatus
+from .choices import MeterReadingStatus, InvoiceStatus, InvoiceCategory
 from tenants.models import Tenancy
 from .utils import get_previous_month_period
 
@@ -34,7 +34,7 @@ class Invoice(models.Model):
     )
     category = models.CharField(
         max_length=20,
-        choices=LedgerEntryCategory.choices
+        choices=InvoiceCategory.choices
     )
     invoice_number = models.CharField(max_length=50, unique=True, blank=True)
     issue_date = models.DateField(default=timezone.now)

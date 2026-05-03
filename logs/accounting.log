@@ -1,9 +1,3 @@
-2026-04-27 10:28:18,022 | INFO | accounting | --- Settling account 1 ---
-2026-04-27 10:28:18,023 | INFO | accounting | Applying available credit
-2026-04-27 10:28:18,032 | INFO | accounting | --- Settlement complete for LA-FDF39213E2 - Enzo Fernandez - Thika Road Apartments - A100 - BEDSITTER - ACTIVE ---
-2026-04-27 10:32:57,828 | INFO | accounting | --- Settling account 1 ---
-2026-04-27 10:32:57,829 | INFO | accounting | Applying available credit
-2026-04-27 10:32:57,836 | INFO | accounting | --- Settlement complete for LA-FDF39213E2 - Enzo Fernandez - Thika Road Apartments - A100 - BEDSITTER - ACTIVE ---
-2026-04-27 11:05:17,337 | INFO | accounting | --- Settling account 1 ---
-2026-04-27 11:05:17,339 | INFO | accounting | Applying available credit
-2026-04-27 11:05:17,389 | INFO | accounting | --- Settlement complete for LA-FDF39213E2 - Enzo Fernandez - Thika Road Apartments - A100 - BEDSITTER - ACTIVE ---
+2026-05-03 16:21:11,182 | INFO | accounting | --- Settling account 2 ---
+2026-05-03 16:21:11,184 | INFO | accounting | Applying available credit
+2026-05-03 16:21:11,235 | INFO | accounting | --- Settlement complete for LA-B5D1C7ED67 - Mesut Ozil - Thika Road Apartment - A2 - BEDSITTER - ACTIVE ---
