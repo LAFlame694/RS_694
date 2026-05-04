@@ -37,3 +37,11 @@
 2026-05-03 15:52:48,023 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=2
 2026-05-03 16:18:32,961 | INFO | admin | ADMIN CREATE | user=Admin | model=DepositAllocation | id=2
 2026-05-03 16:25:02,114 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=3
+2026-05-04 21:40:33,229 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=1
+2026-05-04 21:41:36,460 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=1
+2026-05-04 21:41:51,736 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=1
+2026-05-04 21:43:11,485 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=1
+2026-05-04 21:44:14,399 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=1
+2026-05-04 21:44:47,535 | INFO | admin | ADMIN CREATE | user=Admin | model=DepositAllocation | id=1
+2026-05-04 21:57:40,528 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=2
+2026-05-04 22:56:13,248 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=2

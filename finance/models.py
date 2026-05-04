@@ -2,11 +2,11 @@ import uuid
 
 from django.db import models
 from django.conf import settings
-from django.db.models import Q, Sum
+from django.db.models import Q
 
 from tenants.models import Tenancy
 from billing.models import Invoice
-from .choices import LedgerEntryCategory, LedgerEntryType, PaymentMethod
+from .choices import LedgerEntryCategory, LedgerEntryType, PaymentMethod, SourceChoices
 
 # Create your models here.
 class LedgerAccount(models.Model):
@@ -183,6 +183,12 @@ class CreditAllocation(models.Model):
         Invoice,
         on_delete=models.CASCADE,
         related_name="credit_allocations"
+    )
+
+    source = models.CharField(
+        max_length=20,
+        choices=SourceChoices.choices,
+        default=SourceChoices.NORMAL
     )
 
     amount_applied = models.DecimalField(max_digits=20, decimal_places=2)

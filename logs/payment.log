@@ -5,3 +5,10 @@
 2026-05-03 16:25:02,112 | INFO | payment | Allocated 2000.00 | payment=3 -> invoice=2
 2026-05-03 16:25:02,113 | INFO | payment | Overpayment detected | payment=3 | remaining=3000.00
 2026-05-03 16:25:02,113 | INFO | payment | Allocation comlpete | payment=3
+2026-05-04 21:44:14,351 | INFO | payment | Starting allocation | payment=1 | amount=30000
+2026-05-04 21:44:14,398 | INFO | payment | Overpayment detected | payment=1 | remaining=30000
+2026-05-04 21:44:14,399 | INFO | payment | Allocation comlpete | payment=1
+2026-05-04 22:56:13,239 | INFO | payment | Starting allocation | payment=2 | amount=5000
+2026-05-04 22:56:13,247 | INFO | payment | Allocated 500.00 | payment=2 -> invoice=2
+2026-05-04 22:56:13,248 | INFO | payment | Overpayment detected | payment=2 | remaining=4500.00
+2026-05-04 22:56:13,248 | INFO | payment | Allocation comlpete | payment=2

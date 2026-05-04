@@ -26,3 +26,7 @@ class PaymentMethod(models.TextChoices):
     CARD = "CARD", "Card"
     CHEQUE = "CHEQUE", "Cheque"
     OTHER = "OTHER", "Other"
+
+class SourceChoices(models.TextChoices):
+    NORMAL = "NORMAL", "Normal Credit"
+    DEPOSIT = "DEPOSIT", "Deposit"

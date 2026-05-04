@@ -190,6 +190,14 @@ LOGGING = {
             'backupCount': 5,
             'formatter': 'standard',
         },
+        'deposit_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'deposit.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
         'system_file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -258,6 +266,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'deposit': {
+            'handlers': ['deposit_file', 'error_file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
         'admin': {
             'handlers': ['admin_file', 'error_file'],
             'level': 'INFO',
@@ -269,7 +282,7 @@ LOGGING = {
             'propagate': False,
         },
         'django': {
-            'handlers': ['error_file'],
+            'handlers': ['error_file', 'console'],
             'level': 'ERROR',
             'propagate': True,
         },

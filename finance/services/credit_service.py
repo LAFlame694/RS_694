@@ -6,6 +6,7 @@ from finance.models import DepositAllocation, CreditAllocation, PaymentAllocatio
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
 from finance.models import CreditAllocation
+from finance.choices import SourceChoices
 
 import logging
 
@@ -30,7 +31,8 @@ def get_available_credit(ledger_account):
 
         # money used via credit allocations
         credit_used = CreditAllocation.objects.filter(
-            payment=payment
+            payment=payment,
+            source=SourceChoices.NORMAL
         ).aggregate(
             total=Sum("amount_applied")
         )["total"] or Decimal("0.00")
@@ -78,7 +80,8 @@ def apply_credit_to_invoices(ledger_account):
         )["total"] or Decimal("0.00")
 
         credit_used = CreditAllocation.objects.filter(
-            payment=payment
+            payment=payment,
+            source=SourceChoices.NORMAL
         ).aggregate(
             total=Sum("amount_applied")
         )["total"] or Decimal("0.00")
@@ -89,7 +92,16 @@ def apply_credit_to_invoices(ledger_account):
             total=Sum("amount")
         )["total"] or Decimal("0.00")
 
-        remaining_credit = payment.amount - (payment_used + credit_used + deposit_used)
+        total_used = payment_used + credit_used + deposit_used
+
+        if total_used > payment.amount:
+            logger.error(
+                f"Over-allocation detected | payment={payment.id} | "
+                f"Payment amount={payment.amount} | total used={total_used}"
+            )
+            raise Exception("Payment over-allocated. Data inconsistency.")
+
+        remaining_credit = payment.amount - total_used
 
         if remaining_credit <= 0:
             continue
@@ -126,6 +138,7 @@ def apply_credit_to_invoices(ledger_account):
                 ledger_account=ledger_account,
                 payment=payment,
                 invoice=invoice,
+                source=SourceChoices.NORMAL,
                 amount_applied=amount_to_apply
             )
 
