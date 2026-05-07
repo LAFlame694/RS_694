@@ -10,7 +10,6 @@ class LedgerEntryCategory(models.TextChoices):
     PENALTY = "PENALTY", "Penalty"
     OTHER = "OTHER", "Other"
     PAYMENT = "PAYMENT", "Payment"
-    ADJUSTMENT = "ADJUSTMENT", "Adjustment"
     REVERSAL = "REVERSAL", "Reversal"
     REFUND = "REFUND", "Refund"
 

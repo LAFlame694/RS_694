@@ -4,3 +4,9 @@
 2026-05-04 21:51:33,272 | INFO | credit | Processing payment credit | payment=1 | remaining=20000.00
 2026-05-04 21:51:33,296 | INFO | credit | Credit applied 20000.00 | payment=1 -> invoice=1 | remaining_credit=0.00
 2026-05-04 21:51:33,297 | INFO | credit | Credit application complete | ledger=1
+2026-05-05 23:32:52,030 | INFO | credit | Processing payment credit | payment=1 | remaining=15000.00
+2026-05-05 23:32:52,057 | INFO | credit | Credit applied 7000.00 | payment=1 -> invoice=1 | remaining_credit=8000.00
+2026-05-05 23:32:52,058 | INFO | credit | Credit application complete | ledger=1
+2026-05-05 23:42:38,729 | INFO | credit | Processing payment credit | payment=1 | remaining=8000.00
+2026-05-05 23:42:38,741 | INFO | credit | Credit applied 2000.00 | payment=1 -> invoice=2 | remaining_credit=6000.00
+2026-05-05 23:42:38,741 | INFO | credit | Credit application complete | ledger=1

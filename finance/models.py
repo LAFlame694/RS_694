@@ -47,6 +47,11 @@ class LedgerEntry(models.Model):
         on_delete=models.PROTECT,
         related_name="ledger_entries"
     )
+    source = models.CharField(
+        choices=SourceChoices.choices,
+        null=True,
+        blank=True
+    )
     entry_type = models.CharField(
         max_length=20,
         choices=LedgerEntryType.choices
@@ -55,12 +60,12 @@ class LedgerEntry(models.Model):
         max_length=30,
         choices=LedgerEntryCategory.choices
     )
-    payment = models.OneToOneField(
+    payment = models.ForeignKey(
         "Payment",
         null=True,
         blank=True,
         on_delete=models.PROTECT,
-        related_name="ledger_entry"
+        related_name="ledger_entries"
     )
     amount = models.DecimalField(max_digits=14, decimal_places=2)
     description = models.TextField(blank=True)

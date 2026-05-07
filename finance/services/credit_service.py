@@ -2,11 +2,16 @@ from decimal import Decimal
 from django.db.models import Sum
 from django.db import transaction
 
-from finance.models import DepositAllocation, CreditAllocation, PaymentAllocation, Payment
+from finance.models import (
+    DepositAllocation, 
+    CreditAllocation, 
+    PaymentAllocation, 
+    Payment
+)
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
 from finance.models import CreditAllocation
-from finance.choices import SourceChoices
+from finance.choices import SourceChoices, LedgerEntryCategory
 
 import logging
 
@@ -15,13 +20,14 @@ logger = logging.getLogger("credit")
 def get_available_credit(ledger_account):
     payments = Payment.objects.filter(
         ledger_account=ledger_account,
-        ledger_entry__reversals__isnull=True,
-        ledger_entry__related_entry__isnull=True
-    )
+        ledger_entries__category=LedgerEntryCategory.PAYMENT,
+        ledger_entries__reversals__isnull=True
+    ).distinct()
 
     total_available = Decimal("0.00")
 
     for payment in payments:
+
         # money used via direct payment allocations
         payment_used = PaymentAllocation.objects.filter(
             payment=payment
@@ -44,7 +50,18 @@ def get_available_credit(ledger_account):
             total=Sum("amount")
         )["total"] or Decimal("0.00")
 
-        remaining = payment.amount - (payment_used + credit_used + deposit_used)
+        remaining = payment.amount - (
+            payment_used + 
+            credit_used + 
+            deposit_used
+        )
+
+        if remaining < 0:
+            logger.error(
+                f"Credit inconsistency detected | payment={payment.id}"
+            )
+            remaining = Decimal("0.00")
+        
 
         if remaining > 0:
             total_available += remaining

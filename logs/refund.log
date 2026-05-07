@@ -1,0 +1,16 @@
+2026-05-05 14:19:32,940 | INFO | refund | Starting refund | ledger=1 | amount=5000 | mode=AUTO
+2026-05-05 14:21:55,216 | INFO | refund | Starting refund | ledger=1 | amount=5000 | mode=AUTO
+2026-05-05 14:24:37,357 | INFO | refund | Starting refund | ledger=1 | amount=5000 | mode=AUTO
+2026-05-05 14:50:54,355 | INFO | refund | Starting refund | ledger=1 | amount=5000 | mode=AUTO
+2026-05-05 14:50:54,374 | INFO | refund | Refund completed | ledger=1 | total=5000
+2026-05-05 21:17:28,465 | INFO | refund | Starting refund | ledger=1 | amount=3000 | mode=AUTO
+2026-05-05 21:17:28,490 | INFO | refund | Refund completed | ledger=1 | total=3000
+2026-05-05 21:46:58,370 | INFO | refund | Starting refund | ledger=1 | amount=4500 | mode=AUTO
+2026-05-05 21:46:58,391 | INFO | refund | Refund completed | ledger=1 | total=4500
+2026-05-05 22:55:27,708 | INFO | refund | Starting refund | ledger=1 | amount=4500 | mode=AUTO
+2026-05-07 15:27:17,124 | INFO | refund | Starting deposit refund | ledger=1 | amount=4000
+2026-05-07 15:28:52,439 | INFO | refund | Starting deposit refund | ledger=1 | amount=4000
+2026-05-07 15:30:06,382 | INFO | refund | Starting deposit refund | ledger=1 | amount=4000
+2026-05-07 15:33:36,315 | INFO | refund | Starting deposit refund | ledger=1 | amount=4000
+2026-05-07 15:33:36,360 | INFO | refund | Deposit refunded | payment=1 | amount=4000 | remaining=0
+2026-05-07 15:33:36,360 | INFO | refund | Deposit refund completed successfully | ledger=1 | total=4000

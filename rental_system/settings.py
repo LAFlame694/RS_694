@@ -198,6 +198,14 @@ LOGGING = {
             'backupCount': 5,
             'formatter': 'standard',
         },
+        'refund_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(LOG_DIR / 'refund.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
         'system_file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -268,6 +276,11 @@ LOGGING = {
         },
         'deposit': {
             'handlers': ['deposit_file', 'error_file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'refund': {
+            'handlers': ['refund_file', 'error_file', 'console'],
             'level': 'INFO',
             'propagate': False,
         },

@@ -2,29 +2,22 @@ from decimal import Decimal
 from django.db import transaction
 from django.db.models import Sum
 
-from finance.models import DepositAllocation, CreditAllocation, Payment
+from finance.models import DepositAllocation, CreditAllocation, Payment, LedgerEntry
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
-from finance.choices import SourceChoices
+from finance.choices import SourceChoices, LedgerEntryCategory
 
 import logging
 
 logger = logging.getLogger("deposit")
 
 def get_available_deposit(ledger_account):
-    """
-    Returns total available deposit balance for a ledger account.
-    available deposit = DepositAllocated - DepositUsed
-    
-    - DepositAllocated → from DepositUsed
-    - DepositUsed → CreditAllocation(source="DEPOSIT")
-    """
 
     payments = Payment.objects.filter(
         ledger_account=ledger_account,
-        ledger_entry__reversals__isnull=True, # exclude reversed payments
-        ledger_entry__related_entry__isnull=True # exclude reversal entries
-    )
+        ledger_entries__category=LedgerEntryCategory.PAYMENT,
+        ledger_entries__reversals__isnull=True
+    ).distinct()
 
     total_available = Decimal("0.00")
 
@@ -48,14 +41,25 @@ def get_available_deposit(ledger_account):
             total=Sum("amount_applied")
         )["total"] or Decimal("0.00")
 
+        # deposit refunded
+        refunded_deposit = LedgerEntry.objects.filter(
+            payment=payment,
+            category=LedgerEntryCategory.REFUND,
+            source=SourceChoices.DEPOSIT,
+            reversals__isnull=True
+        ).aggregate(
+            total=Sum("amount")
+        )["total"] or Decimal("0.00")
+
         # remaining deposit
-        remaining = total_deposit - used_deposit
+        remaining = total_deposit - used_deposit - refunded_deposit
 
         # safety guard
         if remaining < 0:
-            raise Exception(
+            logger.error(
                 f"Deposit inconsistency detected | payment={payment.id}"
             )
+            remaining = Decimal("0.00")
         
         total_available += remaining
 

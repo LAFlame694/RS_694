@@ -12,3 +12,6 @@
 2026-05-04 22:56:13,247 | INFO | payment | Allocated 500.00 | payment=2 -> invoice=2
 2026-05-04 22:56:13,248 | INFO | payment | Overpayment detected | payment=2 | remaining=4500.00
 2026-05-04 22:56:13,248 | INFO | payment | Allocation comlpete | payment=2
+2026-05-05 23:25:10,451 | INFO | payment | Starting allocation | payment=1 | amount=25000
+2026-05-05 23:25:10,497 | INFO | payment | Overpayment detected | payment=1 | remaining=25000
+2026-05-05 23:25:10,498 | INFO | payment | Allocation comlpete | payment=1
