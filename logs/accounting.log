@@ -1,12 +1,9 @@
-2026-05-03 16:21:11,182 | INFO | accounting | --- Settling account 2 ---
-2026-05-03 16:21:11,184 | INFO | accounting | Applying available credit
-2026-05-03 16:21:11,235 | INFO | accounting | --- Settlement complete for LA-B5D1C7ED67 - Mesut Ozil - Thika Road Apartment - A2 - BEDSITTER - ACTIVE ---
-2026-05-04 21:51:33,242 | INFO | accounting | --- Settling account 1 ---
-2026-05-04 21:51:33,254 | INFO | accounting | Applying available credit
-2026-05-04 21:51:33,299 | INFO | accounting | --- Settlement complete for LA-0563BC9563 - Enzo Fernandez - Thika Road Apartments - A100 - BEDSITTER - ACTIVE ---
-2026-05-05 23:32:51,993 | INFO | accounting | --- Settling account 1 ---
-2026-05-05 23:32:52,013 | INFO | accounting | Applying available credit
-2026-05-05 23:32:52,061 | INFO | accounting | --- Settlement complete for LA-99BD3004F9 - Enzo Fernandez - Thika Road Apartments - A100 - BEDSITTER - ACTIVE ---
-2026-05-05 23:42:38,721 | INFO | accounting | --- Settling account 1 ---
-2026-05-05 23:42:38,722 | INFO | accounting | Applying available credit
-2026-05-05 23:42:38,750 | INFO | accounting | --- Settlement complete for LA-99BD3004F9 - Enzo Fernandez - Thika Road Apartments - A100 - BEDSITTER - ACTIVE ---
+2026-05-07 22:51:30,588 | INFO | accounting | --- Settling account 1 ---
+2026-05-07 22:51:30,590 | INFO | accounting | Applying available credit
+2026-05-07 22:51:30,603 | INFO | accounting | --- Settlement complete for LA-BF4A61FBA6 - Enzo Fernandez - Gachoka Apartment - A101 - BEDSITTER - ACTIVE ---
+2026-05-07 23:00:51,478 | INFO | accounting | --- Settling account 1 ---
+2026-05-07 23:00:51,479 | INFO | accounting | Applying available credit
+2026-05-07 23:00:51,526 | INFO | accounting | --- Settlement complete for LA-BF4A61FBA6 - Enzo Fernandez - Gachoka Apartment - A101 - BEDSITTER - ACTIVE ---
+2026-05-08 10:09:48,472 | INFO | accounting | --- Settling account 1 ---
+2026-05-08 10:09:48,473 | INFO | accounting | Applying available credit
+2026-05-08 10:09:48,516 | INFO | accounting | --- Settlement complete for LA-BF4A61FBA6 - Enzo Fernandez - Gachoka Apartment - A101 - BEDSITTER - ACTIVE ---

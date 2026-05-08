@@ -57,3 +57,22 @@
 2026-05-07 15:38:04,033 | INFO | admin | ADMIN UPDATE | user=Admin | model=LedgerEntry | id=2
 2026-05-07 16:19:14,408 | INFO | admin | ADMIN UPDATE | user=Admin | model=LedgerEntry | id=1
 2026-05-07 16:27:53,160 | INFO | admin | ADMIN UPDATE | user=Admin | model=LedgerEntry | id=4
+2026-05-07 22:01:05,165 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=2
+2026-05-07 22:10:42,129 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=1
+2026-05-07 22:15:36,009 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=1
+2026-05-07 22:22:34,174 | INFO | admin | ADMIN UPDATE | user=Admin | model=LedgerEntry | id=7
+2026-05-07 22:22:34,174 | INFO | admin | FIELD CHANGE | user=Admin | model=LedgerEntry | id=7 | field=source | from=None | to=NORMAL
+2026-05-07 22:34:39,131 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
+2026-05-07 22:46:23,232 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=1
+2026-05-07 22:47:49,894 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=1
+2026-05-07 22:48:15,471 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=1
+2026-05-07 22:49:43,938 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=1
+2026-05-07 22:53:14,981 | INFO | admin | ADMIN CREATE | user=Admin | model=Payment | id=1
+2026-05-07 22:54:54,138 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=1
+2026-05-07 22:56:03,202 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=1
+2026-05-08 10:06:05,017 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
+2026-05-08 10:40:10,358 | INFO | admin | ADMIN CREATE | user=Admin | model=DepositAllocation | id=1
+2026-05-08 18:01:37,295 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=4
+2026-05-08 18:36:47,234 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=5
+2026-05-08 18:37:42,922 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=6
+2026-05-08 20:58:44,369 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=7

@@ -1,17 +1,111 @@
-2026-05-03 15:52:48,018 | INFO | payment | Starting allocation | payment=2 | amount=20000
-2026-05-03 15:52:48,022 | INFO | payment | Overpayment detected | payment=2 | remaining=20000
-2026-05-03 15:52:48,022 | INFO | payment | Allocation comlpete | payment=2
-2026-05-03 16:25:02,035 | INFO | payment | Starting allocation | payment=3 | amount=5000
-2026-05-03 16:25:02,112 | INFO | payment | Allocated 2000.00 | payment=3 -> invoice=2
-2026-05-03 16:25:02,113 | INFO | payment | Overpayment detected | payment=3 | remaining=3000.00
-2026-05-03 16:25:02,113 | INFO | payment | Allocation comlpete | payment=3
-2026-05-04 21:44:14,351 | INFO | payment | Starting allocation | payment=1 | amount=30000
-2026-05-04 21:44:14,398 | INFO | payment | Overpayment detected | payment=1 | remaining=30000
-2026-05-04 21:44:14,399 | INFO | payment | Allocation comlpete | payment=1
-2026-05-04 22:56:13,239 | INFO | payment | Starting allocation | payment=2 | amount=5000
-2026-05-04 22:56:13,247 | INFO | payment | Allocated 500.00 | payment=2 -> invoice=2
-2026-05-04 22:56:13,248 | INFO | payment | Overpayment detected | payment=2 | remaining=4500.00
-2026-05-04 22:56:13,248 | INFO | payment | Allocation comlpete | payment=2
-2026-05-05 23:25:10,451 | INFO | payment | Starting allocation | payment=1 | amount=25000
-2026-05-05 23:25:10,497 | INFO | payment | Overpayment detected | payment=1 | remaining=25000
-2026-05-05 23:25:10,498 | INFO | payment | Allocation comlpete | payment=1
+2026-05-07 22:53:14,974 | INFO | payment | Starting allocation | payment=1 | amount=30000
+2026-05-07 22:53:14,980 | INFO | payment | Allocated 7000.00 | payment=1 -> invoice=1
+2026-05-07 22:53:14,980 | INFO | payment | Overpayment detected | payment=1 | remaining=23000.00
+2026-05-07 22:53:14,981 | INFO | payment | Allocation comlpete | payment=1
+2026-05-08 10:50:31,377 | INFO | payment | Starting allocation | payment=2 | amount=12000
+2026-05-08 10:50:31,380 | INFO | payment | Overpayment detected | payment=2 | remaining=12000
+2026-05-08 10:50:31,380 | INFO | payment | Allocation comlpete | payment=2
+2026-05-08 22:15:06,683 | INFO | payment | Starting allocation | payment=3 | amount=5000
+2026-05-08 22:15:06,744 | INFO | payment | Allocated 5000 | payment=3 -> invoice=7
+2026-05-08 22:15:06,744 | INFO | payment | Allocation comlpete | payment=3
+2026-05-08 22:15:06,747 | INFO | payment | Starting allocation | payment=3 | amount=5000
+2026-05-08 22:15:06,753 | ERROR | payment | Payment allocation failed | payment=3 | error=UNIQUE constraint failed: finance_paymentallocation.payment_id, finance_paymentallocation.invoice_id
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: finance_paymentallocation.payment_id, finance_paymentallocation.invoice_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\billing\services\payment_service.py", line 77, in apply_payment_to_invoices
+    PaymentAllocation.objects.create(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        payment=payment,
+        ^^^^^^^^^^^^^^^^
+        invoice=invoice,
+        ^^^^^^^^^^^^^^^^
+        amount_applied=amount_to_apply
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 874, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 966, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1220, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1925, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: UNIQUE constraint failed: finance_paymentallocation.payment_id, finance_paymentallocation.invoice_id
+2026-05-08 22:22:45,938 | INFO | payment | Starting allocation | payment=3 | amount=5000
+2026-05-08 22:22:45,950 | INFO | payment | Allocated 5000 | payment=3 -> invoice=7
+2026-05-08 22:22:45,951 | INFO | payment | Allocation comlpete | payment=3
+2026-05-08 22:35:06,371 | INFO | payment | Starting allocation | payment=4 | amount=2000
+2026-05-08 22:35:06,379 | INFO | payment | Allocated 1000.00 | payment=4 -> invoice=7
+2026-05-08 22:35:06,379 | INFO | payment | Overpayment detected | payment=4 | remaining=1000.00
+2026-05-08 22:35:06,380 | INFO | payment | Allocation comlpete | payment=4

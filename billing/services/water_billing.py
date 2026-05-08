@@ -3,7 +3,7 @@ from django.db import transaction
 from django.utils import timezone
 
 from finance.models import LedgerEntry
-from finance.choices import LedgerEntryCategory, LedgerEntryType
+from finance.choices import LedgerEntryCategory, LedgerEntryType, SourceChoices
 from billing.models import Invoice, MeterReading
 from tenants.models import Tenancy
 from tenants.choices import TenancyStatus
@@ -62,6 +62,7 @@ def generate_invoice_from_meter_reading(reading):
                 entry_type=LedgerEntryType.CHARGE,
                 entry_date=reading.reading_date,
                 invoice=invoice,
+                source=SourceChoices.NORMAL,
                 created_by=system_user
             )
 

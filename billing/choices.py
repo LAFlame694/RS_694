@@ -19,3 +19,11 @@ class InvoiceCategory(models.TextChoices):
     GARBAGE = "GARBAGE", "Garbage"
     PENALTY = "PENALTY", "Penalty"
     OTHER = "OTHER", "Other"
+
+class ReccuringChargeCategory(models.TextChoices):
+    WATER = "WATER", "Water"
+    ELECTRICITY = "ELECTRICITY", "Electricity"
+    GARBAGE = "GARBAGE", "Garbage"
+    PARKING = "PARKING", "Parking Fee"
+    SECURITY = "SECURITY", "Security Fee"
+    OTHER = "OTHER", "Other"

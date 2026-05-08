@@ -10,7 +10,7 @@ import logging
 
 from tenants.models import Tenancy
 from finance.models import LedgerEntry
-from finance.choices import LedgerEntryType, LedgerEntryCategory
+from finance.choices import LedgerEntryType, LedgerEntryCategory, SourceChoices
 from billing.models import Invoice, RecurringCharge
 from billing.choices import InvoiceStatus
 from accounts.utils import get_system_user

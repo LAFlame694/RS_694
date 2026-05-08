@@ -9,7 +9,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from finance.choices import LedgerEntryCategory
 from properties.models import Unit, Property
 from properties.choices import UnitType
-from .choices import MeterReadingStatus, InvoiceStatus, InvoiceCategory
+from .choices import MeterReadingStatus, InvoiceStatus, InvoiceCategory, ReccuringChargeCategory
 from tenants.models import Tenancy
 from .utils import get_previous_month_period
 
@@ -277,7 +277,7 @@ class RecurringCharge(models.Model):
         help_text="Select applicable unit types"
     )
     category = models.CharField(
-        choices=LedgerEntryCategory.choices,
+        choices=ReccuringChargeCategory.choices,
         max_length=20
     )
 
