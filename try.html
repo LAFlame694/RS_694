@@ -1,319 +1,378 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tenants | Management System</title>
-    <!-- Tailwind CSS for Modern Styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Font: Inter -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Tenant for Payment | Rental Management</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-      body {
-        font-family: "Inter", sans-serif;
-        background-color: #f8fafc;
-      }
-      .table-row-hover:hover {
-        background-color: #f1f5f9;
-        transition: all 0.2s;
-      }
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --bg-light: #f8f9fc;
+            --border-radius: 12px;
+            --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+
+        /* Dashboard Container Logic (Assuming Sidebar Space) */
+        .main-content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 { font-weight: 700; color: #1a202c; letter-spacing: -0.02em; }
+        .subtitle { color: #718096; font-size: 0.95rem; }
+
+        /* Card Styling */
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            background: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            background-color: transparent;
+            border-bottom: 1px solid #edf2f7;
+            padding: 1.25rem 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Form Controls */
+        .form-control, .form-select {
+            border: 1px solid #e2e8f0;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        /* Avatar Circle */
+        .avatar-circle {
+            width: 38px;
+            height: 38px;
+            background-color: #e2e8f0;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-right: 12px;
+        }
+
+        /* Table Design */
+        .table {
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        .table thead th {
+            background-color: #f8fafc;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            padding: 1rem 1.5rem;
+            border-top: none;
+        }
+
+        .table tbody td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .table tbody tr {
+            transition: background-color var(--transition-speed);
+        }
+
+        .table tbody tr:hover {
+            background-color: #fcfdfe;
+        }
+
+        /* Status Badges */
+        .badge-status {
+            padding: 0.4em 0.8em;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+
+        .bg-paid-light { background-color: #dcfce7; color: #166534; }
+        .bg-pending-light { background-color: #fef9c3; color: #854d0e; }
+        .bg-overdue-light { background-color: #fee2e2; color: #991b1b; }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .btn-select {
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Highlight Balance */
+        .balance-amount {
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        /* Responsive refinements */
+        @media (max-width: 768px) {
+            .main-content { padding: 1rem; }
+            .search-filters { flex-direction: column; }
+        }
     </style>
-  </head>
-  <body class="p-4 md:p-8">
-    <div class="max-w-7xl mx-auto">
-      <!-- 1. HEADER SECTION -->
-      <header
-        class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4"
-      >
-        <div>
-          <h1 class="text-2xl font-bold text-slate-900">Tenants</h1>
-          <p class="text-slate-500 text-sm">Manage all tenants in the system</p>
-        </div>
-        <button
-          class="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-colors"
-        >
-          <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
-          Add Tenant
-        </button>
-      </header>
+</head>
+<body>
 
-      <!-- 2. SEARCH & FILTER BAR -->
-      <div class="flex flex-col md:flex-row gap-4 mb-6">
-        <div class="relative flex-grow">
-          <div
-            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-          >
-            <i data-lucide="search" class="h-4 w-4 text-slate-400"></i>
-          </div>
-          <input
-            type="text"
-            placeholder="Search by name or phone..."
-            class="block w-full pl-10 pr-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-sm outline-none transition-all"
-          />
-        </div>
-        <div class="w-full md:w-48">
-          <select
-            class="block w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-sm outline-none cursor-pointer"
-          >
-            <option>All Tenants</option>
-            <option>Active</option>
-            <option>Inactive</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- 3. TENANT TABLE SECTION -->
-      <div
-        class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden"
-      >
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse">
-            <thead class="bg-slate-50 border-b border-slate-200">
-              <tr>
-                <th
-                  class="px-6 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider"
-                >
-                  Tenant Name
-                </th>
-                <th
-                  class="px-6 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider"
-                >
-                  Contact Info
-                </th>
-                <th
-                  class="px-6 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider"
-                >
-                  Status
-                </th>
-                <th
-                  class="px-6 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider"
-                >
-                  Current Unit
-                </th>
-                <th
-                  class="px-6 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider text-right"
-                >
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-              <!-- Row 1: Active Tenant -->
-              <tr class="table-row-hover">
-                <td class="px-6 py-4">
-                  <span class="font-medium text-slate-900">Johnathan Doe</span>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="text-sm text-slate-900">(555) 012-3456</div>
-                  <div class="text-xs text-slate-500">john.doe@example.com</div>
-                </td>
-                <td class="px-6 py-4">
-                  <span
-                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700 border border-green-200"
-                  >
-                    Active
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-sm text-slate-600">
-                  <div class="flex items-center">
-                    <i
-                      data-lucide="home"
-                      class="w-3.5 h-3.5 mr-2 text-slate-400"
-                    ></i>
-                    Unit A - Green Apartments
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-right space-x-2">
-                  <button
-                    title="View"
-                    class="p-1.5 text-slate-400 hover:text-indigo-600 transition-colors"
-                  >
-                    <i data-lucide="eye" class="w-4 h-4"></i>
-                  </button>
-                  <button
-                    title="Edit"
-                    class="p-1.5 text-slate-400 hover:text-blue-600 transition-colors"
-                  >
-                    <i data-lucide="edit-3" class="w-4 h-4"></i>
-                  </button>
-                  <button
-                    title="Assign Unit"
-                    class="p-1.5 text-slate-400 hover:text-emerald-600 transition-colors"
-                  >
-                    <i data-lucide="link" class="w-4 h-4"></i>
-                  </button>
-                  <button
-                    title="Vacate"
-                    class="p-1.5 text-red-400 hover:text-red-600 transition-colors"
-                  >
-                    <i data-lucide="log-out" class="w-4 h-4"></i>
-                  </button>
-                </td>
-              </tr>
-
-              <!-- Row 2: Inactive Tenant (Vacate Disabled) -->
-              <tr class="table-row-hover">
-                <td class="px-6 py-4">
-                  <span class="font-medium text-slate-900">Sarah Jenkins</span>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="text-sm text-slate-900">(555) 987-6543</div>
-                  <div class="text-xs text-slate-500">sarah.j@webmail.com</div>
-                </td>
-                <td class="px-6 py-4">
-                  <span
-                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200"
-                  >
-                    Inactive
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-sm italic text-slate-400">
-                  Not Assigned
-                </td>
-                <td class="px-6 py-4 text-right space-x-2">
-                  <button
-                    title="View"
-                    class="p-1.5 text-slate-400 hover:text-indigo-600 transition-colors"
-                  >
-                    <i data-lucide="eye" class="w-4 h-4"></i>
-                  </button>
-                  <button
-                    title="Edit"
-                    class="p-1.5 text-slate-400 hover:text-blue-600 transition-colors"
-                  >
-                    <i data-lucide="edit-3" class="w-4 h-4"></i>
-                  </button>
-                  <button
-                    title="Assign Unit"
-                    class="p-1.5 text-slate-400 hover:text-emerald-600 transition-colors"
-                  >
-                    <i data-lucide="link" class="w-4 h-4"></i>
-                  </button>
-                  <!-- Vacate Button Hidden/Disabled for Inactive -->
-                  <button
-                    title="Cannot Vacate"
-                    class="p-1.5 text-slate-200 cursor-not-allowed"
-                    disabled
-                  >
-                    <i data-lucide="log-out" class="w-4 h-4"></i>
-                  </button>
-                </td>
-              </tr>
-
-              <!-- Row 3: Active Tenant -->
-              <tr class="table-row-hover">
-                <td class="px-6 py-4">
-                  <span class="font-medium text-slate-900">Michael Ross</span>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="text-sm text-slate-900">(555) 444-2211</div>
-                  <div class="text-xs text-slate-500">m.ross@services.org</div>
-                </td>
-                <td class="px-6 py-4">
-                  <span
-                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700 border border-green-200"
-                  >
-                    Active
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-sm text-slate-600">
-                  <div class="flex items-center">
-                    <i
-                      data-lucide="home"
-                      class="w-3.5 h-3.5 mr-2 text-slate-400"
-                    ></i>
-                    Studio 4 - Urban Lofts
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-right space-x-2">
-                  <button
-                    title="View"
-                    class="p-1.5 text-slate-400 hover:text-indigo-600 transition-colors"
-                  >
-                    <i data-lucide="eye" class="w-4 h-4"></i>
-                  </button>
-                  <button
-                    title="Edit"
-                    class="p-1.5 text-slate-400 hover:text-blue-600 transition-colors"
-                  >
-                    <i data-lucide="edit-3" class="w-4 h-4"></i>
-                  </button>
-                  <button
-                    title="Assign Unit"
-                    class="p-1.5 text-slate-400 hover:text-emerald-600 transition-colors"
-                  >
-                    <i data-lucide="link" class="w-4 h-4"></i>
-                  </button>
-                  <button
-                    title="Vacate"
-                    class="p-1.5 text-red-400 hover:text-red-600 transition-colors"
-                  >
-                    <i data-lucide="log-out" class="w-4 h-4"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- 5. EMPTY STATE (Hidden by default, shown via logic in a real app) -->
-        <!-- 
-            <div class="flex flex-col items-center justify-center py-12 bg-white">
-                <div class="bg-slate-50 p-4 rounded-full mb-4">
-                    <i data-lucide="users" class="w-12 h-12 text-slate-300"></i>
-                </div>
-                <h3 class="text-lg font-medium text-slate-900">No tenants found</h3>
-                <p class="text-slate-500 mb-6">You haven't added any tenants to the system yet.</p>
-                <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
-                    Add Your First Tenant
-                </button>
+    <div class="main-content">
+        
+        <!-- 1. Page Header Section -->
+        <div class="row mb-4 align-items-end">
+            <div class="col-md-8">
+                <h1 class="h3 mb-1">Record Payment</h1>
+                <p class="subtitle mb-0">Search and select a tenant to record rent or utility payments.</p>
             </div>
-            -->
-      </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 justify-content-md-end">
+                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Record Payment</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
 
-      <!-- 6. PAGINATION -->
-      <div
-        class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4"
-      >
-        <p class="text-sm text-slate-500">Showing 1 to 3 of 12 tenants</p>
-        <nav class="inline-flex rounded-md shadow-sm">
-          <button
-            class="px-3 py-2 rounded-l-lg border border-slate-200 bg-white text-sm font-medium text-slate-500 hover:bg-slate-50 transition-colors"
-          >
-            Previous
-          </button>
-          <button
-            class="px-4 py-2 border-t border-b border-slate-200 bg-indigo-50 text-indigo-600 text-sm font-medium"
-          >
-            1
-          </button>
-          <button
-            class="px-4 py-2 border-t border-b border-slate-200 bg-white text-slate-500 hover:bg-slate-50 text-sm font-medium"
-          >
-            2
-          </button>
-          <button
-            class="px-4 py-2 border-t border-b border-slate-200 bg-white text-slate-500 hover:bg-slate-50 text-sm font-medium"
-          >
-            3
-          </button>
-          <button
-            class="px-3 py-2 rounded-r-lg border border-slate-200 bg-white text-sm font-medium text-slate-500 hover:bg-slate-50 transition-colors"
-          >
-            Next
-          </button>
-        </nav>
-      </div>
+        <!-- 2. Search Card -->
+        <div class="card mb-4">
+            <div class="card-body p-4">
+                <form class="row g-3">
+                    <div class="col-lg-5 col-md-12">
+                        <label class="form-label fw-semibold small text-uppercase text-muted">Tenant Name or Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0 text-muted">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" class="form-control border-start-0" placeholder="e.g. John Smith">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <label class="form-label fw-semibold small text-uppercase text-muted">Property</label>
+                        <select class="form-select">
+                            <option selected>All Properties</option>
+                            <option value="1">Grand Avenue Apartments</option>
+                            <option value="2">Sunset Villas</option>
+                            <option value="3">Skyline Heights</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <label class="form-label fw-semibold small text-uppercase text-muted">Status</label>
+                        <select class="form-select">
+                            <option selected>Any Status</option>
+                            <option value="1">Active</option>
+                            <option value="2">Notice Given</option>
+                            <option value="3">Pending Move-in</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-12 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fa-solid fa-filter me-2"></i>Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 3. Empty State Design (Hidden when search results exist) -->
+        <!-- Toggle display:none manually or via logic to show results -->
+        <div class="card d-none">
+            <div class="card-body empty-state">
+                <div class="empty-state-icon">
+                    <i class="fa-solid fa-user-magnifying-glass"></i>
+                </div>
+                <h5 class="fw-bold">No Tenants Selected</h5>
+                <p class="text-muted">Search for a tenant by name or property to begin recording a payment.</p>
+            </div>
+        </div>
+
+        <!-- 4. Tenant Results Section -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Tenant Search Results</span>
+                <span class="badge bg-light text-dark fw-normal border">3 Results Found</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tenant Name</th>
+                            <th>Property / Unit</th>
+                            <th>Phone Number</th>
+                            <th>Outstanding Balance</th>
+                            <th>Status</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row 1 -->
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-circle">JD</div>
+                                    <div>
+                                        <div class="fw-bold">Jane Doe</div>
+                                        <div class="small text-muted">jane.doe@example.com</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fw-medium">Grand Avenue Apts</div>
+                                <div class="small text-muted">Unit 402-B</div>
+                            </td>
+                            <td class="text-muted">(555) 012-3456</td>
+                            <td>
+                                <span class="balance-amount text-danger">$1,200.00</span>
+                            </td>
+                            <td>
+                                <span class="badge-status bg-overdue-light">Overdue</span>
+                            </td>
+                            <td class="text-end">
+                                <a href="#" class="btn btn-primary btn-sm btn-select">
+                                    Select <i class="fa-solid fa-arrow-right-long"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <!-- Row 2 -->
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-circle" style="background-color: #dcfce7; color: #166534;">MK</div>
+                                    <div>
+                                        <div class="fw-bold">Michael Kosta</div>
+                                        <div class="small text-muted">m.kosta@provider.com</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fw-medium">Sunset Villas</div>
+                                <div class="small text-muted">Villa #12</div>
+                            </td>
+                            <td class="text-muted">(555) 987-6543</td>
+                            <td>
+                                <span class="balance-amount">$0.00</span>
+                            </td>
+                            <td>
+                                <span class="badge-status bg-paid-light">Paid</span>
+                            </td>
+                            <td class="text-end">
+                                <a href="#" class="btn btn-primary btn-sm btn-select">
+                                    Select <i class="fa-solid fa-arrow-right-long"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <!-- Row 3 -->
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-circle" style="background-color: #fef9c3; color: #854d0e;">RB</div>
+                                    <div>
+                                        <div class="fw-bold">Robert Brown</div>
+                                        <div class="small text-muted">robert.b@webmail.com</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fw-medium">Skyline Heights</div>
+                                <div class="small text-muted">Unit 1505</div>
+                            </td>
+                            <td class="text-muted">(555) 444-2211</td>
+                            <td>
+                                <span class="balance-amount text-warning">$450.00</span>
+                            </td>
+                            <td>
+                                <span class="badge-status bg-pending-light">Partial</span>
+                            </td>
+                            <td class="text-end">
+                                <a href="#" class="btn btn-primary btn-sm btn-select">
+                                    Select <i class="fa-solid fa-arrow-right-long"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination / Footer Footer -->
+            <div class="card-footer bg-white border-top py-3">
+                <div class="row align-items-center">
+                    <div class="col-sm-6 text-center text-sm-start">
+                        <p class="small text-muted mb-0">Showing 1 to 3 of 3 tenants</p>
+                    </div>
+                    <div class="col-sm-6 text-center text-sm-end">
+                        <nav class="d-inline-block">
+                            <ul class="pagination pagination-sm mb-0">
+                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <script>
-      // Initialize Icons
-      lucide.createIcons();
-    </script>
-  </body>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

@@ -1,0 +1,98 @@
+{% if not tenants %}
+  <div class="card">
+    <div class="card-body empty-state">
+      <div class="empty-state-icon">
+        <i class="fa-solid fa-user-magnifying-glass"></i>
+      </div>
+      <h5 class="fw-bold">No Tenants Selected</h5>
+      <p class="text-muted">
+        Search for a tenant by name or property to begin recording a payment.
+      </p>
+    </div>
+  </div>
+{% endif %}
+
+ <!-- 4. Tenant Results Section -->
+{% if tenants %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>Tenant Search Results</span>
+      <span class="badge bg-light text-dark fw-normal border"
+        >{{ tenants|length }} Results Found</span
+      >
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tenant Name</th>
+            <th>Property / Unit</th>
+            <th>Phone Number</th>
+            <th>Outstanding Balance</th>
+            <th>Status</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for tenant in tenants %}
+        <tr>
+            <td>
+            <div class="d-flex align-items-center">
+                <div class="avatar-circle">
+                {{ tenant.first_name|first }}{{ tenant.last_name|first }}
+                </div>
+
+                <div>
+                <div class="fw-bold">
+                    {{ tenant.first_name }} {{ tenant.last_name }}
+                </div>
+
+                <div class="small text-muted">
+                    {{ tenant.email }}
+                </div>
+                </div>
+            </div>
+            </td>
+
+            <td>
+            <div class="fw-medium">
+                {{ tenant.tenancies.first.unit.property.name }}
+            </div>
+
+            <div class="small text-muted">
+                Unit {{ tenant.tenancies.first.unit.unit_number }}
+            </div>
+            </td>
+
+            <td class="text-muted">
+            {{ tenant.phone_number }}
+            </td>
+
+            <td>
+            <span class="balance-amount text-danger">
+                KES 0.00
+            </span>
+            </td>
+
+            <td>
+            <span class="badge-status bg-paid-light">
+                {{ tenant.tenancies.first.status }}
+            </span>
+            </td>
+
+            <td class="text-end">
+            <a
+                href="{% url 'finance:record_payment' tenant.id %}"
+                class="btn btn-primary btn-sm btn-select"
+            >
+                Select
+                <i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}

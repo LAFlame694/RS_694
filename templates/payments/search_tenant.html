@@ -1,0 +1,117 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Search Tenant for Payment{% endblock %}
+
+{% load static %}
+
+{% block extra_css %}
+<!-- Custom CSS for Search Tenant -->
+<link rel="stylesheet" href="{% static 'payments/css/search_tenant.css' %}" />
+
+<!-- Google Fonts: Inter -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- Bootstrap 5 CSS -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+
+<!-- Font Awesome -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+{% endblock %} 
+
+{% block content %}
+
+<div class="main-content">
+  <!-- 1. Page Header Section -->
+  <div class="row mb-4 align-items-end">
+    <div class="col-md-8">
+      <h1 class="h3 mb-1">Record Payment</h1>
+      <p class="subtitle mb-0">
+        Search and select a tenant to record rent or utility payments.
+      </p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 justify-content-md-end">
+          <li class="breadcrumb-item">
+            <a href="#" class="text-decoration-none text-muted">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Record Payment
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 2. Search Card -->
+  <div class="card mb-4">
+    <div class="card-body p-4">
+      <form
+        hx-get="{% url 'finance:search_tenant_for_payment' %}" 
+        hx-target="#tenant-results"
+        hx-trigger="keyup changed delay:400ms from:input, change from:select"
+        hx-swap="innerHTML"
+        class="row g-3"
+      >
+        <div class="col-lg-5 col-md-12">
+          <label class="form-label fw-semibold small text-uppercase text-muted"
+            >Tenant Name or Email</label
+          >
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0 text-muted">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                class="form-control border-start-0"
+                placeholder="e.g. John Smith"
+                />
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <label class="form-label fw-semibold small text-uppercase text-muted"
+            >Property</label
+          >
+          <select name="property" class="form-select">
+            <option value="">All Properties</option>
+            {% for property in properties %}
+            <option
+                value="{{ property.id }}"
+                {% if selected_property == property.id|stringformat:"s" %}
+                    selected
+                {% endif %}
+            >
+                {{ property.name }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-lg-2 col-md-12 d-flex align-items-end">
+          <button type="submit" class="btn btn-primary w-100 py-2">
+            <i class="fa-solid fa-filter me-2"></i>Search
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Empty State Design (Hidden when search results exist) -->
+  <!-- Toggle display:none manually or via logic to show results -->
+   <div id="tenant-results">
+      {% include "payments/partials/tenant_search_results.html" %}
+    </div>
+
+</div>
+
+{% endblock %}
