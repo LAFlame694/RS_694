@@ -202,6 +202,8 @@
             </div>
             <span class="badge bg-light text-dark border">Oldest First</span>
         </div>
+
+        {% if unpaid_invoices %}
         <div class="table-responsive">
             <table class="table mb-0">
             <thead>
@@ -210,6 +212,7 @@
                 <th>Category</th>
                 <th>Due Date</th>
                 <th class="text-end">Total</th>
+                <th class="text-end">Balance</th>
                 <th class="text-center">Status</th>
                 </tr>
             </thead>
@@ -233,6 +236,8 @@
                 <td class="text-end fw-600">
                     {{ invoice.total_amount }}
                 </td>
+
+                <td class="text-end text-danger fw-bold">{{ invoice.outstanding_balance }}</td>
 
                 <td class="text-center">
 
@@ -259,6 +264,25 @@
             </tbody>
             </table>
         </div>
+
+        {% else %}
+
+        <div class="card-body text-center py-5">
+            <div class="mb-3">
+                <i class="fa-solid fa-circle-check text-success fa-3x"></i>
+            </div>
+
+            <h5 class="fw-bold mb-2">
+                No Unpaid Invoices
+            </h5>
+
+            <p class="text-muted mb-0">
+                This tenant currently has no unpaid or partially paid invoices.
+            </p>
+        </div>
+
+        {% endif %}
+
         <div class="card-footer bg-white text-center py-2">
             <small class="text-muted italic"
             >Only the 5 oldest unpaid invoices are displayed.</small

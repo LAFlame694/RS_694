@@ -78,6 +78,10 @@ class Invoice(models.Model):
             )
         ]
 
+    @property
+    def outstanding_balance(self):
+        return self.total_amount - self.amount_paid
+
     # safe invoice generator
     def generate_invoice_number(self):
         year = timezone.now().year
