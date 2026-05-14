@@ -1,48 +1,389 @@
-<h1>Record Payment</h1>
+{% extends 'dashboard/base_dashboard.html' %}
 
-<p>
-    Tenant:
-    {{ tenant.first_name }}
-    {{ tenant.last_name }}
-</p>
+{% block title %}Record Payment | Property Management System{% endblock %}
 
-<p>
-    Outstanding:
-    {{ financial_summary.outstanding_balance }} <br>
-    Available Credit:
-    {{ financial_summary.available_credit }} <br>
-    Deposit Held:
-    {{ financial_summary.deposit_held }} <br>
-    Property:
-    {{ financial_summary.tenancy.unit.property }} <br>
-    Unit:
-    {{ financial_summary.tenancy.unit }} <br>
-    Unpaid Invoices:
-    {{ financial_summary.unpaid_invoice_count }}
-</p>
+{% load static %}
 
-<form method="post">
-    {% csrf_token %}
+{% block extra_css %}
+<!-- Custom CSS for Search Tenant -->
+<link rel="stylesheet" href="{% static 'payments/css/record_payment.css' %}" />
 
-    <input
-        type="number"
-        step="0.01"
-        name="amount"
-        placeholder="Amount"
-    >
+<!-- Google Fonts: Inter -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+/>
 
-    <input
-        type="date"
-        name="payment_date"
-    >
+<!-- Bootstrap 5 CSS -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+/>
 
-    <select name="method">
-        <option value="CASH">Cash</option>
-        <option value="MPESA">Mpesa</option>
-        <option value="BANK">Bank</option>
-    </select>
+<!-- Font Awesome -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+{% endblock %}
 
-    <button type="submit">
-        Record Payment
-    </button>
-</form>
+{% block content %}
+<div class="container py-4">
+    <!-- SECTION A: PAGE HEADER -->
+    <header class="page-header">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item">
+            <a href="#" class="text-decoration-none">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="#" class="text-decoration-none">Payments</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Record Payment
+        </li>
+        </ol>
+    </nav>
+
+    <div class="row align-items-center">
+        <div class="col-md-8">
+        <h1 class="h3 fw-bold mb-1">Record Payment</h1>
+        <p class="text-muted mb-3">
+            Record tenant rent and utility payments
+        </p>
+
+        <div class="d-flex gap-2 header-info-wrapper">
+            <div class="header-info-badge">
+            <i class="fa-solid fa-user text-primary"></i>
+            <span class="fw-600">{{ tenant.first_name }} {{ tenant.last_name }}</span>
+            </div>
+            <div class="header-info-badge">
+            <i class="fa-solid fa-door-open text-primary"></i>
+            <span class="fw-600">{{ tenant.tenancies.first.unit.unit_number }}</span>
+            </div>
+            <div class="header-info-badge">
+            <i class="fa-solid fa-building text-primary"></i>
+            <span class="fw-600">{{ tenant.tenancies.first.unit.property.name }}</span>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-4 text-md-end header-actions">
+        <a href="{% url 'finance:search_tenant_for_payment' %}" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="fa-solid fa-arrow-left me-2"></i>Back to Search
+        </a>
+        </div>
+    </div>
+    </header>
+
+    <div class="row">
+    <!-- Left Column: Tenant Info & Invoices -->
+    <div class="col-lg-8">
+        <!-- SECTION B: TENANT INFORMATION CARD -->
+        <div class="card shadow-sm-soft">
+        <div class="card-header">
+            <h5 class="card-title">
+            <i class="fa-solid fa-id-card me-2 text-primary"></i>Tenant
+            Information
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-md-4 col-sm-6">
+                    <label
+                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
+                    >Full Name</label
+                    >
+                    <span class="fw-600">{{ tenant.first_name }} {{ tenant.last_name }}</span>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label
+                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
+                    >Phone Number</label
+                    >
+                    <span class="fw-600">{{ tenant.phone_number }}</span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <label
+                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
+                    >Email Address</label
+                    >
+                    <span class="fw-600">{{ tenant.email }}</span>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label
+                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
+                    >Property</label
+                    >
+                    <span class="fw-600">{{ tenant.tenancies.first.unit.property.name }}</span>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label
+                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
+                    >Unit</label
+                    >
+                    <span class="fw-600">{{ tenant.tenancies.first.unit.unit_number }} Floor - {{ tenant.tenancies.first.unit.floor }}</span>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label
+                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
+                    >Move In Date</label
+                    >
+                    <span class="fw-600">{{ tenant.tenancies.first.start_date }}</span>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SECTION C: FINANCIAL SUMMARY CARDS -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3 mb-4">
+        <div class="col">
+            <div class="card h-100 stat-card">
+            <div class="card-body">
+                <div class="stat-icon bg-danger bg-opacity-10 text-danger">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+                <h6 class="text-muted text-xs text-uppercase fw-bold">
+                Outstanding
+                </h6>
+                <h4 class="fw-bold mb-0">KES {{ financial_summary.outstanding_balance }}</h4>
+            </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 stat-card">
+            <div class="card-body">
+                <div class="stat-icon bg-success bg-opacity-10 text-success">
+                <i class="fa-solid fa-wallet"></i>
+                </div>
+                <h6 class="text-muted text-xs text-uppercase fw-bold">
+                Credit
+                </h6>
+                <h4 class="fw-bold mb-0">KES {{ financial_summary.available_credit }}</h4>
+            </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 stat-card">
+            <div class="card-body">
+                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                <i class="fa-solid fa-vault"></i>
+                </div>
+                <h6 class="text-muted text-xs text-uppercase fw-bold">
+                Deposit
+                </h6>
+                <h4 class="fw-bold mb-0">KES {{ financial_summary.deposit_held }}</h4>
+            </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 stat-card">
+            <div class="card-body">
+                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <h6 class="text-muted text-xs text-uppercase fw-bold">
+                Unpaid
+                </h6>
+                <h4 class="fw-bold mb-0">{{ financial_summary.unpaid_invoice_count }} Invoices</h4>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SECTION D: UNPAID INVOICES TABLE -->
+        <div class="card shadow-sm-soft">
+        <div
+            class="card-header d-flex justify-content-between align-items-center"
+        >
+            <div>
+            <h5 class="card-title">Recent Unpaid Invoices</h5>
+            <small class="text-muted">Showing oldest unpaid invoices</small>
+            </div>
+            <span class="badge bg-light text-dark border">Oldest First</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table mb-0">
+            <thead>
+                <tr>
+                <th>Inv #</th>
+                <th>Category</th>
+                <th>Due Date</th>
+                <th class="text-end">Total</th>
+                <th class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for invoice in unpaid_invoices %}
+            <tr>
+
+                <td class="fw-600">
+                    {{ invoice.invoice_number }}
+                </td>
+
+                <td>
+                    {{ invoice.category }}
+                </td>
+
+                <td class="text-muted">
+                    {{ invoice.due_date }}
+                </td>
+
+                <td class="text-end fw-600">
+                    {{ invoice.total_amount }}
+                </td>
+
+                <td class="text-center">
+
+                    {% if invoice.status == "PARTIAL" %}
+                        <span
+                            class="status-badge bg-warning bg-opacity-10 text-warning border border-warning-subtle"
+                        >
+                            Partial
+                        </span>
+
+                    {% elif invoice.status == "ISSUED" %}
+                        <span
+                            class="status-badge bg-danger bg-opacity-10 text-danger border border-danger-subtle"
+                        >
+                            Unpaid
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+            {% endfor %}
+
+            </tbody>
+            </table>
+        </div>
+        <div class="card-footer bg-white text-center py-2">
+            <small class="text-muted italic"
+            >Only the 5 oldest unpaid invoices are displayed.</small
+            >
+        </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Record Payment Form -->
+    <div class="col-lg-4">
+        <!-- SECTION E: RECORD PAYMENT FORM -->
+        <div
+        class="card shadow-sm-soft border-top border-primary border-4 sticky-top"
+        style="top: 20px; z-index: 10"
+        >
+        <div class="card-header">
+            <h5 class="card-title">Record New Payment</h5>
+        </div>
+
+        <div class="card-body">
+            <form method="POST">
+            {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.amount.id_for_label }}" class="form-label">
+                        Payment Amount
+                    </label>
+
+                    <div class="input-group">
+                        <span class="input-group-text fw-bold">KES</span>
+                        {{ form.amount }}
+                    </div>
+
+                    {% if form.amount.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ form.amount.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.payment_date.id_for_label }}" class="form-label">
+                        Payment Date
+                    </label>
+
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fa-regular fa-calendar"></i>
+                        </span>
+
+                        {{ form.payment_date }}
+                    </div>
+
+                    {% if form.payment_date.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ form.payment_date.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.method.id_for_label }}" class="form-label">
+                        Payment Method
+                    </label>
+
+                    {{ form.method }}
+
+                    {% if form.method.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ form.method.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <label for="{{ form.notes.id_for_label }}" class="form-label">
+                        Optional Notes
+                    </label>
+
+                    {{ form.notes }}
+
+                    {% if form.notes.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ form.notes.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div
+                    class="alert alert-info py-2 px-3 mb-4 border-0 bg-primary bg-opacity-10"
+                >
+                    <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-circle-info text-primary me-2"></i>
+                    <small class="text-primary fw-500"
+                        >Payments are automatically allocated to oldest unpaid
+                        invoices.</small
+                    >
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button
+                    type="submit"
+                    class="btn btn-primary btn-lg rounded-pill fw-bold"
+                    >
+                    Record Payment
+                    </button>
+                    <button
+                    type="button"
+                    class="btn btn-link text-secondary text-decoration-none small"
+                    >
+                    Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

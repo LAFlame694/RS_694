@@ -109,3 +109,6 @@ django.db.utils.IntegrityError: UNIQUE constraint failed: finance_paymentallocat
 2026-05-08 22:35:06,379 | INFO | payment | Allocated 1000.00 | payment=4 -> invoice=7
 2026-05-08 22:35:06,379 | INFO | payment | Overpayment detected | payment=4 | remaining=1000.00
 2026-05-08 22:35:06,380 | INFO | payment | Allocation comlpete | payment=4
+2026-05-14 14:09:19,505 | INFO | payment | Starting allocation | payment=5 | amount=10000
+2026-05-14 14:09:19,561 | INFO | payment | Allocated 10000 | payment=5 -> invoice=8
+2026-05-14 14:09:19,563 | INFO | payment | Allocation comlpete | payment=5

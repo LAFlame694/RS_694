@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from tenants.models import Tenant
 from tenants.choices import TenancyStatus
 from properties.models import Property
+from finance.forms.payment_forms import RecordPaymentForm
 
 from finance.services.payments.query_services import (
     get_tenant_financial_summary,
@@ -76,7 +77,7 @@ def search_tenant_for_payment_view(request):
 def record_payment_view(request, tenant_id):
     """
     Display tenant financial summary
-    and handle payment recording
+    and handle payment recording.
     """
 
     tenant = get_object_or_404(
@@ -96,44 +97,48 @@ def record_payment_view(request, tenant_id):
     except ValidationError as e:
         messages.error(request, str(e))
         return redirect(
-            "search_tenant_for_payment"
+            "finance:search_tenant_for_payment"
         )
     
-    # handle payment submission
+    # handle form submission
     if request.method == "POST":
         
-        amount = request.POST.get("amount")
-        payment_date = request.POST.get("payment_date")
-        method = request.post.get("method")
+        form = RecordPaymentForm(request.POST)
 
-        try:
-            payment = record_payment_service(
-                tenant=tenant,
-                amount=amount,
-                payment_date=payment_date,
-                method=method,
-                created_by=request.user,
-            )
+        if form.is_valid():
+            try:
+                payment = record_payment_service(
+                    tenant=tenant,
+                    amount=form.cleaned_data["amount"],
+                    payment_date=form.cleaned_data["payment_date"],
+                    method=form.cleaned_data["method"],
+                    created_by=request.user,
+                )
 
-            messages.success(
-                request,
-                f"Payment {payment.reference_code} recorded successfully."
-            )
+                messages.success(
+                    request,
+                    f"Payment {payment.reference_code} recorded successfully."
+                )
 
-            return redirect(
-                "record_payment",
-                tenant_id=tenant.id,
-            )
-        
-        except ValidationError as e:
-            messages.error(request, str(e))
+                return redirect(
+                    "finance:record_payment",
+                    tenant_id=tenant.id,
+                )
+            
+            except ValidationError as e:
+                messages.error(request, str(e))
+    else:
+        form = RecordPaymentForm()
     
     context = {
         "tenant": tenant,
         "financial_summary": financial_summary,
         "unpaid_invoices": unpaid_invoices,
+        "form": form,
     }
 
-    return render(request, "payments/record_payment.html",
+    return render(
+        request,
+        "payments/record_payment.html",
         context
     )

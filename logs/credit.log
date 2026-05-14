@@ -31,3 +31,5 @@
 2026-05-08 18:55:06,817 | INFO | credit | Credit applied 1320.00 | payment=2 -> invoice=5 | remaining_credit=10680.00
 2026-05-08 18:55:06,820 | INFO | credit | Credit applied 1200.00 | payment=2 -> invoice=6 | remaining_credit=9480.00
 2026-05-08 18:55:06,821 | INFO | credit | Credit application complete | ledger=1
+2026-05-14 00:00:17,761 | INFO | credit | Credit application complete | ledger=2
+2026-05-14 00:00:17,838 | INFO | credit | Credit application complete | ledger=2

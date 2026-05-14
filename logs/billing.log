@@ -92,3 +92,25 @@
 2026-05-08 18:04:15,083 | INFO | billing | Invoice exists | tenancy=1 | charge=1
 2026-05-08 18:04:15,084 | WARNING | billing | No invoices created for charge 1 - last_generated_date not updated
 2026-05-08 18:04:15,085 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-05-14 00:00:17,581 | INFO | billing | === Monthly billing job started ===
+2026-05-14 00:00:17,604 | INFO | billing | === Monthly billing job STARTED ===
+2026-05-14 00:00:17,666 | INFO | billing | Billing date: 2026-05-13
+2026-05-14 00:00:17,667 | INFO | billing | Generating RENT invoices for period 2026-05-01 to 2026-05-31
+2026-05-14 00:00:17,696 | INFO | billing | Found 2 active tenancies for rent billing
+2026-05-14 00:00:17,710 | INFO | billing | Creating RENT invoice | tenancy=2 | amount=12500.00
+2026-05-14 00:00:17,711 | INFO | billing | Creating invoice + ledger | tenancy=2 | category=RENT | amount=12500.00
+2026-05-14 00:00:17,738 | INFO | billing | Invoice created | id=8 | tenancy=2
+2026-05-14 00:00:17,788 | INFO | billing | Ledger entry created | invoice=8 | amount=12500.00
+2026-05-14 00:00:17,792 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-05-14 00:00:17,793 | INFO | billing | Starting recurring charge billing
+2026-05-14 00:00:17,796 | INFO | billing | Found 1 active recurring charges
+2026-05-14 00:00:17,804 | INFO | billing | Processing charge 1 | property=1 | amount=2000.00
+2026-05-14 00:00:17,809 | INFO | billing | 2 tenancies eligible for charge 1
+2026-05-14 00:00:17,821 | INFO | billing | Creating charge invoice | tenancy=2 | charge=1 | amount=2000.00
+2026-05-14 00:00:17,822 | INFO | billing | Creating invoice + ledger | tenancy=2 | category=SECURITY | amount=2000.00
+2026-05-14 00:00:17,826 | INFO | billing | Invoice created | id=9 | tenancy=2
+2026-05-14 00:00:17,841 | INFO | billing | Ledger entry created | invoice=9 | amount=2000.00
+2026-05-14 00:00:17,844 | INFO | billing | Invoice exists | tenancy=1 | charge=1
+2026-05-14 00:00:17,845 | INFO | billing | Charge 1 processed successfully
+2026-05-14 00:00:17,847 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-05-14 00:00:17,951 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===

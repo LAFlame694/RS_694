@@ -7,3 +7,9 @@
 2026-05-08 10:09:48,472 | INFO | accounting | --- Settling account 1 ---
 2026-05-08 10:09:48,473 | INFO | accounting | Applying available credit
 2026-05-08 10:09:48,516 | INFO | accounting | --- Settlement complete for LA-BF4A61FBA6 - Enzo Fernandez - Gachoka Apartment - A101 - BEDSITTER - ACTIVE ---
+2026-05-14 00:00:17,744 | INFO | accounting | --- Settling account 2 ---
+2026-05-14 00:00:17,754 | INFO | accounting | Applying available credit
+2026-05-14 00:00:17,786 | INFO | accounting | --- Settlement complete for LA-5647C3B8AC - Bruno Fernandez - Gachoka Apartment - A102 - ONE_BEDROOM - ACTIVE ---
+2026-05-14 00:00:17,833 | INFO | accounting | --- Settling account 2 ---
+2026-05-14 00:00:17,833 | INFO | accounting | Applying available credit
+2026-05-14 00:00:17,840 | INFO | accounting | --- Settlement complete for LA-5647C3B8AC - Bruno Fernandez - Gachoka Apartment - A102 - ONE_BEDROOM - ACTIVE ---

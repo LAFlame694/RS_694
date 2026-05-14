@@ -1,0 +1,153 @@
+:root {
+    --bs-body-bg: #f4f7f9;
+    --bs-body-font-family: "Inter", sans-serif;
+    --primary-color: #2563eb;
+    --secondary-color: #64748b;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --card-border-radius: 12px;
+    --card-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body {
+    background-color: var(--bs-body-bg);
+    color: #1e293b;
+    padding-bottom: 3rem;
+}
+
+/* Utility Classes */
+.rounded-12 {
+    border-radius: var(--card-border-radius);
+}
+.shadow-sm-soft {
+    box-shadow: var(--card-shadow);
+}
+.text-xs {
+    font-size: 0.75rem;
+}
+.fw-600 {
+    font-weight: 600;
+}
+
+/* Breadcrumbs */
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "\f105";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 10px;
+}
+
+/* Section A: Header */
+.page-header {
+    padding: 2rem 0;
+}
+.header-info-badge {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Section B & D & E: Cards */
+.card {
+    border: none;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 1.5rem;
+}
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 1.25rem;
+    border-top-left-radius: var(--card-border-radius) !important;
+    border-top-right-radius: var(--card-border-radius) !important;
+}
+.card-title {
+    margin-bottom: 0;
+    font-weight: 700;
+    color: #334155;
+    font-size: 1.1rem;
+}
+
+/* Section C: Financial Cards */
+.stat-card {
+    transition: transform 0.2s;
+}
+.stat-card:hover {
+    transform: translateY(-4px);
+}
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+/* Section D: Table */
+.table thead th {
+    background-color: #f8fafc;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    border-top: none;
+    padding: 1rem;
+}
+.table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+.status-badge {
+    padding: 0.35em 0.65em;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+/* Section E: Form */
+.form-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #475569;
+}
+.form-control,
+.form-select {
+    padding: 0.6rem 1rem;
+    border-color: #e2e8f0;
+    border-radius: 8px;
+}
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    border-color: var(--primary-color);
+}
+.input-group-text {
+    background-color: #f8fafc;
+    border-color: #e2e8f0;
+    color: #64748b;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+.page-header {
+    text-align: center;
+}
+.header-actions {
+    margin-top: 1rem;
+    text-align: center;
+}
+.header-info-wrapper {
+    justify-content: center;
+    flex-wrap: wrap;
+}
+}
