@@ -76,3 +76,33 @@
 2026-05-08 18:36:47,234 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=5
 2026-05-08 18:37:42,922 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=6
 2026-05-08 20:58:44,369 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=7
+2026-05-18 23:04:16,363 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=2
+2026-05-18 23:05:39,918 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
+2026-05-18 23:05:49,234 | INFO | admin | ADMIN UPDATE | user=Admin | model=RecurringCharge | id=1
+2026-05-18 23:05:49,235 | INFO | admin | FIELD CHANGE | user=Admin | model=RecurringCharge | id=1 | field=is_active | from=True | to=False
+2026-05-18 23:05:55,203 | INFO | admin | ADMIN UPDATE | user=Admin | model=RecurringCharge | id=1
+2026-05-18 23:05:55,204 | INFO | admin | FIELD CHANGE | user=Admin | model=RecurringCharge | id=1 | field=is_active | from=False | to=True
+2026-05-18 23:06:59,730 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=2
+2026-05-18 23:24:05,303 | INFO | admin | ADMIN CREATE | user=Admin | model=DepositAllocation | id=1
+2026-05-19 11:57:34,379 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=1
+2026-05-19 11:57:58,087 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=1
+2026-05-19 11:58:24,401 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=1
+2026-05-19 11:58:43,099 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=1
+2026-05-19 11:59:18,275 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
+2026-05-19 11:59:39,989 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=2
+2026-05-21 11:05:20,377 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=1
+2026-05-21 11:05:47,689 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=1
+2026-05-21 11:06:06,093 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=1
+2026-05-21 11:06:29,053 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=1
+2026-05-21 11:07:41,058 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
+2026-05-21 11:08:06,915 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=2
+2026-05-21 12:48:55,795 | INFO | admin | ADMIN UPDATE | user=Admin | model=LedgerEntry | id=5
+2026-05-21 12:48:55,795 | INFO | admin | FIELD CHANGE | user=Admin | model=LedgerEntry | id=5 | field=source | from=None | to=NORMAL
+2026-05-21 12:49:07,489 | INFO | admin | ADMIN UPDATE | user=Admin | model=LedgerEntry | id=4
+2026-05-21 12:49:07,490 | INFO | admin | FIELD CHANGE | user=Admin | model=LedgerEntry | id=4 | field=source | from=None | to=NORMAL
+2026-05-21 12:52:41,359 | INFO | admin | ADMIN UPDATE | user=Admin | model=LedgerEntry | id=1
+2026-05-21 12:52:41,360 | INFO | admin | FIELD CHANGE | user=Admin | model=LedgerEntry | id=1 | field=source | from=None | to=NORMAL
+2026-05-21 12:53:20,200 | INFO | admin | ADMIN UPDATE | user=Admin | model=LedgerEntry | id=2
+2026-05-21 12:53:20,200 | INFO | admin | FIELD CHANGE | user=Admin | model=LedgerEntry | id=2 | field=source | from=None | to=NORMAL
+2026-05-21 12:53:29,408 | INFO | admin | ADMIN UPDATE | user=Admin | model=LedgerEntry | id=3
+2026-05-21 12:53:29,409 | INFO | admin | FIELD CHANGE | user=Admin | model=LedgerEntry | id=3 | field=source | from=None | to=NORMAL

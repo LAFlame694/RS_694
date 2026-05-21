@@ -24,17 +24,6 @@ def apply_payment_to_invoices(payment: Payment):
     try:
         with transaction.atomic():
 
-            # create ledger entry
-            LedgerEntry.objects.create(
-                ledger_account=payment.ledger_account,
-                category=LedgerEntryCategory.PAYMENT,
-                amount=payment.amount,
-                entry_type=LedgerEntryType.CREDIT,
-                payment=payment,
-                entry_date=payment.payment_date,
-                created_by=payment.created_by
-            )
-
             # get unpaid invoices
             invoices = Invoice.objects.filter(
                 ledger_account=payment.ledger_account,

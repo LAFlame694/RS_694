@@ -10,63 +10,42 @@ from finance.models import (
 )
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
-from finance.models import CreditAllocation
-from finance.choices import SourceChoices, LedgerEntryCategory
+from finance.models import CreditAllocation, LedgerEntry
+from finance.choices import SourceChoices, LedgerEntryCategory, PaymentStatus, LedgerEntryType
 
 import logging
 
 logger = logging.getLogger("credit")
 
 def get_available_credit(ledger_account):
-    payments = Payment.objects.filter(
+
+    credits = LedgerEntry.objects.filter(
         ledger_account=ledger_account,
-        ledger_entries__category=LedgerEntryCategory.PAYMENT,
-        ledger_entries__reversals__isnull=True
-    ).distinct()
+        entry_type=LedgerEntryType.CREDIT,
+        source=SourceChoices.NORMAL
+    ).aggregate(
+        total=Sum("amount")
+    )["total"] or Decimal("0.00")
 
-    total_available = Decimal("0.00")
+    normal_charges = LedgerEntry.objects.filter(
+        ledger_account=ledger_account,
+        entry_type=LedgerEntryType.CHARGE,
+        source=SourceChoices.NORMAL
+    ).aggregate(
+        total=Sum("amount")
+    )["total"] or Decimal("0.00")
 
-    for payment in payments:
+    deposit_charges = LedgerEntry.objects.filter(
+        ledger_account=ledger_account,
+        entry_type=LedgerEntryType.CHARGE,
+        source=SourceChoices.DEPOSIT
+    ).aggregate(
+        total=Sum("amount")
+    )["total"] or Decimal("0.00")
 
-        # money used via direct payment allocations
-        payment_used = PaymentAllocation.objects.filter(
-            payment=payment
-        ).aggregate(
-            total=Sum("amount_applied")
-        )["total"] or Decimal("0.00")
+    available = credits - normal_charges - deposit_charges
 
-        # money used via credit allocations
-        credit_used = CreditAllocation.objects.filter(
-            payment=payment,
-            source=SourceChoices.NORMAL
-        ).aggregate(
-            total=Sum("amount_applied")
-        )["total"] or Decimal("0.00")
-
-        # deposit reserved from this payment (not available for credit)
-        deposit_used = DepositAllocation.objects.filter(
-            payment=payment
-        ).aggregate(
-            total=Sum("amount")
-        )["total"] or Decimal("0.00")
-
-        remaining = payment.amount - (
-            payment_used + 
-            credit_used + 
-            deposit_used
-        )
-
-        if remaining < 0:
-            logger.error(
-                f"Credit inconsistency detected | payment={payment.id}"
-            )
-            remaining = Decimal("0.00")
-        
-
-        if remaining > 0:
-            total_available += remaining
-    
-    return total_available
+    return max(available, Decimal("0.00"))
 
 @transaction.atomic
 def apply_credit_to_invoices(ledger_account):
@@ -84,7 +63,8 @@ def apply_credit_to_invoices(ledger_account):
     
     # process payments in FIFO order
     payments = Payment.objects.filter(
-        ledger_account=ledger_account
+        ledger_account=ledger_account,
+        status=PaymentStatus.COMPLETED,
     ).order_by("created_at", "id")
 
     for payment in payments:

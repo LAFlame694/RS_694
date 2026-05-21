@@ -1,4 +1,33 @@
 from finance.models import CreditAllocation, PaymentAllocation
+from datetime import timedelta
+from django.utils import timezone
+from finance.choices import SourceChoices, PaymentStatus
+
+REVERSAL_WINDOW_DAYS = 30
+
+
+def is_payment_reversible(payment):
+
+    if payment.status == PaymentStatus.REVERSED:
+        raise Exception("This payment has already been reversed")
+
+    cutoff_date = (
+        timezone.now().date() -
+        timedelta(days=REVERSAL_WINDOW_DAYS)
+    )
+
+    if payment.payment_date < cutoff_date:
+        return False
+
+    deposit_used = CreditAllocation.objects.filter(
+        payment=payment,
+        source=SourceChoices.DEPOSIT
+    ).exists()
+
+    if deposit_used:
+        return False
+
+    return True
 
 def validate_credit_lifo(allocation):
     """

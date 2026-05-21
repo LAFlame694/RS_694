@@ -1,0 +1,2 @@
+2026-05-21 12:35:40,972 | INFO | deposit | Creating deposit allocation | ledger=1 | payment=2 | amount=10000
+2026-05-21 12:35:41,476 | INFO | deposit | Deposit allocation created successfully | allocation=1

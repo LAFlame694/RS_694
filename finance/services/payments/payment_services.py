@@ -4,11 +4,12 @@ from decimal import Decimal, InvalidOperation
 from django.core.exceptions import ValidationError
 from django.db import transaction
 
-from finance.models import Payment
+from finance.choices import LedgerEntryType, LedgerEntryCategory, SourceChoices
+from finance.models import LedgerEntry, Payment
+from finance.services.accounting_service import settle_account
+
 from tenants.models import Tenancy
 from tenants.choices import TenancyStatus
-
-from billing.services.payment_service import apply_payment_to_invoices
 
 logger = logging.getLogger("payment_service")
 
@@ -66,8 +67,20 @@ def record_payment_service(
                 created_by=created_by,
             )
 
+            LedgerEntry.objects.create(
+                ledger_account=ledger_account,
+                payment=payment,
+                category=LedgerEntryCategory.PAYMENT,
+                entry_type=LedgerEntryType.CREDIT,
+                source=SourceChoices.NORMAL,
+                amount=payment.amount,
+                entry_date=payment.payment_date,
+                description=f"Payment received - {payment.reference_code}",
+                created_by=created_by
+            )
+
             # allocate payment to invoices
-            apply_payment_to_invoices(payment)
+            settle_account(ledger_account)
 
             logger.info(
                 f"Payment recorded successfully | "

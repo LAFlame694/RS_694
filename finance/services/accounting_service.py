@@ -1,34 +1,45 @@
 import logging
 from django.db import transaction
+from decimal import Decimal
 
+from billing.choices import InvoiceStatus
+from billing.models import Invoice
 from billing.services.payment_service import apply_payment_to_invoices
 from finance.services.credit_service import apply_credit_to_invoices
+from finance.models import Payment, PaymentAllocation, CreditAllocation
+from finance.choices import PaymentStatus
 
 logger = logging.getLogger("accounting")
 
-@transaction.atomic
-def settle_account(ledger_account, payment=None):
-    """
-    Central orchestrator for account settlement.
+def settle_account(ledger_account):
+    with transaction.atomic():
 
-    Flow:
-    1. Apply payment allocations
-    2. Apply remaining credits to invoices
+        PaymentAllocation.objects.filter(
+            payment__ledger_account=ledger_account
+        ).delete()
 
-    This ensures:
-    - No double allocation
-    - Proper ordering (payment first, credit second)
-    """
+        CreditAllocation.objects.filter(
+            payment__ledger_account=ledger_account
+        ).delete()
 
-    logger.info(f"--- Settling account {ledger_account.id} ---")
+        # reset invoice balances/status
+        invoices = Invoice.objects.filter(
+            ledger_account=ledger_account
+        )
 
-    # 1. Apply payment
-    if payment:
-        logger.info(f"Applying payment {payment.id}")
-        apply_payment_to_invoices(payment)
-    
-    # 2. Apply credits (always)
-    logger.info("Applying available credit")
-    apply_credit_to_invoices(ledger_account)
+        for invoice in invoices:
+            invoice.amount_paid = Decimal("0.00")
+            invoice.status = InvoiceStatus.ISSUED
+            invoice.save(update_fields=["amount_paid", "status"])
 
-    logger.info(f"--- Settlement complete for {ledger_account} ---")
+        # STEP 2: APPLY ALL ACTIVE PAYMENTS
+        payments = Payment.objects.filter(
+            ledger_account=ledger_account,
+            status=PaymentStatus.COMPLETED
+        ).order_by("created_at", "id")
+
+        for payment in payments:
+            apply_payment_to_invoices(payment)
+
+        # STEP 3: APPLY CREDIT LAST
+        apply_credit_to_invoices(ledger_account)

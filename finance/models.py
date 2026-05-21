@@ -6,7 +6,13 @@ from django.db.models import Q
 
 from tenants.models import Tenancy
 from billing.models import Invoice
-from .choices import LedgerEntryCategory, LedgerEntryType, PaymentMethod, SourceChoices
+from .choices import (
+    LedgerEntryCategory, 
+    LedgerEntryType, 
+    PaymentMethod, 
+    SourceChoices,
+    PaymentStatus
+)
 
 # Create your models here.
 class LedgerAccount(models.Model):
@@ -113,11 +119,31 @@ class Payment(models.Model):
         choices=PaymentMethod.choices
     )
 
+    status = models.CharField(
+        max_length=20,
+        choices=PaymentStatus.choices,
+        default=PaymentStatus.COMPLETED
+    )
+
+    reversed_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    reversed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="reversed_payments"
+    )
+
     reference_code = models.CharField(
         max_length=100,
         unique=True,
         blank=True
     )
+    notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

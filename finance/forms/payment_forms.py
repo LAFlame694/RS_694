@@ -33,3 +33,15 @@ class RecordPaymentForm(forms.Form):
             }
         )
     )
+
+    notes = forms.CharField(
+        max_length=255,
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter payment notes",
+                "rows": 3
+            }
+        )
+    )

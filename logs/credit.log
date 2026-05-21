@@ -33,3 +33,32 @@
 2026-05-08 18:55:06,821 | INFO | credit | Credit application complete | ledger=1
 2026-05-14 00:00:17,761 | INFO | credit | Credit application complete | ledger=2
 2026-05-14 00:00:17,838 | INFO | credit | Credit application complete | ledger=2
+2026-05-18 14:11:29,543 | INFO | credit | Processing payment credit | payment=1 | remaining=30000.00
+2026-05-18 14:11:29,577 | INFO | credit | Credit applied 7000.00 | payment=1 -> invoice=1 | remaining_credit=23000.00
+2026-05-18 14:11:29,581 | INFO | credit | Credit applied 320.00 | payment=1 -> invoice=2 | remaining_credit=22680.00
+2026-05-18 14:11:29,586 | INFO | credit | Credit applied 2000.00 | payment=1 -> invoice=3 | remaining_credit=20680.00
+2026-05-18 14:11:29,590 | INFO | credit | Credit applied 3000.00 | payment=1 -> invoice=4 | remaining_credit=17680.00
+2026-05-18 14:11:29,594 | INFO | credit | Credit applied 2680.00 | payment=1 -> invoice=5 | remaining_credit=15000.00
+2026-05-18 14:11:29,597 | INFO | credit | Processing payment credit | payment=2 | remaining=9480.00
+2026-05-18 14:11:29,659 | INFO | credit | Processing payment credit | payment=4 | remaining=1000.00
+2026-05-18 14:11:29,704 | INFO | credit | Credit application complete | ledger=1
+2026-05-18 22:54:41,528 | INFO | credit | Credit application complete | ledger=1
+2026-05-18 23:08:46,983 | INFO | credit | Credit application complete | ledger=1
+2026-05-18 23:08:47,342 | INFO | credit | Credit application complete | ledger=1
+2026-05-18 23:10:11,364 | INFO | credit | Credit application complete | ledger=1
+2026-05-18 23:13:40,864 | INFO | credit | Credit application complete | ledger=1
+2026-05-18 23:18:22,838 | INFO | credit | No invoices to apply credit for ledger 1
+2026-05-19 10:48:39,753 | INFO | credit | No invoices to apply credit for ledger 1
+2026-05-19 11:33:54,649 | INFO | credit | No invoices to apply credit for ledger 1
+2026-05-19 11:41:05,719 | INFO | credit | No invoices to apply credit for ledger 1
+2026-05-19 12:00:36,479 | INFO | credit | Credit application complete | ledger=1
+2026-05-19 12:00:36,662 | INFO | credit | Credit application complete | ledger=1
+2026-05-19 12:00:37,026 | INFO | credit | Credit application complete | ledger=1
+2026-05-19 12:07:10,187 | INFO | credit | Credit application complete | ledger=1
+2026-05-19 12:07:37,889 | INFO | credit | Credit application complete | ledger=1
+2026-05-19 12:08:05,524 | INFO | credit | No invoices to apply credit for ledger 1
+2026-05-21 11:09:08,949 | INFO | credit | Credit application complete | ledger=1
+2026-05-21 11:09:09,158 | INFO | credit | Credit application complete | ledger=1
+2026-05-21 11:09:09,476 | INFO | credit | Credit application complete | ledger=1
+2026-05-21 12:13:55,734 | INFO | credit | Credit application complete | ledger=1
+2026-05-21 12:26:29,886 | INFO | credit | No invoices to apply credit for ledger 1

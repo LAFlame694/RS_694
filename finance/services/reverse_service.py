@@ -4,7 +4,14 @@ from django.db import transaction
 from django.utils import timezone
 
 from finance.models import LedgerEntry, CreditAllocation, PaymentAllocation, DepositAllocation
-from finance.choices import LedgerEntryType, LedgerEntryCategory, SourceChoices
+from finance.choices import LedgerEntryType, LedgerEntryCategory, SourceChoices, PaymentStatus
+from finance.services.accounting_service import settle_account
+from finance.services.reversal_utils import (
+    block_payment_if_credit_exists,
+    validate_credit_lifo,
+    validate_payment_lifo,
+    is_payment_reversible
+)
 
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
@@ -95,26 +102,10 @@ def reverse_payment_allocation(allocation_id):
     invoice = allocation.invoice
 
     # block if credit allocations exist
-    credit_exists = CreditAllocation.objects.filter(payment=payment).exists()
-
-    if credit_exists:
-        logger.error(
-            f"Cannot reverse payment allocation | payment={payment.id} has credit allocations"
-        )
-        raise Exception(
-            "Reverse credit allocations first before reversing payment allocations"
-        )
+    block_payment_if_credit_exists(payment)
     
     # LIFO check
-    last_allocation = PaymentAllocation.objects.filter(
-        payment=payment
-    ).order_by('-created_at', '-id').first()
-
-    if last_allocation.id != allocation.id:
-        logger.error(
-            f"LIFO violation | allocation={allocation.id} is not for payment={payment.id}"
-        )
-        raise Exception("Only the most recent allocation can be reversed")
+    validate_payment_lifo(allocation)
     
     logger.info(
         f"Reversing payment allocation | allocation={allocation.id} | "
@@ -166,16 +157,8 @@ def reverse_credit_allocation(allocation_id):
     invoice = allocation.invoice
 
     # LIFO check
-    last_allocation = CreditAllocation.objects.filter(
-        payment=payment
-    ).order_by('-created_at', '-id').first()
+    validate_credit_lifo(allocation)
 
-    if last_allocation.id != allocation.id:
-        logger.error(
-            f"LIFO violation | allocation={allocation.id} is not for payment={payment.id}"
-        )
-        raise Exception("Only the most recent allocation can be reversed")
-    
     logger.info(
         f"Reversing credit allocation | allocation={allocation.id} | "
         f"payment={payment.id} | invoice={invoice.id} | amount={allocation.amount_applied}"
@@ -211,15 +194,20 @@ def reverse_credit_allocation(allocation_id):
     )
 
 @transaction.atomic
-def reverse_payment(payment):
+def reverse_payment(payment, reversed_by, reason=None):
     """
     Fully reverses a payment.
 
-    1. Reverse credit allocations (internal)
-    2. Reverse payment allocations (external)
-    3. Reverse ledger entries
-    4. Recalculate invices
+    1. Validate reversibility
+    2. Reverse/remove allocations
+    3. Create reversal ledger entry
+    4. Mark payment reversed
+    5. Re-settle account to rebuild allocations cleanly
     """
+
+    if not is_payment_reversible(payment):
+        logger.error(f"Payment ID={payment.id} is not reversible")
+        raise Exception("This payment cannot be reversed")
 
     logger.info(f" Starting FULL reversal | payment ID={payment.id} | amount={payment.amount}")
 
@@ -239,10 +227,12 @@ def reverse_payment(payment):
 
     # prevent double reversal
     if ledger_entry.reversals.exists():
-        logger.error(f" Payment ID={payment.id} has already been reversed")
-        raise Exception("This payment has already been reversed")
-    
-    affected_invoices = set()
+        logger.error(
+            f" Payment ID={payment.id} has already been reversed"
+        )
+        raise Exception(
+            "This payment has already been reversed"
+        )
 
     # check deposit state
     deposit_allocations = DepositAllocation.objects.filter(
@@ -275,6 +265,7 @@ def reverse_payment(payment):
                 "Cannot reverse payment because deposit "
                 "has already been used or refunded."
             )
+        
     deposit_allocations.delete()
 
     logger.info(
@@ -287,11 +278,11 @@ def reverse_payment(payment):
     )
 
     for allocation in credit_allocations:
-        invoice = allocation.invoice
-        affected_invoices.add(invoice.id)
-
         logger.info(
-            f" Reversing credit allocation ID={payment.id} -> invoice={invoice.id} | amount={allocation.amount_applied}"
+            f"Removing credit allocation | "
+            f"payment={payment.id} | "
+            f"invoice={allocation.invoice.id} | "
+            f"amount={allocation.amount_applied}"
         )
 
         allocation.delete()
@@ -302,11 +293,11 @@ def reverse_payment(payment):
     )
 
     for allocation in payment_allocations:
-        invoice = allocation.invoice
-        affected_invoices.add(invoice.id)
-
         logger.info(
-            f" Reversing payment allocation ID={payment.id} -> invoice={invoice.id} | amount={allocation.amount_applied}"
+            f"Removing payment allocation | "
+            f"payment={payment.id} | "
+            f"invoice={allocation.invoice.id} | "
+            f"amount={allocation.amount_applied}"
         )
 
         allocation.delete()
@@ -327,33 +318,43 @@ def reverse_payment(payment):
         f"Ledger reversed | original={ledger_entry.id} | reversal={reversal_entry.id}"
         )
     
-    # 4. Recalculate invoices
-    for invoice_id in affected_invoices:
-        invoice = Invoice.objects.get(id=invoice_id)
+    # Update payment status
+    payment.status = PaymentStatus.REVERSED
+    payment.reversed_at = timezone.now()
+    payment.reversed_by = reversed_by
 
-        payment_total = invoice.payment_allocations.aggregate(
-            total=Sum('amount_applied')
-        )['total'] or Decimal('0.00')
+    if reason:
+        existing_notes = payment.notes or ""
 
-        credit_total = invoice.credit_allocations.aggregate(
-            total=Sum('amount_applied')
-        )['total'] or Decimal('0.00')
+        payment.notes = (
+            f"{existing_notes}\n\n"
+            f"REVERSAL REASON:\n{reason}"
+        ).strip()
 
-        total_paid = payment_total + credit_total
+    payment.save(
+        update_fields=[
+            "status",
+            "reversed_at",
+            "reversed_by",
+            "notes"
+        ]
+    )
+    logger.info(
+        f"Payment marked reversed | "
+        f"payment={payment.id}"
+    )
 
-        invoice.amount_paid = total_paid
+    # rebuild account state
+    logger.info(
+        f"Re-settling ledger account | "
+        f"ledger={payment.ledger_account.id}"
+    )
 
-        if total_paid == 0:
-            invoice.status = InvoiceStatus.ISSUED
-        elif total_paid < invoice.total_amount:
-            invoice.status = InvoiceStatus.PARTIAL
-        else:
-            invoice.status = InvoiceStatus.PAID
-        
-        invoice.save(update_fields=['amount_paid', 'status'])
+    settle_account(payment.ledger_account)
 
-        logger.info(
-            f"Invoice recalculated | invoice={invoice.id} | paid={total_paid}"
-        )
+    logger.info(
+        f"FULL reversal completed | "
+        f"payment ID={payment.id}"
+    )
 
-    logger.info(f" FULL reversal completed | payment ID={payment.id}")
+    return reversal_entry

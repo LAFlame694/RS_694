@@ -223,6 +223,7 @@ def create_invoice_and_ledger_entry(
                 invoice=invoice,
                 entry_type=LedgerEntryType.CHARGE,
                 category=category,
+                source=SourceChoices.NORMAL,
                 amount=amount,
                 entry_date=today,
                 description=f"{category} charge for {billing_start} - {billing_end}",

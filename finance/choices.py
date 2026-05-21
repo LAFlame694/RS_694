@@ -1,5 +1,9 @@
 from django.db import models
 
+class PaymentStatus(models.TextChoices):
+    COMPLETED = "COMPLETED", "Completed"
+    REVERSED = "REVERSED", "Reversed"
+
 # business meaning choices
 class LedgerEntryCategory(models.TextChoices):
     RENT = "RENT", "Rent"
@@ -8,7 +12,8 @@ class LedgerEntryCategory(models.TextChoices):
     GARBAGE = "GARBAGE", "Garbage"
     SECURITY = "SECURITY", "Security Fee"
     PARKING = "PARKING", "Parking Fee"
-    DEPOSIT = "DEPOSIT", "Deposit"
+    DEPOSIT = "DEPOSIT_ALLOCATION", "Deposit Allocation"
+    LIABILITY = "DEPOSIT_LIABILITY", "Deposit Liability"
     PENALTY = "PENALTY", "Penalty"
     OTHER = "OTHER", "Other"
     PAYMENT = "PAYMENT", "Payment"
