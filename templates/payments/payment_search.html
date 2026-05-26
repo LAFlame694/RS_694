@@ -1,0 +1,74 @@
+<!-- templates/finance/payment_search.html -->
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block content %}
+
+<h2>Search Tenant Payments</h2>
+
+<form method="get">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Search tenant..."
+        value="{{ query }}"
+    >
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+<hr>
+
+{% if tenants %}
+
+<table border="1">
+
+    <thead>
+        <tr>
+            <th>Tenant</th>
+            <th>Phone</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for tenant in tenants %}
+
+        <tr>
+
+            <td>
+                {{ tenant.first_name }}
+                {{ tenant.last_name }}
+            </td>
+
+            <td>
+                {{ tenant.phone_number }}
+            </td>
+
+            <td>
+
+                <a href="{% url 'finance:tenant_payment_history' tenant.id %}">
+                    View Payments
+                </a>
+
+            </td> 
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% elif query %}
+
+<p>No tenants found.</p>
+
+{% endif %}
+
+{% endblock %}

@@ -37,12 +37,9 @@ def get_available_deposit(ledger_account):
         total=Sum("amount")
     )["total"] or Decimal("0.00")
 
-    available_deposit = (
-        deposit_liability -
-        deposit_consumed
-    )
+    available_deposit = (deposit_liability - deposit_consumed)
 
-    if available_deposit < 0:
+    if available_deposit <= 0:
         return Decimal("0.00")
 
     return available_deposit

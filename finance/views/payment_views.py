@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from django.core.exceptions import ValidationError
 
-from tenants.models import Tenant
+from tenants.models import Tenant, Tenancy
 from tenants.choices import TenancyStatus
 from properties.models import Property
 from finance.forms.payment_forms import RecordPaymentForm
@@ -19,6 +19,120 @@ from finance.services.payments.payment_services import (
     record_payment_service,
 )
 
+from finance.services.payments.payment_history_service import (
+    get_accessible_tenants,
+    get_tenant_payment_history,
+    get_payment_detail,
+    get_payment_allocations,
+)
+
+# ==================== Views for viewing payments history ====================
+@login_required
+def payment_search_view(request):
+
+    query = request.GET.get("q", "").strip()
+
+    tenants = get_accessible_tenants(
+        user=request.user,
+        query=query
+    )
+
+    context = {
+        "query": query,
+        "tenants": tenants,
+    }
+
+    return render(
+        request,
+        "payments/payment_search.html",
+        context
+    )
+
+def tenant_payment_history_view(request, tenant_id):
+
+    try:
+        data = get_tenant_payment_history(
+            user=request.user,
+            tenant_id=tenant_id
+        )
+
+        context = {
+            "tenant": data["tenant"],
+            "payments": data["payments"],
+            "ledger_account": data["ledger_account"],
+        }
+
+        return render(
+            request,
+            "payments/tenant_payment_history.html",
+            context
+        )
+    
+    except PermissionError as e:
+        messages.error(request, str(e))
+        return redirect("finance:payment_search")
+    
+    except Exception as e:
+        messages.error(request, "An error occurred while fetching payment history.")
+        return redirect("finance:payment_search")
+
+def payment_detail_view(request, payment_id):
+
+    try:
+        data = get_payment_detail(
+            user=request.user,
+            payment_id=payment_id
+        )
+
+        context = {
+            "payment": data["payment"],
+            "ledger_entries": data["ledger_entries"],
+            "deposit_allocations": data["deposit_allocations"],
+        }
+
+        return render(
+            request,
+            "payments/payment_detail.html",
+            context
+        )
+    
+    except PermissionError as e:
+        messages.error(request, str(e))
+        return redirect("finance:payment_search")
+    
+    except Exception as e:
+        messages.error(request, "An error occurred while fetching payment details.")
+        return redirect("finance:payment_search")
+
+def payment_allocations_view(request, payment_id):
+
+    try:
+        data = get_payment_allocations(
+            user=request.user,
+            payment_id=payment_id
+        )
+
+        context = {
+            "payment": data["payment"],
+            "payment_allocations": data["payment_allocations"],
+            "credit_allocations": data["credit_allocations"],
+        }
+
+        return render(
+            request,
+            "payments/payment_allocations.html",
+            context
+        )
+    
+    except PermissionError as e:
+        messages.error(request, str(e))
+        return redirect("finance:payment_search")
+    
+    except Exception as e:
+        messages.error(request, "An error occurred while fetching payment allocations.")
+        return redirect("finance:payment_search")
+
+# ==================== Views for recording payments ====================
 @login_required
 def search_tenant_for_payment_view(request):
 
