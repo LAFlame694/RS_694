@@ -1,48 +1,100 @@
-<h1>Record Payment</h1>
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block content %}
+
+<h2>Payment Details</h2>
+
+<hr>
 
 <p>
-    Tenant:
-    {{ tenant.first_name }}
-    {{ tenant.last_name }}
+    <strong>Tenant:</strong>
+    {{ payment.ledger_account.tenancy.tenant.first_name }}
+    {{ payment.ledger_account.tenancy.tenant.last_name }}
 </p>
 
 <p>
-    Outstanding:
-    {{ financial_summary.outstanding_balance }} <br>
-    Available Credit:
-    {{ financial_summary.available_credit }} <br>
-    Deposit Held:
-    {{ financial_summary.deposit_held }} <br>
-    Property:
-    {{ financial_summary.tenancy.unit.property }} <br>
-    Unit:
-    {{ financial_summary.tenancy.unit }} <br>
-    Unpaid Invoices:
-    {{ financial_summary.unpaid_invoice_count }}
+    <strong>Payment ID:</strong>
+    {{ payment.id }}
 </p>
 
-<form method="post">
-    {% csrf_token %}
+<p>
+    <strong>Amount:</strong>
+    KES {{ payment.amount }}
+</p>
 
-    <input
-        type="number"
-        step="0.01"
-        name="amount"
-        placeholder="Amount"
-    >
+<p>
+    <strong>Status:</strong>
+    {{ payment.status }}
+</p>
 
-    <input
-        type="date"
-        name="payment_date"
-    >
+<p>
+    <strong>Method:</strong>
+    {{ payment.method }}
+</p>
 
-    <select name="method">
-        <option value="CASH">Cash</option>
-        <option value="MPESA">Mpesa</option>
-        <option value="BANK">Bank</option>
-    </select>
+<p>
+    <strong>Payment Date:</strong>
+    {{ payment.payment_date }}
+</p>
 
-    <button type="submit">
-        Record Payment
-    </button>
-</form>
+<p>
+    <strong>Created At:</strong>
+    {{ payment.created_at }}
+</p>
+
+<p>
+    <strong>Created By:</strong>
+    {{ payment.created_by }}
+</p>
+
+{% if ledger_entries %}
+
+<hr>
+
+<h3>Ledger Entries</h3>
+
+<table border="1">
+
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Entry Type</th>
+            <th>Source</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for entry in ledger_entries %}
+
+        <tr>
+
+            <td>{{ entry.entry_date }}</td>
+
+            <td>{{ entry.category }}</td>
+
+            <td>{{ entry.entry_type }}</td>
+
+            <td>{{ entry.source }}</td>
+
+            <td>KES {{ entry.amount }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endif %}
+
+<br>
+
+<a href="{% url 'finance:payment_allocations' payment.id %}">
+    View Allocations
+</a>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif;
+    color: #334155;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.breadcrumb { 
+    font-size: 0.85rem; 
+}
+
+.stat-card {
+    transition: transform 0.2s;
+}
+
+.table thead {
+    background-color: #f1f5f9;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: #64748b;
+}
+
+.table td { 
+    vertical-align: middle; 
+}
+
+.btn-primary { 
+    background-color: #2563eb; 
+    border-color: #2563eb; 
+}
+
+.btn-primary:hover { 
+    background-color: #1d4ed8; 
+}
+
+.empty-state {
+    padding: 3rem;
+    text-align: center;
+    color: #94a3b8;
+}
+
+.badge-active { 
+    background-color: #dcfce7; 
+    color: #166534; 
+}
+
+.badge-inactive { 
+    background-color: #f1f5f9; 
+    color: #475569; 
+}

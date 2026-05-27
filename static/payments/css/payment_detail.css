@@ -1,0 +1,46 @@
+body {
+    background-color: #f4f7f6;
+    font-family: 'Inter', sans-serif;
+    color: #334155;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1e293b;
+}
+
+.metadata-label {
+    color: #64748b;
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.metadata-value {
+    font-weight: 500;
+    color: #0f172a;
+}
+
+.badge-type {
+    font-size: 0.75rem;
+    padding: 0.35em 0.75em;
+}
+.bg-credit { background-color: #dcfce7; color: #166534; }
+.bg-charge { background-color: #fee2e2; color: #991b1b; }
+.badge-paid { background-color: #dbeafe; color: #1e40af; }
+
+.table thead {
+    background-color: #f8fafc;
+    color: #64748b;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}

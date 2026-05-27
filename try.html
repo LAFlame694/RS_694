@@ -1,518 +1,165 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Record Payment | Property Management System</title>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Details | Rental Management</title>
+    
     <!-- Google Fonts: Inter -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- Bootstrap 5 CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-      :root {
-        --bs-body-bg: #f4f7f9;
-        --bs-body-font-family: "Inter", sans-serif;
-        --primary-color: #2563eb;
-        --secondary-color: #64748b;
-        --success-color: #10b981;
-        --warning-color: #f59e0b;
-        --danger-color: #ef4444;
-        --card-border-radius: 12px;
-        --card-shadow:
-          0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      }
-
-      body {
-        background-color: var(--bs-body-bg);
-        color: #1e293b;
-        padding-bottom: 3rem;
-      }
-
-      /* Utility Classes */
-      .rounded-12 {
-        border-radius: var(--card-border-radius);
-      }
-      .shadow-sm-soft {
-        box-shadow: var(--card-shadow);
-      }
-      .text-xs {
-        font-size: 0.75rem;
-      }
-      .fw-600 {
-        font-weight: 600;
-      }
-
-      /* Breadcrumbs */
-      .breadcrumb-item + .breadcrumb-item::before {
-        content: "\f105";
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        font-size: 10px;
-      }
-
-      /* Section A: Header */
-      .page-header {
-        padding: 2rem 0;
-      }
-      .header-info-badge {
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        padding: 0.4rem 0.8rem;
-        border-radius: 8px;
-        font-size: 0.875rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      /* Section B & D & E: Cards */
-      .card {
-        border: none;
-        border-radius: var(--card-border-radius);
-        box-shadow: var(--card-shadow);
-        margin-bottom: 1.5rem;
-      }
-      .card-header {
-        background-color: #fff;
-        border-bottom: 1px solid #f1f5f9;
-        padding: 1.25rem;
-        border-top-left-radius: var(--card-border-radius) !important;
-        border-top-right-radius: var(--card-border-radius) !important;
-      }
-      .card-title {
-        margin-bottom: 0;
-        font-weight: 700;
-        color: #334155;
-        font-size: 1.1rem;
-      }
-
-      /* Section C: Financial Cards */
-      .stat-card {
-        transition: transform 0.2s;
-      }
-      .stat-card:hover {
-        transform: translateY(-4px);
-      }
-      .stat-icon {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        font-size: 1.25rem;
-        margin-bottom: 1rem;
-      }
-
-      /* Section D: Table */
-      .table thead th {
-        background-color: #f8fafc;
-        text-transform: uppercase;
-        font-size: 0.7rem;
-        letter-spacing: 0.05em;
-        color: #64748b;
-        border-top: none;
-        padding: 1rem;
-      }
-      .table tbody td {
-        padding: 1rem;
-        vertical-align: middle;
-        font-size: 0.9rem;
-      }
-      .status-badge {
-        padding: 0.35em 0.65em;
-        font-weight: 500;
-        border-radius: 6px;
-      }
-
-      /* Section E: Form */
-      .form-label {
-        font-weight: 600;
-        font-size: 0.875rem;
-        color: #475569;
-      }
-      .form-control,
-      .form-select {
-        padding: 0.6rem 1rem;
-        border-color: #e2e8f0;
-        border-radius: 8px;
-      }
-      .form-control:focus,
-      .form-select:focus {
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        border-color: var(--primary-color);
-      }
-      .input-group-text {
-        background-color: #f8fafc;
-        border-color: #e2e8f0;
-        color: #64748b;
-      }
-
-      /* Responsive Adjustments */
-      @media (max-width: 768px) {
-        .page-header {
-          text-align: center;
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Inter', sans-serif;
+            color: #334155;
         }
-        .header-actions {
-          margin-top: 1rem;
-          text-align: center;
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
-        .header-info-wrapper {
-          justify-content: center;
-          flex-wrap: wrap;
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e293b;
         }
-      }
+
+        .metadata-label {
+            color: #64748b;
+            font-size: 0.85rem;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .metadata-value {
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .badge-type {
+            font-size: 0.75rem;
+            padding: 0.35em 0.75em;
+        }
+        .bg-credit { background-color: #dcfce7; color: #166534; }
+        .bg-charge { background-color: #fee2e2; color: #991b1b; }
+        .badge-paid { background-color: #dbeafe; color: #1e40af; }
+
+        .table thead {
+            background-color: #f8fafc;
+            color: #64748b;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
     </style>
-  </head>
-  <body>
-    <div class="container py-4">
-      <!-- SECTION A: PAGE HEADER -->
-      <header class="page-header">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb mb-3">
-            <li class="breadcrumb-item">
-              <a href="#" class="text-decoration-none">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item">
-              <a href="#" class="text-decoration-none">Payments</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">
-              Record Payment
-            </li>
-          </ol>
-        </nav>
+</head>
+<body>
 
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <h1 class="h3 fw-bold mb-1">Record Payment</h1>
-            <p class="text-muted mb-3">
-              Record tenant rent and utility payments
-            </p>
-
-            <div class="d-flex gap-2 header-info-wrapper">
-              <div class="header-info-badge">
-                <i class="fa-solid fa-user text-primary"></i>
-                <span class="fw-600">John Doe</span>
-              </div>
-              <div class="header-info-badge">
-                <i class="fa-solid fa-door-open text-primary"></i>
-                <span class="fw-600">Unit A-12</span>
-              </div>
-              <div class="header-info-badge">
-                <i class="fa-solid fa-building text-primary"></i>
-                <span class="fw-600">Sunset Apartments</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 text-md-end header-actions">
-            <a href="#" class="btn btn-outline-secondary rounded-pill px-4">
-              <i class="fa-solid fa-arrow-left me-2"></i>Back to Search
+    <div class="container py-5">
+        
+        <!-- Navigation -->
+        <div class="mb-4">
+            <a href="#" class="btn btn-outline-secondary btn-sm">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Payment History
             </a>
-          </div>
         </div>
-      </header>
 
-      <div class="row">
-        <!-- Left Column: Tenant Info & Invoices -->
-        <div class="col-lg-8">
-          <!-- SECTION B: TENANT INFORMATION CARD -->
-          <div class="card shadow-sm-soft">
-            <div class="card-header">
-              <h5 class="card-title">
-                <i class="fa-solid fa-id-card me-2 text-primary"></i>Tenant
-                Information
-              </h5>
-            </div>
-            <div class="card-body">
-              <div class="row g-4">
-                <div class="col-md-4 col-sm-6">
-                  <label
-                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
-                    >Full Name</label
-                  >
-                  <span class="fw-600">John Doe</span>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                  <label
-                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
-                    >Phone Number</label
-                  >
-                  <span class="fw-600">+254 712 345 678</span>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                  <label
-                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
-                    >Email Address</label
-                  >
-                  <span class="fw-600">j.doe@example.com</span>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                  <label
-                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
-                    >Property</label
-                  >
-                  <span class="fw-600">Sunset Apartments</span>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                  <label
-                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
-                    >Unit</label
-                  >
-                  <span class="fw-600">Block A - 12</span>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                  <label
-                    class="text-muted text-xs text-uppercase fw-bold d-block mb-1"
-                    >Move In Date</label
-                  >
-                  <span class="fw-600">12th Jan 2023</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- Header -->
+        <header class="mb-4">
+            <h2 class="fw-bold text-dark">Payment Details</h2>
+            <p class="text-muted">Detailed breakdown of payment and ledger activity</p>
+        </header>
 
-          <!-- SECTION C: FINANCIAL SUMMARY CARDS -->
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3 mb-4">
-            <div class="col">
-              <div class="card h-100 stat-card">
-                <div class="card-body">
-                  <div class="stat-icon bg-danger bg-opacity-10 text-danger">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                  </div>
-                  <h6 class="text-muted text-xs text-uppercase fw-bold">
-                    Outstanding
-                  </h6>
-                  <h4 class="fw-bold mb-0">KES 12,500</h4>
+        <!-- Payment Summary Card -->
+        <div class="card mb-4">
+            <div class="card-body p-4">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-6">
+                        <h4 class="fw-bold mb-1">KES 10,000.00</h4>
+                        <span class="badge badge-paid">Status: Paid</span>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <span class="metadata-label">Payment ID</span>
+                        <div class="metadata-value font-monospace">PAY-2026-9982X</div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 stat-card">
-                <div class="card-body">
-                  <div class="stat-icon bg-success bg-opacity-10 text-success">
-                    <i class="fa-solid fa-wallet"></i>
-                  </div>
-                  <h6 class="text-muted text-xs text-uppercase fw-bold">
-                    Credit
-                  </h6>
-                  <h4 class="fw-bold mb-0">KES 2,000</h4>
+                <hr>
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <span class="metadata-label"><i class="fa-solid fa-user me-1"></i> Tenant</span>
+                        <div class="metadata-value">Johnathan Doe</div>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="metadata-label"><i class="fa-solid fa-credit-card me-1"></i> Method</span>
+                        <div class="metadata-value">M-Pesa</div>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="metadata-label"><i class="fa-solid fa-calendar me-1"></i> Payment Date</span>
+                        <div class="metadata-value">May 12, 2026</div>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="metadata-label"><i class="fa-solid fa-user-gear me-1"></i> Created By</span>
+                        <div class="metadata-value">Admin User</div>
+                    </div>
                 </div>
-              </div>
             </div>
-            <div class="col">
-              <div class="card h-100 stat-card">
-                <div class="card-body">
-                  <div class="stat-icon bg-primary bg-opacity-10 text-primary">
-                    <i class="fa-solid fa-vault"></i>
-                  </div>
-                  <h6 class="text-muted text-xs text-uppercase fw-bold">
-                    Deposit
-                  </h6>
-                  <h4 class="fw-bold mb-0">KES 15,000</h4>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 stat-card">
-                <div class="card-body">
-                  <div class="stat-icon bg-warning bg-opacity-10 text-warning">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-                  </div>
-                  <h6 class="text-muted text-xs text-uppercase fw-bold">
-                    Unpaid
-                  </h6>
-                  <h4 class="fw-bold mb-0">5 Invoices</h4>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
 
-          <!-- SECTION D: UNPAID INVOICES TABLE -->
-          <div class="card shadow-sm-soft">
-            <div
-              class="card-header d-flex justify-content-between align-items-center"
-            >
-              <div>
-                <h5 class="card-title">Recent Unpaid Invoices</h5>
-                <small class="text-muted">Showing oldest unpaid invoices</small>
-              </div>
-              <span class="badge bg-light text-dark border">Oldest First</span>
-            </div>
+        <!-- Ledger Entries Section -->
+        <div class="section-title">Ledger Entries</div>
+        <div class="card mb-4">
             <div class="table-responsive">
-              <table class="table mb-0">
-                <thead>
-                  <tr>
-                    <th>Inv #</th>
-                    <th>Category</th>
-                    <th>Due Date</th>
-                    <th class="text-end">Total</th>
-                    <th class="text-end">Balance</th>
-                    <th class="text-center">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="fw-600">#INV-8821</td>
-                    <td>Rent</td>
-                    <td class="text-muted">01 May 2024</td>
-                    <td class="text-end fw-600">10,000</td>
-                    <td class="text-end text-danger fw-bold">5,000</td>
-                    <td class="text-center">
-                      <span
-                        class="status-badge bg-warning bg-opacity-10 text-warning border border-warning-subtle"
-                        >Partial</span
-                      >
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="fw-600">#INV-8750</td>
-                    <td>Water</td>
-                    <td class="text-muted">15 Apr 2024</td>
-                    <td class="text-end fw-600">2,500</td>
-                    <td class="text-end text-danger fw-bold">2,500</td>
-                    <td class="text-center">
-                      <span
-                        class="status-badge bg-danger bg-opacity-10 text-danger border border-danger-subtle"
-                        >Overdue</span
-                      >
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="fw-600">#INV-8610</td>
-                    <td>Electricity</td>
-                    <td class="text-muted">10 Apr 2024</td>
-                    <td class="text-end fw-600">3,000</td>
-                    <td class="text-end text-danger fw-bold">3,000</td>
-                    <td class="text-center">
-                      <span
-                        class="status-badge bg-danger bg-opacity-10 text-danger border border-danger-subtle"
-                        >Overdue</span
-                      >
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                <table class="table table-striped table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">Date</th>
+                            <th>Category</th>
+                            <th>Entry Type</th>
+                            <th>Source</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ps-4">May 12, 2026</td>
+                            <td>Rent Payment</td>
+                            <td><span class="badge badge-type bg-credit">CREDIT</span></td>
+                            <td>System</td>
+                            <td class="fw-bold text-success">KES 10,000</td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">May 01, 2026</td>
+                            <td>Monthly Rent</td>
+                            <td><span class="badge badge-type bg-charge">CHARGE</span></td>
+                            <td>Automated</td>
+                            <td class="fw-bold text-danger">KES 10,000</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="card-footer bg-white text-center py-2">
-              <small class="text-muted italic"
-                >Only the 5 oldest unpaid invoices are displayed.</small
-              >
-            </div>
-          </div>
         </div>
 
-        <!-- Right Column: Record Payment Form -->
-        <div class="col-lg-4">
-          <!-- SECTION E: RECORD PAYMENT FORM -->
-          <div
-            class="card shadow-sm-soft border-top border-primary border-4 sticky-top"
-            style="top: 20px; z-index: 10"
-          >
-            <div class="card-header">
-              <h5 class="card-title">Record New Payment</h5>
-            </div>
-            <div class="card-body">
-              <form action="#" method="POST">
-                <div class="mb-3">
-                  <label for="amount" class="form-label">Payment Amount</label>
-                  <div class="input-group">
-                    <span class="input-group-text fw-bold">KES</span>
-                    <input
-                      type="number"
-                      class="form-control form-control-lg"
-                      id="amount"
-                      placeholder="0.00"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="date" class="form-label">Payment Date</label>
-                  <div class="input-group">
-                    <span class="input-group-text"
-                      ><i class="fa-regular fa-calendar"></i
-                    ></span>
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="date"
-                      value="2024-05-12"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="method" class="form-label">Payment Method</label>
-                  <select class="form-select" id="method" required>
-                    <option value="" disabled selected>Select method...</option>
-                    <option value="mpesa">M-Pesa</option>
-                    <option value="bank">Bank Transfer</option>
-                    <option value="cash">Cash</option>
-                    <option value="cheque">Cheque</option>
-                  </select>
-                </div>
-
-                <div class="mb-4">
-                  <label for="notes" class="form-label">Optional Notes</label>
-                  <textarea
-                    class="form-control"
-                    id="notes"
-                    rows="3"
-                    placeholder="Reference number or memo..."
-                  ></textarea>
-                </div>
-
-                <div
-                  class="alert alert-info py-2 px-3 mb-4 border-0 bg-primary bg-opacity-10"
-                >
-                  <div class="d-flex align-items-center">
-                    <i class="fa-solid fa-circle-info text-primary me-2"></i>
-                    <small class="text-primary fw-500"
-                      >Payments are automatically allocated to oldest unpaid
-                      invoices.</small
-                    >
-                  </div>
-                </div>
-
-                <div class="d-grid gap-2">
-                  <button
-                    type="submit"
-                    class="btn btn-primary btn-lg rounded-pill fw-bold"
-                  >
-                    Record Payment
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-link text-secondary text-decoration-none small"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+        <!-- Action Section -->
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary">
+                <i class="fa-solid fa-eye me-1"></i> View Allocations
+            </button>
         </div>
-      </div>
+
     </div>
 
-    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+</body>
 </html>
+```

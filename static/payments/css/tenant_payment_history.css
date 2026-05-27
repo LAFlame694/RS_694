@@ -1,0 +1,54 @@
+body {
+    background-color: #f4f7f6;
+    font-family: 'Inter', sans-serif;
+    color: #334155;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #edf2f7;
+    padding: 1.25rem;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.table thead {
+    background-color: #f8fafc;
+    color: #64748b;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.badge-paid { 
+    background-color: #d1fae5; 
+    color: #065f46; 
+}
+
+.badge-pending { 
+    background-color: #fef3c7; 
+    color: #92400e; 
+}
+
+.badge-failed { 
+    background-color: #fee2e2; 
+    color: #991b1b; 
+}
+
+.info-label { 
+    color: #64748b; 
+    font-size: 0.875rem; 
+    margin-bottom: 0.25rem; 
+}
+
+.info-value { 
+    font-weight: 600; 
+    font-size: 1rem; 
+}
+
+.btn-action { font-size: 0.8rem; padding: 0.4rem 0.8rem; }

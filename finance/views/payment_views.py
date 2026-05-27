@@ -32,22 +32,36 @@ def payment_search_view(request):
 
     query = request.GET.get("q", "").strip()
 
-    tenants = get_accessible_tenants(
-        user=request.user,
-        query=query
-    )
+    tenants = []
+    has_searched = False
+
+    if query:
+        has_searched = True
+        tenants = get_accessible_tenants(
+            user=request.user,
+            query=query
+        )
 
     context = {
         "query": query,
         "tenants": tenants,
+        "has_searched": has_searched,
     }
 
+    # HTMX request
+    if request.htmx:
+        return render(
+            request,
+            "payments/partials/payment_search_results.html",
+            context
+        )
+    
     return render(
         request,
         "payments/payment_search.html",
         context
     )
-
+    
 def tenant_payment_history_view(request, tenant_id):
 
     try:
@@ -101,7 +115,7 @@ def payment_detail_view(request, payment_id):
         return redirect("finance:payment_search")
     
     except Exception as e:
-        messages.error(request, "An error occurred while fetching payment details.")
+        messages.error(request, str(e))
         return redirect("finance:payment_search")
 
 def payment_allocations_view(request, payment_id):

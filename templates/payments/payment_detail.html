@@ -1,0 +1,138 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Payment Details | Rental Management{% endblock %}
+
+{% load static %}
+
+{% block extra_css %}
+<!-- Custom CSS for Search Tenant -->
+<link rel="stylesheet" href="{% static 'payments/css/payment_detail.css' %}" />
+
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+    
+    <!-- Navigation -->
+    <div class="mb-4">
+        <a href="#" class="btn btn-outline-secondary btn-sm">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Payment History
+        </a>
+    </div>
+
+    <!-- Header -->
+    <header class="mb-4">
+        <h2 class="fw-bold text-dark">Payment Details</h2>
+        <p class="text-muted">Detailed breakdown of payment and ledger activity</p>
+    </header>
+
+    <!-- Payment Summary Card -->
+    <div class="card mb-4">
+        <div class="card-body p-4">
+            <div class="row align-items-center mb-4">
+                <div class="col-md-6">
+                    <h4 class="fw-bold mb-1">KES {{ payment.amount|floatformat:2 }}</h4>
+                    <span class="badge bg-primary">Status: {{ payment.status }}</span>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span class="metadata-label">Reference Code</span>
+                    <div class="metadata-value font-monospace">{{ payment.reference_code }}</div>
+                </div>
+            </div>
+            <hr>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <span class="metadata-label"><i class="fa-solid fa-user me-1"></i> Tenant</span>
+                    <div class="metadata-value">{{ payment.ledger_account.tenancy.tenant.first_name }} {{ payment.ledger_account.tenancy.tenant.last_name }}</div>
+                </div>
+                <div class="col-md-3">
+                    <span class="metadata-label"><i class="fa-solid fa-credit-card me-1"></i> Method</span>
+                    <div class="metadata-value">{{ payment.method }}</div>
+                </div>
+                <div class="col-md-3">
+                    <span class="metadata-label"><i class="fa-solid fa-calendar me-1"></i> Payment Date</span>
+                    <div class="metadata-value">{{ payment.payment_date }}</div>
+                </div>
+                <div class="col-md-3">
+                    <span class="metadata-label"><i class="fa-solid fa-user-gear me-1"></i> Created By</span>
+                    <div class="metadata-value">{{ payment.created_by }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ledger Entries Section -->
+     {% if ledger_entries %}
+    <div class="section-title">Ledger Entries</div>
+    <div class="card mb-4">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Date</th>
+                        <th>Category</th>
+                        <th>Entry Type</th>
+                        <th>Source</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in ledger_entries %}
+                    <tr>
+                        <td class="ps-4">{{ entry.entry_date }}</td>
+                        <td>{{ entry.category }}</td>
+                        <td>
+                            {% if entry.entry_type == "CREDIT" %}
+                                <span class="badge bg-success px-3 py-2">
+                                    <i class="fa-solid fa-arrow-down me-1"></i>
+                                    {{ entry.entry_type }}
+                                </span>
+                            {% elif entry.entry_type == "CHARGE" %}
+                                <span class="badge bg-danger px-3 py-2">
+                                    <i class="fa-solid fa-arrow-up me-1"></i>
+                                    {{ entry.entry_type }}
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary px-3 py-2">
+                                    {{ entry.entry_type }}
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>{{ entry.source }}</td>
+                        <td class="fw-bold text-success">KES {{ entry.amount|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                    <!--<tr>
+                        <td class="ps-4">May 01, 2026</td>
+                        <td>Monthly Rent</td>
+                        <td><span class="badge badge-type bg-charge">CHARGE</span></td>
+                        <td>Automated</td>
+                        <td class="fw-bold text-danger">KES 10,000</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Action Section -->
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary" href="{% url 'finance:payment_allocations' payment.id %}">
+            <i class="fa-solid fa-eye me-1"></i> View Allocations
+        </a>
+    </div>
+
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

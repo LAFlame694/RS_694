@@ -1,0 +1,67 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block content %}
+
+<h2>Payment Allocations</h2>
+
+<hr>
+
+<p>
+    <strong>Payment ID:</strong>
+    {{ payment }}
+</p>
+
+<p>
+    <strong>Amount:</strong>
+    KES {{ payment.amount }}
+</p>
+
+<hr>
+
+<h3>Invoice Payment Allocations</h3>
+
+{% if payment_allocations %}
+
+<table border="1">
+
+    <thead>
+        <tr>
+            <th>Invoice</th>
+            <th>Category</th>
+            <th>Amount Applied</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for allocation in payment_allocations %}
+
+        <tr>
+
+            <td>
+                {{ allocation.invoice.invoice_number }}
+            </td>
+
+            <td>
+                {{ allocation.invoice.category }}
+            </td>
+
+            <td>
+                KES {{ allocation.amount_applied }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>No payment allocations found.</p>
+
+{% endif %}
+
+{% endblock %}

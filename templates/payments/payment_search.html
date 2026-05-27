@@ -1,74 +1,144 @@
-<!-- templates/finance/payment_search.html -->
 {% extends 'dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block title %}
+Search Tenant Payments
+{% endblock %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'payments/css/payment_search.css' %}"
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+>
+
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+{% endblock %}
 
 {% block content %}
 
-<h2>Search Tenant Payments</h2>
+<div class="container py-4">
 
-<form method="get">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
 
-    <input
-        type="text"
-        name="q"
-        placeholder="Search tenant..."
-        value="{{ query }}"
-    >
+        <ol class="breadcrumb">
 
-    <button type="submit">
-        Search
-    </button>
-
-</form>
-
-<hr>
-
-{% if tenants %}
-
-<table border="1">
-
-    <thead>
-        <tr>
-            <th>Tenant</th>
-            <th>Phone</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-        {% for tenant in tenants %}
-
-        <tr>
-
-            <td>
-                {{ tenant.first_name }}
-                {{ tenant.last_name }}
-            </td>
-
-            <td>
-                {{ tenant.phone_number }}
-            </td>
-
-            <td>
-
-                <a href="{% url 'finance:tenant_payment_history' tenant.id %}">
-                    View Payments
+            <li class="breadcrumb-item">
+                <a href="#" class="text-decoration-none">
+                    Dashboard
                 </a>
+            </li>
 
-            </td> 
+            <li class="breadcrumb-item">
+                <a href="#" class="text-decoration-none">
+                    Payments
+                </a>
+            </li>
 
-        </tr>
+            <li class="breadcrumb-item active">
+                Search
+            </li>
 
-        {% endfor %}
+        </ol>
 
-    </tbody>
+    </nav>
 
-</table>
+    <!-- Header -->
+    <header class="mb-4">
 
-{% elif query %}
+        <h1 class="h3 fw-bold">
 
-<p>No tenants found.</p>
+            <i class="fa-solid fa-money-bill-transfer text-primary me-2"></i>
 
-{% endif %}
+            Search Tenant Payments
+
+        </h1>
+
+        <p class="text-muted">
+            Search tenants and view their payment history
+        </p>
+
+    </header>
+
+    <!-- Search Card -->
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body p-4">
+
+            <form>
+
+                <div class="row g-2">
+
+                    <div class="col-md-10">
+
+                        <div class="input-group input-group-lg">
+
+                            <span class="input-group-text bg-white border-end-0">
+
+                                <i class="fa-solid fa-magnifying-glass text-muted"></i>
+
+                            </span>
+
+                            <input
+                                type="text"
+                                name="q"
+                                value="{{ query }}"
+                                class="form-control border-start-0"
+                                placeholder="Search by tenant name, phone number, or ID number"
+
+                                hx-get="{% url 'finance:payment_search' %}"
+                                hx-trigger="keyup changed delay:500ms"
+                                hx-target="#tenant-results"
+                                hx-swap="innerHTML"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 d-grid">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-lg"
+                        >
+                            Search
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Results -->
+    <div id="tenant-results">
+
+        {% include "payments/partials/payment_search_results.html" %}
+
+    </div>
+
+</div>
 
 {% endblock %}
