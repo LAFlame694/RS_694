@@ -2,19 +2,13 @@
 
 {% block content %}
 
-<h2>Payment Details</h2>
+<h2>Payment Allocations</h2>
 
 <hr>
 
 <p>
-    <strong>Tenant:</strong>
-    {{ payment.ledger_account.tenancy.tenant.first_name }}
-    {{ payment.ledger_account.tenancy.tenant.last_name }}
-</p>
-
-<p>
     <strong>Payment ID:</strong>
-    {{ payment.id }}
+    {{ payment }}
 </p>
 
 <p>
@@ -22,64 +16,39 @@
     KES {{ payment.amount }}
 </p>
 
-<p>
-    <strong>Status:</strong>
-    {{ payment.status }}
-</p>
-
-<p>
-    <strong>Method:</strong>
-    {{ payment.method }}
-</p>
-
-<p>
-    <strong>Payment Date:</strong>
-    {{ payment.payment_date }}
-</p>
-
-<p>
-    <strong>Created At:</strong>
-    {{ payment.created_at }}
-</p>
-
-<p>
-    <strong>Created By:</strong>
-    {{ payment.created_by }}
-</p>
-
-{% if ledger_entries %}
-
 <hr>
 
-<h3>Ledger Entries</h3>
+<h3>Invoice Payment Allocations</h3>
+
+{% if payment_allocations %}
 
 <table border="1">
 
     <thead>
         <tr>
-            <th>Date</th>
+            <th>Invoice</th>
             <th>Category</th>
-            <th>Entry Type</th>
-            <th>Source</th>
-            <th>Amount</th>
+            <th>Amount Applied</th>
         </tr>
     </thead>
 
     <tbody>
 
-        {% for entry in ledger_entries %}
+        {% for allocation in payment_allocations %}
 
         <tr>
 
-            <td>{{ entry.entry_date }}</td>
+            <td>
+                {{ allocation.invoice.invoice_number }}
+            </td>
 
-            <td>{{ entry.category }}</td>
+            <td>
+                {{ allocation.invoice.category }}
+            </td>
 
-            <td>{{ entry.entry_type }}</td>
-
-            <td>{{ entry.source }}</td>
-
-            <td>KES {{ entry.amount }}</td>
+            <td>
+                KES {{ allocation.amount_applied }}
+            </td>
 
         </tr>
 
@@ -89,12 +58,10 @@
 
 </table>
 
+{% else %}
+
+<p>No payment allocations found.</p>
+
 {% endif %}
-
-<br>
-
-<a href="{% url 'finance:payment_allocations' payment.id %}">
-    View Allocations
-</a>
 
 {% endblock %}

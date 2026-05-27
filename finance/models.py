@@ -99,6 +99,13 @@ class LedgerEntry(models.Model):
             self.reference_code = self.generate_reference_code()
         super().save(*args, **kwargs)
     
+    def entry_type_badge_class(self):
+        if self.entry_type == LedgerEntryType.CREDIT:
+            return "success"
+        if self.entry_type == LedgerEntryType.CHARGE:
+            return "danger"
+        return "secondary"
+    
     def generate_reference_code(self):
         return f"LE-{uuid.uuid4().hex[:10].upper()}"
 
