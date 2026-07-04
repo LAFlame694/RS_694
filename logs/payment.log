@@ -229,3 +229,93 @@ django.db.utils.IntegrityError: UNIQUE constraint failed: finance_paymentallocat
 2026-05-27 18:49:09,411 | INFO | payment | Starting allocation | payment=3 | amount=17600.00
 2026-05-27 18:49:09,431 | INFO | payment | Overpayment detected | payment=3 | remaining=17600.00
 2026-05-27 18:49:09,432 | INFO | payment | Allocation comlpete | payment=3
+2026-06-02 00:00:15,438 | INFO | payment | Starting allocation | payment=3 | amount=17600.00
+2026-06-02 00:00:15,456 | INFO | payment | Allocated 6500.00 | payment=3 -> invoice=4
+2026-06-02 00:00:15,456 | INFO | payment | Overpayment detected | payment=3 | remaining=11100.00
+2026-06-02 00:00:15,457 | INFO | payment | Allocation comlpete | payment=3
+2026-06-02 00:00:15,490 | INFO | payment | Starting allocation | payment=1 | amount=10000.00
+2026-06-02 00:00:15,494 | INFO | payment | Allocated 7000.00 | payment=1 -> invoice=1
+2026-06-02 00:00:15,497 | INFO | payment | Allocated 1200.00 | payment=1 -> invoice=2
+2026-06-02 00:00:15,500 | INFO | payment | Allocated 1800.00 | payment=1 -> invoice=3
+2026-06-02 00:00:15,500 | INFO | payment | Allocation comlpete | payment=1
+2026-06-02 00:00:15,502 | INFO | payment | Starting allocation | payment=2 | amount=20000.00
+2026-06-02 00:00:15,506 | INFO | payment | Allocated 2200.00 | payment=2 -> invoice=3
+2026-06-02 00:00:15,509 | INFO | payment | Allocated 7000.00 | payment=2 -> invoice=5
+2026-06-02 00:00:15,510 | INFO | payment | Overpayment detected | payment=2 | remaining=10800.00
+2026-06-02 00:00:15,510 | INFO | payment | Allocation comlpete | payment=2
+2026-06-02 00:00:15,539 | INFO | payment | Starting allocation | payment=3 | amount=17600.00
+2026-06-02 00:00:15,543 | INFO | payment | Allocated 6500.00 | payment=3 -> invoice=4
+2026-06-02 00:00:15,547 | INFO | payment | Allocated 1200.00 | payment=3 -> invoice=6
+2026-06-02 00:00:15,547 | INFO | payment | Overpayment detected | payment=3 | remaining=9900.00
+2026-06-02 00:00:15,549 | INFO | payment | Allocation comlpete | payment=3
+2026-06-02 00:00:15,568 | INFO | payment | Starting allocation | payment=1 | amount=10000.00
+2026-06-02 00:00:15,573 | INFO | payment | Allocated 7000.00 | payment=1 -> invoice=1
+2026-06-02 00:00:15,576 | INFO | payment | Allocated 1200.00 | payment=1 -> invoice=2
+2026-06-02 00:00:15,580 | INFO | payment | Allocated 1800.00 | payment=1 -> invoice=3
+2026-06-02 00:00:15,581 | INFO | payment | Allocation comlpete | payment=1
+2026-06-02 00:00:15,584 | INFO | payment | Starting allocation | payment=2 | amount=20000.00
+2026-06-02 00:00:15,588 | INFO | payment | Allocated 2200.00 | payment=2 -> invoice=3
+2026-06-02 00:00:15,591 | INFO | payment | Allocated 7000.00 | payment=2 -> invoice=5
+2026-06-02 00:00:15,595 | INFO | payment | Allocated 1200.00 | payment=2 -> invoice=7
+2026-06-02 00:00:15,595 | INFO | payment | Overpayment detected | payment=2 | remaining=9600.00
+2026-06-02 00:00:15,596 | INFO | payment | Allocation comlpete | payment=2
+2026-06-02 00:00:15,623 | INFO | payment | Starting allocation | payment=3 | amount=17600.00
+2026-06-02 00:00:15,628 | INFO | payment | Allocated 6500.00 | payment=3 -> invoice=4
+2026-06-02 00:00:15,632 | INFO | payment | Allocated 1200.00 | payment=3 -> invoice=6
+2026-06-02 00:00:15,636 | INFO | payment | Allocated 4000.00 | payment=3 -> invoice=8
+2026-06-02 00:00:15,636 | INFO | payment | Overpayment detected | payment=3 | remaining=5900.00
+2026-06-02 00:00:15,637 | INFO | payment | Allocation comlpete | payment=3
+2026-06-02 00:00:15,657 | INFO | payment | Starting allocation | payment=1 | amount=10000.00
+2026-06-02 00:00:15,663 | INFO | payment | Allocated 7000.00 | payment=1 -> invoice=1
+2026-06-02 00:00:15,666 | INFO | payment | Allocated 1200.00 | payment=1 -> invoice=2
+2026-06-02 00:00:15,670 | INFO | payment | Allocated 1800.00 | payment=1 -> invoice=3
+2026-06-02 00:00:15,670 | INFO | payment | Allocation comlpete | payment=1
+2026-06-02 00:00:15,672 | INFO | payment | Starting allocation | payment=2 | amount=20000.00
+2026-06-02 00:00:15,678 | INFO | payment | Allocated 2200.00 | payment=2 -> invoice=3
+2026-06-02 00:00:15,682 | INFO | payment | Allocated 7000.00 | payment=2 -> invoice=5
+2026-06-02 00:00:15,685 | INFO | payment | Allocated 1200.00 | payment=2 -> invoice=7
+2026-06-02 00:00:15,689 | INFO | payment | Allocated 4000.00 | payment=2 -> invoice=9
+2026-06-02 00:00:15,689 | INFO | payment | Overpayment detected | payment=2 | remaining=5600.00
+2026-06-02 00:00:15,690 | INFO | payment | Allocation comlpete | payment=2
+2026-07-04 12:54:03,143 | INFO | payment | Starting allocation | payment=3 | amount=17600.00
+2026-07-04 12:54:03,229 | INFO | payment | Allocated 6500.00 | payment=3 -> invoice=4
+2026-07-04 12:54:03,234 | INFO | payment | Allocated 1200.00 | payment=3 -> invoice=6
+2026-07-04 12:54:03,242 | INFO | payment | Allocated 4000.00 | payment=3 -> invoice=8
+2026-07-04 12:54:03,245 | INFO | payment | Allocated 5900.00 | payment=3 -> invoice=10
+2026-07-04 12:54:03,246 | INFO | payment | Allocation comlpete | payment=3
+2026-07-04 12:54:04,160 | INFO | payment | Starting allocation | payment=1 | amount=10000.00
+2026-07-04 12:54:04,168 | INFO | payment | Allocated 7000.00 | payment=1 -> invoice=1
+2026-07-04 12:54:04,175 | INFO | payment | Allocated 1200.00 | payment=1 -> invoice=2
+2026-07-04 12:54:04,180 | INFO | payment | Allocated 1800.00 | payment=1 -> invoice=3
+2026-07-04 12:54:04,181 | INFO | payment | Allocation comlpete | payment=1
+2026-07-04 12:54:04,184 | INFO | payment | Starting allocation | payment=2 | amount=20000.00
+2026-07-04 12:54:04,198 | INFO | payment | Allocated 2200.00 | payment=2 -> invoice=3
+2026-07-04 12:54:04,205 | INFO | payment | Allocated 7000.00 | payment=2 -> invoice=5
+2026-07-04 12:54:04,216 | INFO | payment | Allocated 1200.00 | payment=2 -> invoice=7
+2026-07-04 12:54:04,227 | INFO | payment | Allocated 4000.00 | payment=2 -> invoice=9
+2026-07-04 12:54:04,233 | INFO | payment | Allocated 5600.00 | payment=2 -> invoice=11
+2026-07-04 12:54:04,233 | INFO | payment | Allocation comlpete | payment=2
+2026-07-04 14:32:07,681 | INFO | payment | Starting allocation | payment=1 | amount=20000.00
+2026-07-04 14:32:07,688 | INFO | payment | Overpayment detected | payment=1 | remaining=20000.00
+2026-07-04 14:32:07,689 | INFO | payment | Allocation comlpete | payment=1
+2026-07-04 15:02:05,690 | INFO | payment | Starting allocation | payment=1 | amount=20000.00
+2026-07-04 15:02:06,579 | INFO | payment | Allocated 12000.00 | payment=1 -> invoice=1
+2026-07-04 15:02:06,581 | INFO | payment | Overpayment detected | payment=1 | remaining=8000.00
+2026-07-04 15:02:06,584 | INFO | payment | Allocation comlpete | payment=1
+2026-07-04 23:44:13,895 | INFO | payment | Starting allocation | payment=2 | amount=20000.00
+2026-07-04 23:44:13,898 | INFO | payment | Overpayment detected | payment=2 | remaining=20000.00
+2026-07-04 23:44:13,898 | INFO | payment | Allocation comlpete | payment=2
+2026-07-04 23:45:02,841 | INFO | payment | Starting allocation | payment=2 | amount=20000.00
+2026-07-04 23:45:02,854 | INFO | payment | Allocated 13500.00 | payment=2 -> invoice=3
+2026-07-04 23:45:02,856 | INFO | payment | Overpayment detected | payment=2 | remaining=6500.00
+2026-07-04 23:45:02,857 | INFO | payment | Allocation comlpete | payment=2
+2026-07-04 23:49:12,099 | INFO | payment | Starting allocation | payment=3 | amount=20000.00
+2026-07-04 23:49:12,102 | INFO | payment | Overpayment detected | payment=3 | remaining=20000.00
+2026-07-04 23:49:12,102 | INFO | payment | Allocation comlpete | payment=3
+2026-07-05 00:00:03,674 | INFO | payment | Starting allocation | payment=3 | amount=20000.00
+2026-07-05 00:00:03,679 | INFO | payment | Allocated 12000.00 | payment=3 -> invoice=4
+2026-07-05 00:00:03,679 | INFO | payment | Overpayment detected | payment=3 | remaining=8000.00
+2026-07-05 00:00:03,680 | INFO | payment | Allocation comlpete | payment=3
+2026-07-05 00:05:11,894 | INFO | payment | Starting allocation | payment=4 | amount=30000.00
+2026-07-05 00:05:11,956 | INFO | payment | Overpayment detected | payment=4 | remaining=30000.00
+2026-07-05 00:05:11,958 | INFO | payment | Allocation comlpete | payment=4

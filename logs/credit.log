@@ -63,3 +63,22 @@
 2026-05-21 12:13:55,734 | INFO | credit | Credit application complete | ledger=1
 2026-05-21 12:26:29,886 | INFO | credit | No invoices to apply credit for ledger 1
 2026-05-27 18:49:09,434 | INFO | credit | No invoices to apply credit for ledger 2
+2026-06-02 00:00:15,458 | INFO | credit | No invoices to apply credit for ledger 2
+2026-06-02 00:00:15,511 | INFO | credit | No invoices to apply credit for ledger 1
+2026-06-02 00:00:15,551 | INFO | credit | No invoices to apply credit for ledger 2
+2026-06-02 00:00:15,600 | INFO | credit | No invoices to apply credit for ledger 1
+2026-06-02 00:00:15,639 | INFO | credit | No invoices to apply credit for ledger 2
+2026-06-02 00:00:15,693 | INFO | credit | No invoices to apply credit for ledger 1
+2026-07-04 12:54:03,256 | INFO | credit | Credit application complete | ledger=2
+2026-07-04 12:54:04,248 | ERROR | credit | Over-allocation detected | payment=2 | Payment amount=20000.00 | total used=30000.00
+2026-07-04 14:32:07,691 | INFO | credit | No invoices to apply credit for ledger 1
+2026-07-04 15:02:06,600 | INFO | credit | No invoices to apply credit for ledger 1
+2026-07-04 23:40:41,837 | INFO | credit | Credit application complete | ledger=2
+2026-07-04 23:44:13,900 | INFO | credit | No invoices to apply credit for ledger 3
+2026-07-04 23:45:02,861 | INFO | credit | No invoices to apply credit for ledger 3
+2026-07-04 23:49:12,104 | INFO | credit | No invoices to apply credit for ledger 4
+2026-07-05 00:00:03,681 | INFO | credit | No invoices to apply credit for ledger 4
+2026-07-05 00:05:11,961 | INFO | credit | No invoices to apply credit for ledger 5
+2026-07-05 00:29:24,748 | INFO | credit | Processing payment credit | payment=4 | remaining=10000.00
+2026-07-05 00:29:24,764 | INFO | credit | Credit applied 10000.00 | payment=4 -> invoice=5 | remaining_credit=0.00
+2026-07-05 00:29:24,765 | INFO | credit | Credit application complete | ledger=5

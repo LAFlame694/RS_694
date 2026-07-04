@@ -1326,3 +1326,5 @@ Traceback (most recent call last):
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for 'tenant_payment_history' not found. 'tenant_payment_history' is not a valid view function or pattern name.
 2026-05-26 22:36:10,281 | ERROR | django.server | "GET /finance/payments/search/ HTTP/1.1" 500 189147
+2026-07-04 12:54:04,248 | ERROR | credit | Over-allocation detected | payment=2 | Payment amount=20000.00 | total used=30000.00
+2026-07-04 12:54:04,358 | ERROR | billing | FAILED to create invoice | tenancy=1 | category=RENT | error=Payment over-allocated. Data inconsistency.

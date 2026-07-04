@@ -32,9 +32,50 @@
 
     <!-- FINANCE -->
     <li>
-      <a href="#" class="nav-item-link">
-        <i class="fa-solid fa-credit-card"></i> Billing
+      <a
+        class="nav-item-link d-flex justify-content-between align-items-center"
+        data-bs-toggle="collapse"
+        href="#billingSubmenu"
+        role="button"
+        aria-expanded="false"
+        aria-controls="billingSubmenu"
+      >
+        <span>
+          <i class="fa-solid fa-credit-card"></i> Billing
+        </span>
+
+        <i class="fa-solid fa-chevron-down small"></i>
       </a>
+
+      <div class="collapse mt-1" id="billingSubmenu">
+        <ul class="list-unstyled ps-4 small">
+
+          <li class="mb-1">
+            <a href="#" class="nav-item-link">
+              <i class="fa-solid fa-file-invoice"></i> Invoices
+            </a>
+          </li>
+
+          <li class="mb-1">
+            <a href="#" class="nav-item-link">
+              <i class="fa-solid fa-money-bill-transfer"></i> Transactions
+            </a>
+          </li>
+
+          <li class="mb-1">
+            <a href="#" class="nav-item-link">
+              <i class="fa-solid fa-bolt"></i> Charges
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="nav-item-link">
+              <i class="fa-solid fa-book"></i> Accounts
+            </a>
+          </li>
+
+        </ul>
+      </div>
     </li>
 
     <li>

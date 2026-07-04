@@ -33,13 +33,13 @@ def settle_account(ledger_account):
             invoice.save(update_fields=["amount_paid", "status"])
 
         # STEP 2: APPLY ALL ACTIVE PAYMENTS
-        payments = Payment.objects.filter(
+        """payments = Payment.objects.filter(
             ledger_account=ledger_account,
             status=PaymentStatus.COMPLETED
         ).order_by("created_at", "id")
 
         for payment in payments:
-            apply_payment_to_invoices(payment)
+            apply_payment_to_invoices(payment)"""
 
         # STEP 3: APPLY CREDIT LAST
         apply_credit_to_invoices(ledger_account)
