@@ -452,3 +452,94 @@
 2026-07-05 00:27:28,828 | INFO | billing | Found 0 active recurring charges
 2026-07-05 00:27:28,830 | WARNING | billing | No recurring charges found
 2026-07-05 00:27:28,832 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-07-05 12:26:58,836 | INFO | billing | === Monthly billing job STARTED ===
+2026-07-05 12:26:58,867 | INFO | billing | Billing date: 2026-07-05
+2026-07-05 12:26:58,870 | INFO | billing | Generating RENT invoices for period 2026-07-01 to 2026-07-31
+2026-07-05 12:26:58,877 | INFO | billing | Found 5 active tenancies for rent billing
+2026-07-05 12:26:58,896 | INFO | billing | Invoice already exists for tenancy 5, category RENT
+2026-07-05 12:26:58,899 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-07-05 12:26:58,902 | INFO | billing | Invoice already exists for tenancy 2, category RENT
+2026-07-05 12:26:58,906 | INFO | billing | Invoice already exists for tenancy 3, category RENT
+2026-07-05 12:26:58,910 | INFO | billing | Invoice already exists for tenancy 4, category RENT
+2026-07-05 12:26:58,910 | INFO | billing | Starting recurring charge billing
+2026-07-05 12:26:58,913 | INFO | billing | Found 0 active recurring charges
+2026-07-05 12:26:58,915 | WARNING | billing | No recurring charges found
+2026-07-05 12:26:58,916 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-07-05 12:32:26,512 | INFO | billing | === Monthly billing job STARTED ===
+2026-07-05 12:32:26,521 | INFO | billing | Billing date: 2026-07-05
+2026-07-05 12:32:26,522 | INFO | billing | Generating RENT invoices for period 2026-07-01 to 2026-07-31
+2026-07-05 12:32:26,525 | INFO | billing | Found 6 active tenancies for rent billing
+2026-07-05 12:32:26,538 | INFO | billing | Invoice already exists for tenancy 5, category RENT
+2026-07-05 12:32:26,549 | INFO | billing | Creating RENT invoice | tenancy=6 | amount=11500.00
+2026-07-05 12:32:26,553 | INFO | billing | Creating invoice + ledger | tenancy=6 | category=RENT | amount=11500.00
+2026-07-05 12:32:26,562 | INFO | billing | Invoice created | id=6 | tenancy=6
+2026-07-05 12:32:26,685 | INFO | billing | Ledger entry created | invoice=6 | amount=11500.00
+2026-07-05 12:32:26,689 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-07-05 12:32:26,693 | INFO | billing | Invoice already exists for tenancy 2, category RENT
+2026-07-05 12:32:26,698 | INFO | billing | Invoice already exists for tenancy 3, category RENT
+2026-07-05 12:32:26,702 | INFO | billing | Invoice already exists for tenancy 4, category RENT
+2026-07-05 12:32:26,702 | INFO | billing | Starting recurring charge billing
+2026-07-05 12:32:26,706 | INFO | billing | Found 0 active recurring charges
+2026-07-05 12:32:26,707 | WARNING | billing | No recurring charges found
+2026-07-05 12:32:26,708 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-07-10 17:01:08,566 | INFO | billing | === Monthly billing job STARTED ===
+2026-07-10 17:01:08,577 | INFO | billing | Billing date: 2026-07-10
+2026-07-10 17:01:08,578 | INFO | billing | Generating RENT invoices for period 2026-07-01 to 2026-07-31
+2026-07-10 17:01:08,582 | INFO | billing | Found 1 active tenancies for rent billing
+2026-07-10 17:01:08,597 | INFO | billing | Creating RENT invoice | tenancy=1 | amount=6500.00
+2026-07-10 17:01:08,598 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=RENT | amount=6500.00
+2026-07-10 17:01:08,609 | INFO | billing | Invoice created | id=1 | tenancy=1
+2026-07-10 17:01:08,756 | INFO | billing | Ledger entry created | invoice=1 | amount=6500.00
+2026-07-10 17:01:08,757 | INFO | billing | Starting recurring charge billing
+2026-07-10 17:01:08,761 | INFO | billing | Found 0 active recurring charges
+2026-07-10 17:01:08,765 | WARNING | billing | No recurring charges found
+2026-07-10 17:01:08,766 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-07-10 17:09:58,105 | INFO | billing | === Monthly billing job STARTED ===
+2026-07-10 17:09:58,122 | INFO | billing | Billing date: 2026-07-10
+2026-07-10 17:09:58,126 | INFO | billing | Generating RENT invoices for period 2026-07-01 to 2026-07-31
+2026-07-10 17:09:58,130 | INFO | billing | Found 1 active tenancies for rent billing
+2026-07-10 17:09:58,151 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-07-10 17:09:58,158 | INFO | billing | Starting recurring charge billing
+2026-07-10 17:09:58,162 | INFO | billing | Found 1 active recurring charges
+2026-07-10 17:09:58,170 | INFO | billing | Processing charge 1 | property=1 | amount=650.00
+2026-07-10 17:09:58,174 | INFO | billing | 1 tenancies eligible for charge 1
+2026-07-10 17:09:58,189 | INFO | billing | Creating charge invoice | tenancy=1 | charge=1 | amount=650.00
+2026-07-10 17:09:58,189 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=GARBAGE | amount=650.00
+2026-07-10 17:09:58,199 | INFO | billing | Invoice created | id=2 | tenancy=1
+2026-07-10 17:09:58,357 | INFO | billing | Ledger entry created | invoice=2 | amount=650.00
+2026-07-10 17:09:58,357 | INFO | billing | Charge 1 processed successfully
+2026-07-10 17:09:58,450 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-08-30 00:00:06,495 | INFO | billing | === Monthly billing job started ===
+2026-08-30 00:00:06,505 | INFO | billing | === Monthly billing job STARTED ===
+2026-08-30 00:00:06,519 | INFO | billing | Billing date: 2026-08-29
+2026-08-30 00:00:06,520 | INFO | billing | Generating RENT invoices for period 2026-08-01 to 2026-08-31
+2026-08-30 00:00:06,532 | INFO | billing | Found 6 active tenancies for rent billing
+2026-08-30 00:00:06,586 | INFO | billing | Creating RENT invoice | tenancy=5 | amount=15000.00
+2026-08-30 00:00:06,586 | INFO | billing | Creating invoice + ledger | tenancy=5 | category=RENT | amount=15000.00
+2026-08-30 00:00:06,618 | INFO | billing | Invoice created | id=8 | tenancy=5
+2026-08-30 00:00:06,661 | INFO | billing | Ledger entry created | invoice=8 | amount=15000.00
+2026-08-30 00:00:06,663 | INFO | billing | Creating RENT invoice | tenancy=6 | amount=11500.00
+2026-08-30 00:00:06,664 | INFO | billing | Creating invoice + ledger | tenancy=6 | category=RENT | amount=11500.00
+2026-08-30 00:00:06,667 | INFO | billing | Invoice created | id=9 | tenancy=6
+2026-08-30 00:00:06,677 | INFO | billing | Ledger entry created | invoice=9 | amount=11500.00
+2026-08-30 00:00:06,680 | INFO | billing | Creating RENT invoice | tenancy=1 | amount=12000.00
+2026-08-30 00:00:06,681 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=RENT | amount=12000.00
+2026-08-30 00:00:06,687 | INFO | billing | Invoice created | id=10 | tenancy=1
+2026-08-30 00:00:06,738 | INFO | billing | Ledger entry created | invoice=10 | amount=12000.00
+2026-08-30 00:00:06,742 | INFO | billing | Creating RENT invoice | tenancy=2 | amount=13500.00
+2026-08-30 00:00:06,743 | INFO | billing | Creating invoice + ledger | tenancy=2 | category=RENT | amount=13500.00
+2026-08-30 00:00:06,748 | INFO | billing | Invoice created | id=11 | tenancy=2
+2026-08-30 00:00:06,764 | INFO | billing | Ledger entry created | invoice=11 | amount=13500.00
+2026-08-30 00:00:06,769 | INFO | billing | Creating RENT invoice | tenancy=3 | amount=13500.00
+2026-08-30 00:00:06,770 | INFO | billing | Creating invoice + ledger | tenancy=3 | category=RENT | amount=13500.00
+2026-08-30 00:00:06,779 | INFO | billing | Invoice created | id=12 | tenancy=3
+2026-08-30 00:00:06,809 | INFO | billing | Ledger entry created | invoice=12 | amount=13500.00
+2026-08-30 00:00:06,815 | INFO | billing | Creating RENT invoice | tenancy=4 | amount=12000.00
+2026-08-30 00:00:06,815 | INFO | billing | Creating invoice + ledger | tenancy=4 | category=RENT | amount=12000.00
+2026-08-30 00:00:06,821 | INFO | billing | Invoice created | id=13 | tenancy=4
+2026-08-30 00:00:06,851 | INFO | billing | Ledger entry created | invoice=13 | amount=12000.00
+2026-08-30 00:00:06,851 | INFO | billing | Starting recurring charge billing
+2026-08-30 00:00:06,855 | INFO | billing | Found 0 active recurring charges
+2026-08-30 00:00:06,856 | WARNING | billing | No recurring charges found
+2026-08-30 00:00:06,857 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-08-30 00:00:07,204 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===

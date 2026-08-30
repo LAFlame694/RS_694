@@ -11,7 +11,7 @@ from finance.models import (
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
 from finance.models import CreditAllocation, LedgerEntry
-from finance.choices import SourceChoices, LedgerEntryCategory, PaymentStatus, LedgerEntryType
+from finance.choices import SourceChoices, PaymentStatus, LedgerEntryType
 
 import logging
 

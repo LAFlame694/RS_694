@@ -104,7 +104,7 @@
   </div>
 
   <!-- Allocations Table -->
-   {% if payment_allocations %}
+   {% if credit_allocations %}
   <div class="card">
     <div class="table-responsive">
       <table class="table table-striped table-hover align-middle mb-0">
@@ -118,7 +118,7 @@
           </tr>
         </thead>
         <tbody>
-            {% for allocation in payment_allocations %}
+            {% for allocation in credit_allocations %}
           <tr>
             <td class="ps-4 fw-medium text-primary">{{ allocation.invoice.invoice_number }}</td>
             <td><span class="badge bg-info">{{ allocation.invoice.category }}</span></td>

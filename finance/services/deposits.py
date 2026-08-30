@@ -5,8 +5,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 
 from .credit_service import get_available_credit
-from finance.models import DepositAllocation, CreditAllocation, Payment, LedgerEntry
-from billing.models import Invoice
+from finance.models import DepositAllocation, CreditAllocation, LedgerEntry
 from billing.choices import InvoiceStatus
 from finance.choices import LedgerEntryType, SourceChoices, LedgerEntryCategory
 

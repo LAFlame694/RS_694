@@ -82,3 +82,41 @@
 2026-07-05 00:29:24,748 | INFO | credit | Processing payment credit | payment=4 | remaining=10000.00
 2026-07-05 00:29:24,764 | INFO | credit | Credit applied 10000.00 | payment=4 -> invoice=5 | remaining_credit=0.00
 2026-07-05 00:29:24,765 | INFO | credit | Credit application complete | ledger=5
+2026-07-05 12:32:26,676 | INFO | credit | Credit application complete | ledger=6
+2026-07-05 12:46:00,716 | INFO | credit | Processing payment credit | payment=1 | remaining=10000.00
+2026-07-05 12:46:00,726 | INFO | credit | Credit applied 10000.00 | payment=1 -> invoice=1 | remaining_credit=0.00
+2026-07-05 12:46:00,727 | INFO | credit | Credit application complete | ledger=1
+2026-07-05 12:49:01,926 | INFO | credit | Processing payment credit | payment=1 | remaining=10000.00
+2026-07-05 12:49:01,935 | INFO | credit | Credit applied 10000.00 | payment=1 -> invoice=1 | remaining_credit=0.00
+2026-07-05 12:49:01,942 | INFO | credit | Processing payment credit | payment=5 | remaining=3000.00
+2026-07-05 12:49:01,951 | INFO | credit | Credit applied 2000.00 | payment=5 -> invoice=1 | remaining_credit=1000.00
+2026-07-05 12:49:01,979 | INFO | credit | Credit applied 180.00 | payment=5 -> invoice=7 | remaining_credit=820.00
+2026-07-05 12:49:01,979 | INFO | credit | Credit application complete | ledger=1
+2026-07-10 17:01:08,754 | INFO | credit | Credit application complete | ledger=1
+2026-07-10 17:09:58,355 | INFO | credit | Credit application complete | ledger=1
+2026-07-10 17:16:25,936 | INFO | credit | Credit application complete | ledger=1
+2026-07-10 17:18:43,759 | INFO | credit | Processing payment credit | payment=1 | remaining=30000.00
+2026-07-10 17:18:43,767 | INFO | credit | Credit applied 6500.00 | payment=1 -> invoice=1 | remaining_credit=23500.00
+2026-07-10 17:18:43,773 | INFO | credit | Credit applied 650.00 | payment=1 -> invoice=2 | remaining_credit=22850.00
+2026-07-10 17:18:43,780 | INFO | credit | Credit applied 750.00 | payment=1 -> invoice=3 | remaining_credit=22100.00
+2026-07-10 17:18:43,790 | INFO | credit | Credit application complete | ledger=1
+2026-08-30 00:00:06,638 | INFO | credit | Processing payment credit | payment=4 | remaining=10000.00
+2026-08-30 00:00:06,660 | INFO | credit | Credit applied 10000.00 | payment=4 -> invoice=5 | remaining_credit=0.00
+2026-08-30 00:00:06,660 | INFO | credit | Credit application complete | ledger=5
+2026-08-30 00:00:06,677 | INFO | credit | Credit application complete | ledger=6
+2026-08-30 00:00:06,705 | INFO | credit | Processing payment credit | payment=1 | remaining=10000.00
+2026-08-30 00:00:06,713 | INFO | credit | Credit applied 10000.00 | payment=1 -> invoice=1 | remaining_credit=0.00
+2026-08-30 00:00:06,719 | INFO | credit | Processing payment credit | payment=5 | remaining=3000.00
+2026-08-30 00:00:06,725 | INFO | credit | Credit applied 2000.00 | payment=5 -> invoice=1 | remaining_credit=1000.00
+2026-08-30 00:00:06,730 | INFO | credit | Credit applied 180.00 | payment=5 -> invoice=7 | remaining_credit=820.00
+2026-08-30 00:00:06,736 | INFO | credit | Credit applied 820.00 | payment=5 -> invoice=10 | remaining_credit=0.00
+2026-08-30 00:00:06,737 | INFO | credit | Credit application complete | ledger=1
+2026-08-30 00:00:06,763 | INFO | credit | Credit application complete | ledger=2
+2026-08-30 00:00:06,797 | INFO | credit | Processing payment credit | payment=2 | remaining=20000.00
+2026-08-30 00:00:06,803 | INFO | credit | Credit applied 13500.00 | payment=2 -> invoice=3 | remaining_credit=6500.00
+2026-08-30 00:00:06,808 | INFO | credit | Credit applied 6500.00 | payment=2 -> invoice=12 | remaining_credit=0.00
+2026-08-30 00:00:06,808 | INFO | credit | Credit application complete | ledger=3
+2026-08-30 00:00:06,839 | INFO | credit | Processing payment credit | payment=3 | remaining=20000.00
+2026-08-30 00:00:06,846 | INFO | credit | Credit applied 12000.00 | payment=3 -> invoice=4 | remaining_credit=8000.00
+2026-08-30 00:00:06,849 | INFO | credit | Credit applied 8000.00 | payment=3 -> invoice=13 | remaining_credit=0.00
+2026-08-30 00:00:06,850 | INFO | credit | Credit application complete | ledger=4

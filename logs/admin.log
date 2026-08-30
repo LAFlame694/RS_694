@@ -112,3 +112,22 @@
 2026-07-04 14:59:25,963 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenancy | id=1
 2026-07-04 14:59:25,964 | INFO | admin | FIELD CHANGE | user=Admin | model=Tenancy | id=1 | field=rent_amount | from=7000.00 | to=12000.00
 2026-07-05 00:25:47,371 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=5
+2026-07-05 12:35:24,935 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=1
+2026-07-05 12:35:41,246 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=2
+2026-07-05 12:35:52,939 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=3
+2026-07-05 12:36:07,862 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=4
+2026-07-05 12:36:18,571 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=5
+2026-07-05 12:36:28,898 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=6
+2026-07-05 12:37:52,501 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=1
+2026-07-05 12:39:38,245 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=2
+2026-07-05 12:40:15,937 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=3
+2026-07-05 12:40:54,830 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=4
+2026-07-05 12:41:57,916 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=5
+2026-07-05 12:42:40,984 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=6
+2026-07-10 16:51:45,993 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenant | id=1
+2026-07-10 16:52:21,180 | INFO | admin | ADMIN CREATE | user=Admin | model=Property | id=1
+2026-07-10 16:52:57,579 | INFO | admin | ADMIN CREATE | user=Admin | model=Unit | id=1
+2026-07-10 16:53:31,329 | INFO | admin | ADMIN CREATE | user=Admin | model=Tenancy | id=1
+2026-07-10 16:58:08,030 | INFO | admin | ADMIN CREATE | user=Admin | model=Meter | id=1
+2026-07-10 16:59:23,675 | INFO | admin | ADMIN CREATE | user=Admin | model=MeterReading | id=1
+2026-07-10 17:08:07,220 | INFO | admin | ADMIN CREATE | user=Admin | model=RecurringCharge | id=1
