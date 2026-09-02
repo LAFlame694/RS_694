@@ -120,3 +120,7 @@
 2026-08-30 00:00:06,846 | INFO | credit | Credit applied 12000.00 | payment=3 -> invoice=4 | remaining_credit=8000.00
 2026-08-30 00:00:06,849 | INFO | credit | Credit applied 8000.00 | payment=3 -> invoice=13 | remaining_credit=0.00
 2026-08-30 00:00:06,850 | INFO | credit | Credit application complete | ledger=4
+2026-09-02 21:50:54,281 | INFO | credit | Credit application complete | ledger=1
+2026-09-02 21:52:44,291 | INFO | credit | Processing payment credit | payment=1 | remaining=10000.00
+2026-09-02 21:52:44,302 | INFO | credit | Credit applied 8700.00 | payment=1 -> invoice=1 | remaining_credit=1300.00
+2026-09-02 21:52:44,303 | INFO | credit | Credit application complete | ledger=1

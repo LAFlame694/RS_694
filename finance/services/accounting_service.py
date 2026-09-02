@@ -4,10 +4,8 @@ from decimal import Decimal
 
 from billing.choices import InvoiceStatus
 from billing.models import Invoice
-from billing.services.payment_service import apply_payment_to_invoices
 from finance.services.credit_service import apply_credit_to_invoices
-from finance.models import Payment, PaymentAllocation, CreditAllocation
-from finance.choices import PaymentStatus
+from finance.models import PaymentAllocation, CreditAllocation
 
 logger = logging.getLogger("accounting")
 

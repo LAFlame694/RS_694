@@ -3,11 +3,24 @@ from django.db import transaction
 from django.db.models import Sum
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.core.exceptions import PermissionDenied
 
+from finance.services.payments.payment_history_service import get_accessible_tenants
 from .credit_service import get_available_credit
-from finance.models import DepositAllocation, CreditAllocation, LedgerEntry
+from tenants.models import Tenancy
+from tenants.choices import TenancyStatus
+from finance.models import (
+    DepositAllocation, 
+    CreditAllocation, 
+    LedgerEntry,
+    Payment,
+)
 from billing.choices import InvoiceStatus
-from finance.choices import LedgerEntryType, SourceChoices, LedgerEntryCategory
+from finance.choices import (
+    LedgerEntryType, 
+    SourceChoices, 
+    LedgerEntryCategory
+)
 
 import logging
 
@@ -42,6 +55,38 @@ def get_available_deposit(ledger_account):
         return Decimal("0.00")
 
     return available_deposit
+
+def get_deposit_summary(ledger_account):
+
+    # Total deposit liability ever created
+    total_deposit = LedgerEntry.objects.filter(
+        ledger_account=ledger_account,
+        source=SourceChoices.DEPOSIT,
+        category=LedgerEntryCategory.LIABILITY,
+        entry_type=LedgerEntryType.CREDIT
+    ).aggregate(
+        total=Sum("amount")
+    )["total"] or Decimal("0.00")
+
+    # Total deposit money consumed
+    total_consumed = LedgerEntry.objects.filter(
+        ledger_account=ledger_account,
+        source=SourceChoices.DEPOSIT,
+        entry_type=LedgerEntryType.CHARGE,
+    ).exclude(
+        category=LedgerEntryCategory.DEPOSIT
+    ).aggregate(
+        total=Sum("amount")
+    )["total"] or Decimal("0.00")
+
+    # current available deposit
+    available_deposit = get_available_deposit(ledger_account)
+
+    return {
+        "total_deposit": total_deposit,
+        "total_consumed": total_consumed,
+        "available_deposit": available_deposit
+    }
 
 def create_deposit_allocation(
         *,
@@ -265,3 +310,115 @@ def apply_deposit_to_invoice(
     )
 
     return amount_to_apply
+
+def get_deposit_history(ledger_account):
+
+    entries = LedgerEntry.objects.filter(
+        ledger_account=ledger_account,
+        source=SourceChoices.DEPOSIT,
+    ).exclude(
+        category=LedgerEntryCategory.LIABILITY,
+        entry_type=LedgerEntryType.CREDIT,
+    ).select_related(
+        "payment", "invoice", "created_by",
+    ).order_by(
+        "-entry_date", "-created_at"
+    )
+
+    return {
+        "entries": entries
+    }
+
+def get_deposit_eligible_payments(ledger_account):
+
+    payments = Payment.objects.filter(
+        ledger_account=ledger_account,
+    ).select_related(
+        "created_by",
+    ).order_by(
+        "-payment_date", "-created_at"
+    )
+
+    eligible_payments = []
+
+    for payment in payments:
+
+        # money already used to pay invoices
+        payment_allocated = (
+            CreditAllocation.objects.filter(
+                payment=payment
+            ).aggregate(
+                total=Sum("amount_applied")
+            )["total"] or Decimal("0.00")
+        )
+
+        # money already reserved as deposit
+        deposit_allocated = (
+            DepositAllocation.objects.filter(
+                payment=payment
+            ).aggregate(
+                total=Sum("amount")
+            )["total"] or Decimal("0.00")
+        )
+
+        eligible_amount = (
+            payment.amount - payment_allocated - deposit_allocated
+        )
+
+        if eligible_amount > Decimal("0.00"):
+            eligible_payments.append({
+                "payment": payment,
+                "eligible_amount": eligible_amount
+            })
+
+    return eligible_payments
+
+def get_deposit_dashboard(*, user, tenant_id):
+    """
+    Return all deposit information required for a tenant's
+    deposit dashboard.
+    """
+
+    tenant = get_accessible_tenants(
+        user=user
+    ).filter(
+        id=tenant_id
+    ).first()
+
+    if not tenant:
+        raise PermissionDenied(
+            "You do not have permission to view this tenant's deposit information."
+        )
+
+
+    # get active tenancy
+    try:
+        tenancy = (
+            Tenancy.objects
+            .select_related("ledger_account")
+            .get(
+                tenant=tenant,
+                status=TenancyStatus.ACTIVE
+            )
+        )
+
+    except Tenancy.DoesNotExist:
+        raise ValidationError(
+            "Tenant does not have an active tenancy."
+        )
+
+    ledger_account = tenancy.ledger_account
+
+    # get deposit information
+    summary = get_deposit_summary(ledger_account)
+    history = get_deposit_history(ledger_account)
+    eligible_payments = get_deposit_eligible_payments(ledger_account)
+
+    return {
+        "tenant": tenant,
+        "tenancy": tenancy,
+        "ledger_account": ledger_account,
+        "summary": summary,
+        "deposit_history": history["entries"],
+        "eligible_payments": eligible_payments,
+    }

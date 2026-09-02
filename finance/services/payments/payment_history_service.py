@@ -162,7 +162,7 @@ def get_accessible_tenants(user, query=None):
         ).distinct()
 
     logger.info(
-        f"Tenant payment search | "
+        f"Tenant search | "
         f"user={user.id} | "
         f"role={user.role} | "
         f"query={query}"

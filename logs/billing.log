@@ -543,3 +543,16 @@
 2026-08-30 00:00:06,856 | WARNING | billing | No recurring charges found
 2026-08-30 00:00:06,857 | INFO | billing | === Monthly billing job COMPLETED ===
 2026-08-30 00:00:07,204 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===
+2026-09-02 21:49:05,332 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-02 21:50:54,068 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-02 21:50:54,076 | INFO | billing | Billing date: 2026-09-02
+2026-09-02 21:50:54,076 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-02 21:50:54,080 | INFO | billing | Found 1 active tenancies for rent billing
+2026-09-02 21:50:54,096 | INFO | billing | Creating RENT invoice | tenancy=1 | amount=8700.00
+2026-09-02 21:50:54,097 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=RENT | amount=8700.00
+2026-09-02 21:50:54,109 | INFO | billing | Invoice created | id=1 | tenancy=1
+2026-09-02 21:50:54,291 | INFO | billing | Ledger entry created | invoice=1 | amount=8700.00
+2026-09-02 21:50:54,292 | INFO | billing | Starting recurring charge billing
+2026-09-02 21:50:54,296 | INFO | billing | Found 0 active recurring charges
+2026-09-02 21:50:54,300 | WARNING | billing | No recurring charges found
+2026-09-02 21:50:54,301 | INFO | billing | === Monthly billing job COMPLETED ===
