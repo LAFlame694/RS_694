@@ -137,35 +137,3 @@ def get_tenant_payment_history(*, user, tenant_id):
         "payments": payments,
         "ledger_account": tenancy.ledger_account,
     }
-
-def get_accessible_tenants(user, query=None):
-
-    if user.role == Role.SYSTEM_ADMIN:
-        # system admin sees all tenants
-        tenants = Tenant.objects.all()
-    
-    elif user.role == Role.LANDLORD:
-        tenants = Tenant.objects.filter(landlord=user)
-    
-    elif user.role == Role.CARETAKER:
-        tenants = Tenant.objects.filter(landlord=user.landlord)
-    
-    else:
-        return Tenant.objects.none()
-    
-    if query:
-        tenants = tenants.filter(
-            Q(first_name__icontains=query) |
-            Q(last_name__icontains=query) |
-            Q(phone_number__icontains=query) |
-            Q(id_number__icontains=query)
-        ).distinct()
-
-    logger.info(
-        f"Tenant search | "
-        f"user={user.id} | "
-        f"role={user.role} | "
-        f"query={query}"
-    )
-
-    return tenants.distinct()

@@ -1,0 +1,113 @@
+{% if query %}
+
+    {% if tenants %}
+
+        <div class="card shadow-sm">
+
+            <div class="card-header">
+                <strong>
+                    Search Results
+                </strong>
+
+                <span class="text-muted small ms-2">
+                    {{ tenants|length }} tenant{{ tenants|length|pluralize }}
+                </span>
+            </div>
+
+
+            <div class="list-group list-group-flush">
+
+                {% for tenant in tenants %}
+
+                    <a
+                        href="{% url 'finance:tenant_deposit' tenant.id %}"
+                        class="list-group-item list-group-item-action"
+                    >
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <h6 class="mb-1">
+                                    {{ tenant.first_name }}
+                                    {{ tenant.last_name }}
+                                </h6>
+
+                                <div class="small text-muted">
+
+                                    <span>
+                                        <i class="fa-solid fa-phone me-1"></i>
+                                        {{ tenant.phone_number }}
+                                    </span>
+
+                                    {% if tenant.id_number %}
+                                        <span class="ms-3">
+                                            <i class="fa-solid fa-id-card me-1"></i>
+                                            {{ tenant.id_number }}
+                                        </span>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <i class="fa-solid fa-chevron-right text-muted"></i>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+    {% else %}
+
+        <!-- No Results -->
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center py-5">
+
+                <i class="fa-solid fa-user-slash fa-2x text-muted mb-3"></i>
+
+                <h5>No tenants found</h5>
+
+                <p class="text-muted mb-0">
+                    Try adjusting your search terms.
+                </p>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+{% else %}
+
+    <!-- Empty Search -->
+    <div class="card shadow-sm">
+
+        <div class="card-body text-center py-5">
+
+            <i class="fa-solid fa-magnifying-glass fa-2x text-muted mb-3"></i>
+
+            <h5>Search for a tenant</h5>
+
+            <p class="text-muted mb-0">
+                Enter a tenant's name, phone number or ID number above.
+            </p>
+
+        </div>
+
+    </div>
+
+{% endif %}

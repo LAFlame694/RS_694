@@ -5,10 +5,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from django.core.exceptions import ValidationError
 
-from tenants.models import Tenant, Tenancy
+from tenants.models import Tenant
 from tenants.choices import TenancyStatus
 from properties.models import Property
 from finance.forms.payment_forms import RecordPaymentForm
+from finance.services.tenant_access import get_accessible_tenants
 
 from finance.services.payments.query_services import (
     get_tenant_financial_summary,
@@ -20,7 +21,6 @@ from finance.services.payments.payment_services import (
 )
 
 from finance.services.payments.payment_history_service import (
-    get_accessible_tenants,
     get_tenant_payment_history,
     get_payment_detail,
     get_payment_allocations,

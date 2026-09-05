@@ -1,0 +1,74 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Deposit Search{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- Page header -->
+     <div class="mb-4">
+        <h2 class="mb-1">Deposits</h2>
+
+        <p class="text-muted mb-0">
+            Search for a tenant to view and manage their deposit.
+        </p>
+     </div>
+
+     <!-- Search Card -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <label for="tenant_search" class="form-label fw-semibold">
+                Tenant Search
+            </label>
+
+            <div class="input-group">
+
+                <span class="input-group-text">
+                    <i class="fa-solid fa-search"></i>
+                </span>
+
+                <input 
+                    type="text" 
+                    id="tenant_search"
+                    name="q"
+                    class="form-control"
+                    placeholder="Name, phone number or ID number..."
+
+                    hx-get="{% url 'finance:deposit_search' %}"
+                    hx-trigger="keyup changed delay:300ms"
+                    hx-target="#deposit-search-results"
+                    hx-swap="innerHTML"
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="for-text">
+                Start typing to search for a tenant.
+            </div>
+
+        </div>
+      </div>
+
+      <!-- Search Results -->
+      <div id="deposit-search-results">
+
+        <!-- Initial State -->
+         <div class="card shadow-sm">
+            <div class="card-body text-center py-5">
+
+                <i class="fa-solid fa-magnifying-glass fa-2x text-muted mb-3"></i>
+
+                <h5>Search for a tenant</h5>
+
+                <p class="text-muted mb-0">
+                    Enter a tenant's name, phone number or ID number above.
+                </p>
+
+            </div>
+         </div>
+      </div>
+
+</div>
+{% endblock %}

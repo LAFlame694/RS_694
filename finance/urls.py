@@ -9,9 +9,26 @@ from finance.views.payment_views import (
     payment_allocations_view,
 )
 
+from finance.views.deposit_views import (
+    deposit_search_view,
+    tenant_deposit_view,
+)
+
 app_name = "finance"
 
 urlpatterns = [
+    path(
+        "deposits/search/",
+        deposit_search_view,
+        name="deposit_search"
+    ),
+
+    path(
+        "deposits/tenant/<int:tenant_id>/",
+        tenant_deposit_view,
+        name="tenant_deposit"
+    ),
+
     path(
         "payments/search/",
         payment_search_view,

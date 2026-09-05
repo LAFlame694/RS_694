@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.core.exceptions import PermissionDenied
 
-from finance.services.payments.payment_history_service import get_accessible_tenants
+from finance.services.tenant_access import get_accessible_tenants
 from .credit_service import get_available_credit
 from tenants.models import Tenancy
 from tenants.choices import TenancyStatus

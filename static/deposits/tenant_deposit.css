@@ -1,0 +1,36 @@
+body { 
+    background-color: #f8f9fa; 
+    color: #333; 
+}
+
+.card { 
+    border: 1px solid #e9ecef; 
+    border-radius: 8px; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+}
+
+.card-header {
+    background-color: #fff; 
+    border-bottom: 1px solid #e9ecef; 
+    font-weight: 600; 
+}
+
+.available-card { 
+    border: 2px solid #0d6efd; 
+    background-color: #f0f7ff; 
+}
+
+.table thead th { 
+    font-size: 0.85rem; 
+    text-transform: uppercase; 
+    color: #6c757d; 
+}
+
+.badge { 
+    font-weight: 500; 
+    font-size: 0.75rem; 
+}
+
+.btn-sm { 
+    font-size: 0.8rem; 
+}
