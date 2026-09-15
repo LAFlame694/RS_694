@@ -112,6 +112,7 @@ class DepositAllocationAdmin(LandlordFilteredAdmin):
     landlord_lookup = "ledger_account__tenancy__unit__property__landlord"
 
     list_display = (
+        "deposit_reference",
         "ledger_account",
         "amount",
         "created_at",

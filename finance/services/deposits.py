@@ -4,6 +4,7 @@ from django.db.models import Sum
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.core.exceptions import PermissionDenied
+import uuid
 
 from finance.services.tenant_access import get_accessible_tenants
 from .credit_service import get_available_credit
@@ -13,6 +14,7 @@ from finance.models import (
     DepositAllocation, 
     CreditAllocation, 
     LedgerEntry,
+    LedgerAccount,
     Payment,
 )
 from billing.choices import InvoiceStatus
@@ -89,91 +91,162 @@ def get_deposit_summary(ledger_account):
     }
 
 def create_deposit_allocation(
-        *,
-        ledger_account,
-        payment,
-        amount,
-        created_by,
-        created_at=None
+    *,
+    ledger_account,
+    amount,
+    created_by,
+    created_at=None,
 ):
-    
+
     if created_at is None:
-        created_at = timezone.now().date()
-    
-    # validate amount
+        created_at = timezone.now()
+
     try:
         amount = Decimal(amount)
     except (InvalidOperation, TypeError):
-        raise ValidationError(
-            "Invalid deposit amount."
-        )
-    
+        raise ValidationError("Invalid deposit amount.")
+
     if amount <= 0:
         raise ValidationError(
             "Deposit amount must be greater than zero."
         )
-    
-    if payment.ledger_account != ledger_account:
-        raise ValidationError(
-            "Payment does not belong to the specified ledger account."
+
+    with transaction.atomic():
+
+        # Lock the account while the deposit is being created.
+        ledger_account = (
+            LedgerAccount.objects
+            .select_for_update()
+            .get(pk=ledger_account.pk)
         )
-    
-    # check available credit 
-    available_credit = get_available_credit(ledger_account)
 
-    if amount > available_credit:
-        raise ValidationError(
-            f"Insufficient available credit. "
-            f"Available: {available_credit}"
+        available_credit = get_available_credit(
+            ledger_account
         )
-    
-    logger.info(
-        f"Creating deposit allocation | "
-        f"ledger={ledger_account.id} | "
-        f"payment={payment.id} | "
-        f"amount={amount}"
-    )
 
-    # create allocation record
-    deposit_allocation = DepositAllocation.objects.create(
-        ledger_account=ledger_account,
-        payment=payment,
-        amount=amount,
-        created_at=created_at
-    )
+        if amount > available_credit:
+            raise ValidationError(
+                f"Insufficient available credit. "
+                f"Available: {available_credit}"
+            )
 
-    # create ledger entries
-    LedgerEntry.objects.create(
-        ledger_account=ledger_account,
-        payment=payment,
-        category=LedgerEntryCategory.DEPOSIT,
-        source=SourceChoices.DEPOSIT,
-        entry_type=LedgerEntryType.CHARGE,
-        amount=amount,
-        entry_date=created_at,
-        description=f"Deposit allocation for payment {payment}",
-        created_by=created_by
-    )
+        # Get payments that still have available normal credit.
+        eligible_payments = get_deposit_eligible_payments(
+            ledger_account
+        )
 
-    # create deposit liability entry
-    LedgerEntry.objects.create(
-        ledger_account=ledger_account,
-        payment=payment,
-        category=LedgerEntryCategory.LIABILITY,
-        source=SourceChoices.DEPOSIT,
-        entry_type=LedgerEntryType.CREDIT,
-        amount=amount,
-        entry_date=created_at,
-        description=f"Deposit liability for payment {payment}",
-        created_by=created_by
-    )
+        if not eligible_payments:
+            raise ValidationError(
+                "No available credit can be transferred into deposit."
+            )
 
-    logger.info(
-        f"Deposit allocation created successfully | "
-        f"allocation={deposit_allocation.id}"
-    )
+        deposit_reference = (
+            f"DEP-{uuid.uuid4().hex[:10].upper()}"
+        )
 
-    return deposit_allocation
+        remaining = amount
+
+        allocations = []
+
+        for item in eligible_payments:
+
+            if remaining <= Decimal("0.00"):
+                break
+
+            payment = item["payment"]
+            eligible_amount = Decimal(
+                item["eligible_amount"]
+            )
+
+            if eligible_amount <= Decimal("0.00"):
+                continue
+
+            allocation_amount = min(
+                remaining,
+                eligible_amount
+            )
+
+            # Record the allocation/source of the deposit.
+            deposit_allocation = DepositAllocation.objects.create(
+                deposit_reference=deposit_reference,
+                ledger_account=ledger_account,
+                payment=payment,
+                amount=allocation_amount,
+            )
+
+            allocations.append(deposit_allocation)
+
+            # Remove this amount from NORMAL available credit.
+            LedgerEntry.objects.create(
+                ledger_account=ledger_account,
+                payment=payment,
+                category=LedgerEntryCategory.DEPOSIT,
+                source=SourceChoices.NORMAL,
+                entry_type=LedgerEntryType.CHARGE,
+                amount=allocation_amount,
+                entry_date=created_at,
+                description=(
+                    f"Transfer of {allocation_amount} "
+                    f"from normal credit to deposit "
+                    f"{deposit_reference}"
+                ),
+                created_by=created_by,
+            )
+
+            # Record the deposit allocation.
+            # This is an earmark, NOT deposit consumption.
+            LedgerEntry.objects.create(
+                ledger_account=ledger_account,
+                payment=payment,
+                category=LedgerEntryCategory.DEPOSIT,
+                source=SourceChoices.DEPOSIT,
+                entry_type=LedgerEntryType.CHARGE,
+                amount=allocation_amount,
+                entry_date=created_at,
+                description=(
+                    f"Deposit allocation "
+                    f"{deposit_reference}"
+                ),
+                created_by=created_by,
+            )
+
+            # Create the actual deposit liability.
+            LedgerEntry.objects.create(
+                ledger_account=ledger_account,
+                payment=payment,
+                category=LedgerEntryCategory.LIABILITY,
+                source=SourceChoices.DEPOSIT,
+                entry_type=LedgerEntryType.CREDIT,
+                amount=allocation_amount,
+                entry_date=created_at,
+                description=(
+                    f"Deposit liability "
+                    f"{deposit_reference}"
+                ),
+                created_by=created_by,
+            )
+
+            remaining -= allocation_amount
+
+        # Safety check.
+        if remaining > Decimal("0.00"):
+            raise ValidationError(
+                "Unable to fully allocate the requested deposit."
+            )
+
+        logger.info(
+            f"Deposit created successfully | "
+            f"ledger={ledger_account.id} | "
+            f"reference={deposit_reference} | "
+            f"amount={amount} | "
+            f"allocations={len(allocations)}"
+        )
+
+        return {
+            "deposit_reference": deposit_reference,
+            "amount": amount,
+            "allocations": allocations,
+        }
 
 @transaction.atomic
 def apply_deposit_to_invoice(

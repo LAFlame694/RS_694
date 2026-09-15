@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models import Q
-from accounts.models import User
 from django.db.models import UniqueConstraint
 from properties.models import Unit
 from .choices import TenancyStatus

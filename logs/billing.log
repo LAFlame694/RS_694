@@ -567,3 +567,14 @@
 2026-09-04 00:00:13,159 | WARNING | billing | No recurring charges found
 2026-09-04 00:00:13,159 | INFO | billing | === Monthly billing job COMPLETED ===
 2026-09-04 00:00:13,159 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===
+2026-09-14 00:00:17,205 | INFO | billing | === Monthly billing job started ===
+2026-09-14 00:00:17,283 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-14 00:00:17,319 | INFO | billing | Billing date: 2026-09-13
+2026-09-14 00:00:17,319 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-14 00:00:17,323 | INFO | billing | Found 1 active tenancies for rent billing
+2026-09-14 00:00:17,334 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-09-14 00:00:17,334 | INFO | billing | Starting recurring charge billing
+2026-09-14 00:00:17,337 | INFO | billing | Found 0 active recurring charges
+2026-09-14 00:00:17,338 | WARNING | billing | No recurring charges found
+2026-09-14 00:00:17,338 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-09-14 00:00:17,338 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===

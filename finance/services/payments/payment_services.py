@@ -6,7 +6,7 @@ from django.db import transaction
 
 from finance.choices import LedgerEntryType, LedgerEntryCategory, SourceChoices
 from finance.models import LedgerEntry, Payment
-from finance.services.accounting_service import settle_account
+from finance.services.credit_service import apply_available_credit_to_invoices
 
 from tenants.models import Tenancy
 from tenants.choices import TenancyStatus
@@ -22,30 +22,25 @@ def record_payment_service(
         created_by,
 ):
     
-    """
-    Records a payment and automatically 
-    allocates it to oldest invoices
-    """
-
     try:
         # validate amount
         if amount is None:
             raise ValidationError(
-                "Payment amount is required"
+                "Payment amount is required."
             )
-        
+
         try:
             amount = Decimal(amount)
         except (InvalidOperation, TypeError):
             raise ValidationError(
                 "Invalid payment amount."
             )
-        
+
         if amount <= 0:
             raise ValidationError(
                 "Payment amount must be greater than zero."
             )
-        
+
         # get active tenancy
         tenancy = Tenancy.objects.select_related(
             "ledger_account"
@@ -56,7 +51,8 @@ def record_payment_service(
 
         ledger_account = tenancy.ledger_account
 
-        # create payment + allocate
+        # record payment and automatically apply
+        # available NORMAL credit to invoices.
         with transaction.atomic():
 
             payment = Payment.objects.create(
@@ -64,9 +60,10 @@ def record_payment_service(
                 amount=amount,
                 payment_date=payment_date,
                 method=method,
-                created_by=created_by,
+                created_by=created_by
             )
 
+            # payment enter the NORMAL credit pool
             LedgerEntry.objects.create(
                 ledger_account=ledger_account,
                 payment=payment,
@@ -75,18 +72,27 @@ def record_payment_service(
                 source=SourceChoices.NORMAL,
                 amount=payment.amount,
                 entry_date=payment.payment_date,
-                description=f"Payment received - {payment.reference_code}",
+                description=(
+                    f"Payment received - "
+                    f"{payment.reference_code}"
+                ),
                 created_by=created_by
             )
 
-            # allocate payment to invoices
-            settle_account(ledger_account)
+            # automatically apply NORMAL credit 
+            # to the oldest outstanding invoices.
+            applied_amount = apply_available_credit_to_invoices(
+                ledger_account=ledger_account,
+                created_by=created_by,
+                entry_date=payment.payment_date
+            )
 
             logger.info(
-                f"Payment recorded successfully | "
-                f"payment={payment.id} | "
-                f"tenant={tenant.id} | "
-                f"amount={amount}"
+                f"Payment recorded successfully | " 
+                f"payment={payment.id} | " 
+                f"tenant={tenant.id} | " 
+                f"amount={amount} | " 
+                f"credit_applied={applied_amount}"
             )
 
             return payment
@@ -100,12 +106,11 @@ def record_payment_service(
         raise ValidationError(
             "Tenant does not have an active tenancy."
         )
-    
+
     except ValidationError:
         raise
 
     except Exception as e:
-
         logger.error(
             f"Payment recording failed | "
             f"tenant={tenant.id} | "
@@ -114,5 +119,6 @@ def record_payment_service(
         )
 
         raise ValidationError(
-            "Unable to record payment at the moment. Please try again."
+            "Unable to record payment at the moment. "
+            "Please try again."
         )

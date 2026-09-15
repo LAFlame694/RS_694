@@ -1,17 +1,12 @@
 from decimal import Decimal
 from django.db.models import Sum
 from django.db import transaction
+from django.utils import timezone
 
-from finance.models import (
-    DepositAllocation, 
-    CreditAllocation, 
-    PaymentAllocation, 
-    Payment
-)
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
-from finance.models import CreditAllocation, LedgerEntry
-from finance.choices import SourceChoices, PaymentStatus, LedgerEntryType
+from finance.models import LedgerEntry
+from finance.choices import SourceChoices, LedgerEntryType, LedgerEntryCategory
 
 import logging
 
@@ -22,7 +17,7 @@ def get_available_credit(ledger_account):
     credits = LedgerEntry.objects.filter(
         ledger_account=ledger_account,
         entry_type=LedgerEntryType.CREDIT,
-        source=SourceChoices.NORMAL
+        source=SourceChoices.NORMAL,
     ).aggregate(
         total=Sum("amount")
     )["total"] or Decimal("0.00")
@@ -30,131 +25,109 @@ def get_available_credit(ledger_account):
     normal_charges = LedgerEntry.objects.filter(
         ledger_account=ledger_account,
         entry_type=LedgerEntryType.CHARGE,
-        source=SourceChoices.NORMAL
+        source=SourceChoices.NORMAL,
     ).aggregate(
         total=Sum("amount")
     )["total"] or Decimal("0.00")
 
-    deposit_charges = LedgerEntry.objects.filter(
-        ledger_account=ledger_account,
-        entry_type=LedgerEntryType.CHARGE,
-        source=SourceChoices.DEPOSIT
-    ).aggregate(
-        total=Sum("amount")
-    )["total"] or Decimal("0.00")
-
-    available = credits - normal_charges - deposit_charges
+    available = credits - normal_charges
 
     return max(available, Decimal("0.00"))
 
 @transaction.atomic
-def apply_credit_to_invoices(ledger_account):
+def apply_available_credit_to_invoices(
+    *, ledger_account, created_by, entry_date=None,
+):
 
-    invoices = Invoice.objects.filter(
-        ledger_account=ledger_account,
-        status__in=[InvoiceStatus.ISSUED, InvoiceStatus.PARTIAL]
-    ).order_by("issue_date", "id")
+    if entry_date is None:
+        entry_date = timezone.now().date()
 
-    if not invoices.exists():
+    available_credit = get_available_credit(ledger_account)
+
+    if available_credit <= Decimal("0.00"):
         logger.info(
-            f"No invoices to apply credit for ledger {ledger_account.id}"
+            "No available credit to apply | ledger=%s",
+            ledger_account.id
         )
-        return
-    
-    # process payments in FIFO order
-    payments = Payment.objects.filter(
+
+        return Decimal("0.00")
+
+    invoices = Invoice.objects.select_for_update().filter(
         ledger_account=ledger_account,
-        status=PaymentStatus.COMPLETED,
-    ).order_by("created_at", "id")
+        status__in=[
+            InvoiceStatus.ISSUED,
+            InvoiceStatus.PARTIAL
+        ],
+    ).order_by(
+        "issue_date",
+        "id",
+    )
 
-    for payment in payments:
+    total_applied = Decimal("0.00")
 
-        # calculate remaining credit for this payment
-        payment_used = PaymentAllocation.objects.filter(
-            payment=payment
-        ).aggregate(
-            total=Sum("amount_applied")
-        )["total"] or Decimal("0.00")
+    for invoice in invoices:
 
-        credit_used = CreditAllocation.objects.filter(
-            payment=payment,
-            source=SourceChoices.NORMAL
-        ).aggregate(
-            total=Sum("amount_applied")
-        )["total"] or Decimal("0.00")
+        if available_credit <= Decimal("0.00"):
+            break
 
-        deposit_used = DepositAllocation.objects.filter(
-            payment=payment
-        ).aggregate(
-            total=Sum("amount")
-        )["total"] or Decimal("0.00")
+        outstanding = invoice.outstanding_balance
 
-        total_used = payment_used + credit_used + deposit_used
-
-        if total_used > payment.amount:
-            logger.error(
-                f"Over-allocation detected | payment={payment.id} | "
-                f"Payment amount={payment.amount} | total used={total_used}"
-            )
-            raise Exception("Payment over-allocated. Data inconsistency.")
-
-        remaining_credit = payment.amount - total_used
-
-        if remaining_credit <= 0:
+        if outstanding <= Decimal("0.00"):
             continue
 
-        logger.info(
-            f"Processing payment credit | payment={payment.id} | remaining={remaining_credit}"
+        amount_to_apply = min(
+            available_credit, outstanding
         )
 
-        # apply to invoices
-        for invoice in invoices:
-            if remaining_credit <= 0:
-                break
+        # create the financial transaction
+        LedgerEntry.objects.create(
+            ledger_account=ledger_account,
+            invoice=invoice,
+            source=SourceChoices.NORMAL,
+            entry_type=LedgerEntryType.CHARGE,
+            category=invoice.category,
+            amount=amount_to_apply,
+            entry_date=entry_date,
+            description=(
+                f"Normal credit applied to invoice "
+                f"{invoice.invoice_number}"
+            ),
+            created_by=created_by
+        )
 
-            # already paid (payments + credit)
-            payment_allocated = invoice.payment_allocations.aggregate(
-                total=Sum("amount_applied")
-            )["total"] or Decimal("0.00")
+        # update cached invoice payment information
+        invoice.amount_paid += amount_to_apply
 
-            credit_allocated = invoice.credit_allocations.aggregate(
-                total=Sum("amount_applied")
-            )["total"] or Decimal("0.00")
+        if invoice.amount_paid >= invoice.total_amount:
+            invoice.amount_paid = invoice.total_amount
+            invoice.status = InvoiceStatus.PAID
+        else:
+            invoice.status = InvoiceStatus.PARTIAL
 
-            total_paid = payment_allocated + credit_allocated
+        invoice.save(
+            update_fields=[
+                "amount_paid", "status",
+            ]
+        )
 
-            balance = invoice.total_amount - total_paid
+        available_credit -= amount_to_apply
+        total_applied += amount_to_apply
 
-            if balance <= 0:
-                continue
+        logger.info(
+            "Available credit applied | ledger=%s | invoice=%s | "
+            "amount=%s | remaining_credit=%s",
+            ledger_account.id,
+            invoice.invoice_number,
+            amount_to_apply,
+            available_credit,
+        )
 
-            amount_to_apply = min(balance, remaining_credit)
-
-            # link credit to specific payment
-            CreditAllocation.objects.create(
-                ledger_account=ledger_account,
-                payment=payment,
-                invoice=invoice,
-                source=SourceChoices.NORMAL,
-                amount_applied=amount_to_apply
-            )
-
-            # update invoice
-            invoice.amount_paid = total_paid + amount_to_apply
-
-            if invoice.amount_paid == invoice.total_amount:
-                invoice.status = InvoiceStatus.PAID
-            else:
-                invoice.status = InvoiceStatus.PARTIAL
-            
-            invoice.save(update_fields=["amount_paid", "status"])
-
-            remaining_credit -= amount_to_apply
-
-            logger.info(
-                f"Credit applied {amount_to_apply} | payment={payment.id} -> invoice={invoice.id} | remaining_credit={remaining_credit}"
-            )
-            
     logger.info(
-        f"Credit application complete | ledger={ledger_account.id}"
+        "Available credit application complete | ledger=%s | "
+        "total_applied=%s | remaining_credit=%s",
+        ledger_account.id,
+        total_applied,
+        available_credit,
     )
+
+    return total_applied

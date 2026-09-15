@@ -1460,3 +1460,77 @@ Traceback (most recent call last):
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for 'tenant_deposit' with arguments '('',)' not found. 1 pattern(s) tried: ['finance/deposits/tenant/(?P<tenant_id>[0-9]+)/\\Z']
 2026-09-05 18:48:04,927 | ERROR | django.server | "GET /finance/deposits/search/ HTTP/1.1" 500 178856
+2026-09-08 13:22:15,231 | ERROR | django.request | Internal Server Error: /finance/deposits/tenant/2/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\finance\services\deposits.py", line 399, in get_deposit_dashboard
+    .get(
+     ~~~^
+        tenant=tenant,
+        ^^^^^^^^^^^^^^
+        status=TenancyStatus.ACTIVE
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+tenants.models.Tenancy.DoesNotExist: Tenancy matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\finance\views\deposit_views.py", line 48, in tenant_deposit_view
+    data = get_deposit_dashboard(
+        user=request.user,
+        tenant_id=tenant_id
+    )
+  File "C:\Users\GEORGE\Desktop\RS_694\finance\services\deposits.py", line 406, in get_deposit_dashboard
+    raise ValidationError(
+        "Tenant does not have an active tenancy."
+    )
+django.core.exceptions.ValidationError: ['Tenant does not have an active tenancy.']
+2026-09-08 13:22:15,251 | ERROR | django.server | "GET /finance/deposits/tenant/2/ HTTP/1.1" 500 94624
+2026-09-15 23:22:32,568 | ERROR | django.request | Internal Server Error: /finance/deposits/tenant/1/
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\finance\services\deposits.py", line 472, in get_deposit_dashboard
+    .get(
+     ~~~^
+        tenant=tenant,
+        ^^^^^^^^^^^^^^
+        status=TenancyStatus.ACTIVE
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+tenants.models.Tenancy.DoesNotExist: Tenancy matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\GEORGE\Desktop\RS_694\finance\views\deposit_views.py", line 128, in tenant_deposit_view
+    data = get_deposit_dashboard(
+        user=request.user,
+        tenant_id=tenant_id
+    )
+  File "C:\Users\GEORGE\Desktop\RS_694\finance\services\deposits.py", line 479, in get_deposit_dashboard
+    raise ValidationError(
+        "Tenant does not have an active tenancy."
+    )
+django.core.exceptions.ValidationError: ['Tenant does not have an active tenancy.']
+2026-09-15 23:22:32,579 | ERROR | django.server | "GET /finance/deposits/tenant/1/ HTTP/1.1" 500 95590

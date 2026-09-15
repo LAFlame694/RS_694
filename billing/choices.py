@@ -19,6 +19,7 @@ class InvoiceCategory(models.TextChoices):
     GARBAGE = "GARBAGE", "Garbage"
     PENALTY = "PENALTY", "Penalty"
     OTHER = "OTHER", "Other"
+    REFUND = "REFUND", "Refund"
 
 class ReccuringChargeCategory(models.TextChoices):
     WATER = "WATER", "Water"

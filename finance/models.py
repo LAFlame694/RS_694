@@ -257,16 +257,16 @@ class DepositAllocation(models.Model):
     Tracks how much of a payment is reserved as DEPOSIT.
     This amount is NOT available for invoice settlement.
     """
+    deposit_reference = models.CharField(
+        max_length=50,
+        unique=True,
+        editable=False,
+        db_index=True
+    )
 
     ledger_account = models.ForeignKey(
         LedgerAccount,
         on_delete=models.CASCADE,
-        related_name="deposit_allocations"
-    )
-
-    payment = models.ForeignKey(
-        Payment,
-        on_delete=models.PROTECT,
         related_name="deposit_allocations"
     )
 
@@ -276,6 +276,12 @@ class DepositAllocation(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name="created_deposit_allocations"
+    )
 
     class Meta:
         constraints = [
@@ -287,6 +293,9 @@ class DepositAllocation(models.Model):
 
             # Prevent over-allocation beyond payment amount (enforced at service level)
         ]
-    
+
     def __str__(self):
-        return f"Deposit {self.amount} from payment {self.payment.id}"
+        return (
+            f"{self.deposit_reference} - "
+            f"{self.amount} from payment {self.payment.reference_code}"
+        )

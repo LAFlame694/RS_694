@@ -1,104 +1,86 @@
-def get_available_credit(ledger_account):
-    payments = Payment.objects.filter(
-        ledger_account=ledger_account,
-        ledger_entries__category=LedgerEntryCategory.PAYMENT,
-        ledger_entries__reversals__isnull=True
-    ).distinct()
-
-    total_available = Decimal("0.00")
-
-    for payment in payments:
-
-        # money used via direct payment allocations
-        payment_used = PaymentAllocation.objects.filter(
-            payment=payment
-        ).aggregate(
-            total=Sum("amount_applied")
-        )["total"] or Decimal("0.00")
-
-        # money used via credit allocations
-        credit_used = CreditAllocation.objects.filter(
-            payment=payment,
-            source=SourceChoices.NORMAL
-        ).aggregate(
-            total=Sum("amount_applied")
-        )["total"] or Decimal("0.00")
-
-        # deposit reserved from this payment (not available for credit)
-        deposit_used = DepositAllocation.objects.filter(
-            payment=payment
-        ).aggregate(
-            total=Sum("amount")
-        )["total"] or Decimal("0.00")
-
-        remaining = payment.amount - (
-            payment_used + 
-            credit_used + 
-            deposit_used
-        )
-
-        if remaining < 0:
-            logger.error(
-                f"Credit inconsistency detected | payment={payment.id}"
-            )
-            remaining = Decimal("0.00")
-        
-
-        if remaining > 0:
-            total_available += remaining
+def create_deposit_allocation(
+        *,
+        ledger_account,
+        payment,
+        amount,
+        created_by,
+        created_at=None
+):
     
-    return total_available
+    if created_at is None:
+        created_at = timezone.now().date()
+    
+    # validate amount
+    try:
+        amount = Decimal(amount)
+    except (InvalidOperation, TypeError):
+        raise ValidationError(
+            "Invalid deposit amount."
+        )
+    
+    if amount <= 0:
+        raise ValidationError(
+            "Deposit amount must be greater than zero."
+        )
+    
+    if payment.ledger_account != ledger_account:
+        raise ValidationError(
+            "Payment does not belong to the specified ledger account."
+        )
+    
+    # check available credit 
+    available_credit = get_available_credit(ledger_account)
 
-def get_available_deposit(ledger_account):
+    if amount > available_credit:
+        raise ValidationError(
+            f"Insufficient available credit. "
+            f"Available: {available_credit}"
+        )
+    
+    logger.info(
+        f"Creating deposit allocation | "
+        f"ledger={ledger_account.id} | "
+        f"payment={payment.id} | "
+        f"amount={amount}"
+    )
 
-    payments = Payment.objects.filter(
+    # create allocation record
+    deposit_allocation = DepositAllocation.objects.create(
         ledger_account=ledger_account,
-        ledger_entries__category=LedgerEntryCategory.PAYMENT,
-        ledger_entries__reversals__isnull=True
-    ).distinct()
+        payment=payment,
+        amount=amount,
+        created_at=created_at
+    )
 
-    total_available = Decimal("0.00")
+    # create ledger entries
+    LedgerEntry.objects.create(
+        ledger_account=ledger_account,
+        payment=payment,
+        category=LedgerEntryCategory.DEPOSIT,
+        source=SourceChoices.DEPOSIT,
+        entry_type=LedgerEntryType.CHARGE,
+        amount=amount,
+        entry_date=created_at,
+        description=f"Deposit allocation for payment {payment}",
+        created_by=created_by
+    )
 
-    for payment in payments:
+    # create deposit liability entry
+    LedgerEntry.objects.create(
+        ledger_account=ledger_account,
+        payment=payment,
+        category=LedgerEntryCategory.LIABILITY,
+        source=SourceChoices.DEPOSIT,
+        entry_type=LedgerEntryType.CREDIT,
+        amount=amount,
+        entry_date=created_at,
+        description=f"Deposit liability for payment {payment}",
+        created_by=created_by
+    )
 
-        # total deposit allocated
-        total_deposit = DepositAllocation.objects.filter(
-            payment=payment
-        ).aggregate(
-            total=Sum("amount")
-        )["total"] or Decimal("0.00")
+    logger.info(
+        f"Deposit allocation created successfully | "
+        f"allocation={deposit_allocation.id}"
+    )
 
-        if total_deposit <= 0:
-            continue # no deposit in this payment
-
-        # deposit already used
-        used_deposit = CreditAllocation.objects.filter(
-            payment=payment,
-            source=SourceChoices.DEPOSIT
-        ).aggregate(
-            total=Sum("amount_applied")
-        )["total"] or Decimal("0.00")
-
-        # deposit refunded
-        refunded_deposit = LedgerEntry.objects.filter(
-            payment=payment,
-            category=LedgerEntryCategory.REFUND,
-            source=SourceChoices.DEPOSIT,
-            reversals__isnull=True
-        ).aggregate(
-            total=Sum("amount")
-        )["total"] or Decimal("0.00")
-
-        # remaining deposit
-        remaining = total_deposit - used_deposit - refunded_deposit
-
-        # safety guard
-        if remaining < 0:
-            logger.error(
-                f"Deposit inconsistency detected | payment={payment.id}"
-            )
-            remaining = Decimal("0.00")
-        
-        total_available += remaining
-
-    return total_available
+    return deposit_allocation

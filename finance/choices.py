@@ -12,7 +12,7 @@ class LedgerEntryCategory(models.TextChoices):
     GARBAGE = "GARBAGE", "Garbage"
     SECURITY = "SECURITY", "Security Fee"
     PARKING = "PARKING", "Parking Fee"
-    DEPOSIT = "DEPOSIT_ALLOCATION", "Deposit Allocation"
+    DEPOSIT_TRANSFER = "DEPOSIT_TRANSFER", "Deposit Transfer"
     LIABILITY = "DEPOSIT_LIABILITY", "Deposit Liability"
     PENALTY = "PENALTY", "Penalty"
     OTHER = "OTHER", "Other"
