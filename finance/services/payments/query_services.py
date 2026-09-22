@@ -1,16 +1,14 @@
 import logging
-from decimal import Decimal
 
 from django.core.exceptions import ValidationError
-from django.db.models import Sum
 
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
-from finance.models import DepositAllocation
 from finance.services.payments.calculation_services import calculate_outstanding_balance
 from tenants.models import Tenancy
 from tenants.choices import TenancyStatus
 from finance.services.credit_service import get_available_credit
+from finance.services.deposits import get_available_deposit
 
 logger = logging.getLogger("query_service")
 
@@ -74,11 +72,9 @@ def get_tenant_financial_summary(*, tenant):
             ledger_account=ledger_account
         )
 
-        deposit_held = DepositAllocation.objects.filter(
+        deposit_held = get_available_deposit(
             ledger_account=ledger_account
-        ).aggregate(
-            total=Sum("amount")
-        )["total"] or Decimal("0.00")
+        )
 
         unpaid_invoice_count = Invoice.objects.filter(
             ledger_account=ledger_account,

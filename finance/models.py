@@ -40,6 +40,8 @@ class LedgerAccount(models.Model):
     def __str__(self):
         return f"{self.account_number} - {self.tenancy}"
 
+# Invoice-generation ledger entries have no source because they represent an obligation, not money moving between pools.
+# Any ledger entry that actually consumes a financial pool must have a source.
 class LedgerEntry(models.Model):
     ledger_account = models.ForeignKey(
         LedgerAccount,
@@ -76,13 +78,6 @@ class LedgerEntry(models.Model):
     amount = models.DecimalField(max_digits=14, decimal_places=2)
     description = models.TextField(blank=True)
     reference_code = models.CharField(max_length=50, unique=True, editable=False)
-    related_entry = models.ForeignKey(
-        "self",
-        null=True,
-        blank=True,
-        on_delete=models.PROTECT,
-        related_name="reversals"
-    )
     entry_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
@@ -296,6 +291,6 @@ class DepositAllocation(models.Model):
 
     def __str__(self):
         return (
-            f"{self.deposit_reference} - "
-            f"{self.amount} from payment {self.payment.reference_code}"
+            f"Deposit {self.deposit_reference} - "
+            f"{self.amount}"
         )

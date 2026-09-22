@@ -6,3 +6,7 @@
 2026-07-05 00:09:15,286 | INFO | deposit | Deposit allocation created successfully | allocation=2
 2026-07-10 17:45:47,278 | INFO | deposit | Creating deposit allocation | ledger=1 | payment=1 | amount=20000
 2026-07-10 17:45:47,671 | INFO | deposit | Deposit allocation created successfully | allocation=1
+2026-09-22 19:54:38,439 | INFO | deposit | Deposit created successfully | ledger=1 | reference=DEP-BD3E6482F1 | amount=5000
+2026-09-22 21:22:20,800 | INFO | deposit | ===== Starting deposit application =====
+2026-09-22 21:22:20,809 | INFO | deposit | Applying deposit to invoice | ledger=1 | invoice=3 | amount=600
+2026-09-22 21:22:20,820 | INFO | deposit | Deposit applied successfully | ledger=1 | invoice=3 | amount=600 | remaining_deposit=4400.00

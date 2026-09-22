@@ -8,7 +8,7 @@ from billing.models import Invoice, MeterReading
 from tenants.models import Tenancy
 from tenants.choices import TenancyStatus
 from billing.choices import MeterReadingStatus, InvoiceStatus
-from finance.services.accounting_service import settle_account
+from finance.services.credit_service import apply_available_credit_to_invoices
 
 from accounts.utils import get_system_user
 
@@ -62,7 +62,6 @@ def generate_invoice_from_meter_reading(reading):
                 entry_type=LedgerEntryType.CHARGE,
                 entry_date=reading.reading_date,
                 invoice=invoice,
-                source=SourceChoices.NORMAL,
                 created_by=system_user
             )
 
@@ -78,7 +77,11 @@ def generate_invoice_from_meter_reading(reading):
                 f"Water invoice created | reading={reading.id} | invoice={invoice.invoice_number}"
             )
 
-        settle_account(tenancy.ledger_account)
+        apply_available_credit_to_invoices(
+            ledger_account=tenancy.ledger_account,
+            created_by=system_user,
+            entry_date=timezone.now().date()
+        )
 
         return invoice
     

@@ -1,7 +1,4 @@
-from datetime import date
 import calendar
-from nt import system
-from unicodedata import category
 
 from django.utils import timezone
 from django.db import transaction
@@ -14,7 +11,7 @@ from finance.choices import LedgerEntryType, LedgerEntryCategory, SourceChoices
 from billing.models import Invoice, RecurringCharge
 from billing.choices import InvoiceStatus
 from accounts.utils import get_system_user
-from finance.services.accounting_service import settle_account
+from finance.services.credit_service import apply_available_credit_to_invoices
 
 logger = logging.getLogger("billing")
 
@@ -223,14 +220,19 @@ def create_invoice_and_ledger_entry(
                 invoice=invoice,
                 entry_type=LedgerEntryType.CHARGE,
                 category=category,
-                source=SourceChoices.NORMAL,
                 amount=amount,
                 entry_date=today,
                 description=f"{category} charge for {billing_start} - {billing_end}",
                 created_by=system_user
             )
 
-        settle_account(ledger_account)
+        user = get_system_user()
+
+        apply_available_credit_to_invoices(
+            ledger_account=ledger_account,
+            created_by=user,
+            entry_date=None
+        )
         
         logger.info(f"Ledger entry created | invoice={invoice.id} | amount={amount}")
         

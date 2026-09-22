@@ -578,3 +578,132 @@
 2026-09-14 00:00:17,338 | WARNING | billing | No recurring charges found
 2026-09-14 00:00:17,338 | INFO | billing | === Monthly billing job COMPLETED ===
 2026-09-14 00:00:17,338 | INFO | billing | === Monthly billing job COMPLETED SUCCESSFULLY ===
+2026-09-18 01:21:02,284 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-18 01:21:02,372 | INFO | billing | Billing date: 2026-09-17
+2026-09-18 01:21:02,373 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-18 01:21:02,377 | INFO | billing | Found 1 active tenancies for rent billing
+2026-09-18 01:21:02,412 | INFO | billing | Creating RENT invoice | tenancy=1 | amount=12000.00
+2026-09-18 01:21:02,413 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=RENT | amount=12000.00
+2026-09-18 01:21:02,457 | INFO | billing | Invoice created | id=1 | tenancy=1
+2026-09-18 01:21:02,858 | ERROR | billing | FAILED to create invoice | tenancy=1 | category=RENT | error=name 'settle_account' is not defined
+2026-09-18 01:24:24,173 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-18 01:24:24,182 | INFO | billing | Billing date: 2026-09-17
+2026-09-18 01:24:24,182 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-18 01:24:24,187 | INFO | billing | Found 1 active tenancies for rent billing
+2026-09-18 01:24:24,202 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-09-18 01:24:24,210 | INFO | billing | Starting recurring charge billing
+2026-09-18 01:24:24,214 | INFO | billing | Found 0 active recurring charges
+2026-09-18 01:24:24,235 | WARNING | billing | No recurring charges found
+2026-09-18 01:24:24,250 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-09-18 02:12:12,793 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-18 02:12:12,802 | INFO | billing | Billing date: 2026-09-17
+2026-09-18 02:12:12,802 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-18 02:12:12,806 | INFO | billing | Found 0 active tenancies for rent billing
+2026-09-18 02:12:12,808 | WARNING | billing | No active tenancies found for rent billing
+2026-09-18 02:12:12,809 | INFO | billing | Starting recurring charge billing
+2026-09-18 02:12:12,812 | INFO | billing | Found 0 active recurring charges
+2026-09-18 02:12:12,817 | WARNING | billing | No recurring charges found
+2026-09-18 02:12:12,818 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-09-18 02:13:31,672 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-18 02:13:31,674 | INFO | billing | Billing date: 2026-09-17
+2026-09-18 02:13:31,675 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-18 02:13:31,677 | INFO | billing | Found 0 active tenancies for rent billing
+2026-09-18 02:13:31,679 | WARNING | billing | No active tenancies found for rent billing
+2026-09-18 02:13:31,680 | INFO | billing | Starting recurring charge billing
+2026-09-18 02:13:31,682 | INFO | billing | Found 0 active recurring charges
+2026-09-18 02:13:31,684 | WARNING | billing | No recurring charges found
+2026-09-18 02:13:31,685 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-09-18 02:42:04,858 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-18 02:42:04,867 | INFO | billing | Billing date: 2026-09-17
+2026-09-18 02:42:04,868 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-18 02:42:04,872 | INFO | billing | Found 1 active tenancies for rent billing
+2026-09-18 02:42:04,888 | INFO | billing | Creating RENT invoice | tenancy=1 | amount=12000.00
+2026-09-18 02:42:04,890 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=RENT | amount=12000.00
+2026-09-18 02:42:04,901 | INFO | billing | Invoice created | id=1 | tenancy=1
+2026-09-18 02:42:05,269 | INFO | billing | Ledger entry created | invoice=1 | amount=12000.00
+2026-09-18 02:42:05,269 | INFO | billing | Starting recurring charge billing
+2026-09-18 02:42:05,272 | INFO | billing | Found 0 active recurring charges
+2026-09-18 02:42:05,273 | WARNING | billing | No recurring charges found
+2026-09-18 02:42:05,273 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-09-20 00:07:02,431 | INFO | billing | === Monthly billing job started ===
+2026-09-20 00:07:02,840 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-20 00:07:03,006 | ERROR | billing | === Monthly billing job FAILED === | Error: {'password': ['This field cannot be blank.']}
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 987, in get_or_create
+    return self.get(**kwargs), False
+           ~~~~~~~~^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+accounts.models.User.DoesNotExist: User matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\GEORGE\Desktop\RS_694\billing\management\commands\run_billing.py", line 18, in handle
+    generate_monthly_billing()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\GEORGE\Desktop\RS_694\finance\services\billing_service.py", line 26, in generate_monthly_billing
+    system_user = get_system_user()
+  File "C:\Users\GEORGE\Desktop\RS_694\accounts\utils.py", line 6, in get_system_user
+    user, _ = User.objects.get_or_create(
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        username="System",
+        ^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        }
+        ^
+    )
+    ^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 994, in get_or_create
+    return self.create(**params), True
+           ~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GEORGE\Desktop\RS_694\accounts\models.py", line 40, in save
+    self.full_clean()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\GEORGE\Desktop\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1712, in full_clean
+    raise ValidationError(errors)
+django.core.exceptions.ValidationError: {'password': ['This field cannot be blank.']}
+2026-09-22 17:20:54,724 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-22 17:20:54,772 | INFO | billing | Billing date: 2026-09-22
+2026-09-22 17:20:54,772 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-22 17:20:54,775 | INFO | billing | Found 1 active tenancies for rent billing
+2026-09-22 17:20:54,787 | INFO | billing | Creating RENT invoice | tenancy=1 | amount=12000.00
+2026-09-22 17:20:54,788 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=RENT | amount=12000.00
+2026-09-22 17:20:54,796 | INFO | billing | Invoice created | id=1 | tenancy=1
+2026-09-22 17:20:54,975 | INFO | billing | Ledger entry created | invoice=1 | amount=12000.00
+2026-09-22 17:20:54,976 | INFO | billing | Starting recurring charge billing
+2026-09-22 17:20:54,978 | INFO | billing | Found 0 active recurring charges
+2026-09-22 17:20:54,979 | WARNING | billing | No recurring charges found
+2026-09-22 17:20:54,980 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-09-22 17:43:41,105 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-22 17:43:41,115 | INFO | billing | Billing date: 2026-09-22
+2026-09-22 17:43:41,116 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-22 17:43:41,120 | INFO | billing | Found 1 active tenancies for rent billing
+2026-09-22 17:43:41,133 | INFO | billing | Creating RENT invoice | tenancy=1 | amount=12000.00
+2026-09-22 17:43:41,134 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=RENT | amount=12000.00
+2026-09-22 17:43:41,144 | INFO | billing | Invoice created | id=1 | tenancy=1
+2026-09-22 17:43:41,320 | INFO | billing | Ledger entry created | invoice=1 | amount=12000.00
+2026-09-22 17:43:41,321 | INFO | billing | Starting recurring charge billing
+2026-09-22 17:43:41,325 | INFO | billing | Found 0 active recurring charges
+2026-09-22 17:43:41,327 | WARNING | billing | No recurring charges found
+2026-09-22 17:43:41,331 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-09-22 18:26:52,820 | INFO | billing | === Monthly billing job STARTED ===
+2026-09-22 18:26:52,829 | INFO | billing | Billing date: 2026-09-22
+2026-09-22 18:26:52,829 | INFO | billing | Generating RENT invoices for period 2026-09-01 to 2026-09-30
+2026-09-22 18:26:52,833 | INFO | billing | Found 1 active tenancies for rent billing
+2026-09-22 18:26:52,846 | INFO | billing | Creating RENT invoice | tenancy=1 | amount=12000.00
+2026-09-22 18:26:52,847 | INFO | billing | Creating invoice + ledger | tenancy=1 | category=RENT | amount=12000.00
+2026-09-22 18:26:52,863 | INFO | billing | Invoice created | id=1 | tenancy=1
+2026-09-22 18:26:53,036 | INFO | billing | Ledger entry created | invoice=1 | amount=12000.00
+2026-09-22 18:26:53,036 | INFO | billing | Starting recurring charge billing
+2026-09-22 18:26:53,038 | INFO | billing | Found 0 active recurring charges
+2026-09-22 18:26:53,040 | WARNING | billing | No recurring charges found
+2026-09-22 18:26:53,040 | INFO | billing | === Monthly billing job COMPLETED ===

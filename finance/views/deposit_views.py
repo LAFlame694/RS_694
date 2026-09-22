@@ -136,7 +136,6 @@ def tenant_deposit_view(request, tenant_id):
             "ledger_account": data["ledger_account"],
             "summary": data["summary"],
             "deposit_history": data["deposit_history"],
-            "eligible_payments": data["eligible_payments"],
         }
 
         return render(
