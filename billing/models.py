@@ -9,7 +9,13 @@ from decimal import Decimal, ROUND_HALF_UP
 from finance.choices import LedgerEntryCategory
 from properties.models import Unit, Property
 from properties.choices import UnitType
-from .choices import MeterReadingStatus, InvoiceStatus, InvoiceCategory, ReccuringChargeCategory
+from .choices import (
+    MeterReadingStatus, 
+    InvoiceStatus, 
+    InvoiceCategory, 
+    InvoicePaymentStatus,
+    ReccuringChargeCategory
+)
 from tenants.models import Tenancy
 from .utils import get_previous_month_period
 
@@ -81,6 +87,30 @@ class Invoice(models.Model):
     @property
     def outstanding_balance(self):
         return self.total_amount - self.amount_paid
+
+    @property
+    def payment_status(self):
+        if self.status in {
+            InvoiceStatus.DRAFT,
+            InvoiceStatus.CANCELLED
+        }:
+            return None
+
+        if self.amount_paid == 0:
+            return InvoicePaymentStatus.UNPAID
+
+        if self.amount_paid < self.total_amount:
+            return InvoicePaymentStatus.PARTIAL
+
+        return InvoicePaymentStatus.PAID
+
+    @property
+    def is_overdue(self):
+        return (
+            self.status == InvoiceStatus.ISSUED
+            and self.due_date < timezone.localdate()
+            and self.outstanding_balance > 0
+        )
 
     # safe invoice generator
     def generate_invoice_number(self):

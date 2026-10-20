@@ -38,7 +38,6 @@ def get_available_credit(ledger_account):
 def apply_available_credit_to_invoices(
     *, ledger_account, created_by, entry_date=None,
 ):
-
     if entry_date is None:
         entry_date = timezone.now().date()
 
@@ -47,31 +46,25 @@ def apply_available_credit_to_invoices(
     if available_credit <= Decimal("0.00"):
         logger.info(
             "No available credit to apply | ledger=%s",
-            ledger_account.id
+            ledger_account.id,
         )
-
         return Decimal("0.00")
 
+    # only issued invoices are eligible for credit application.
     invoices = Invoice.objects.select_for_update().filter(
         ledger_account=ledger_account,
-        status__in=[
-            InvoiceStatus.ISSUED,
-            InvoiceStatus.PARTIAL
-        ],
-    ).order_by(
-        "issue_date",
-        "id",
-    )
+        status=InvoiceStatus.ISSUED,
+    ).order_by("issue_date", "id")
 
     total_applied = Decimal("0.00")
 
     for invoice in invoices:
-
         if available_credit <= Decimal("0.00"):
             break
 
         outstanding = invoice.outstanding_balance
 
+        # skip invoices with no outstanding balance
         if outstanding <= Decimal("0.00"):
             continue
 
@@ -79,7 +72,7 @@ def apply_available_credit_to_invoices(
             available_credit, outstanding
         )
 
-        # create the financial transaction
+        # record the financial transaction in the ledger
         LedgerEntry.objects.create(
             ledger_account=ledger_account,
             invoice=invoice,
@@ -92,23 +85,12 @@ def apply_available_credit_to_invoices(
                 f"Normal credit applied to invoice "
                 f"{invoice.invoice_number}"
             ),
-            created_by=created_by
+            created_by=created_by,
         )
 
-        # update cached invoice payment information
+        # update the invoice's cached payment information
         invoice.amount_paid += amount_to_apply
-
-        if invoice.amount_paid >= invoice.total_amount:
-            invoice.amount_paid = invoice.total_amount
-            invoice.status = InvoiceStatus.PAID
-        else:
-            invoice.status = InvoiceStatus.PARTIAL
-
-        invoice.save(
-            update_fields=[
-                "amount_paid", "status",
-            ]
-        )
+        invoice.save(update_fields=["amount_paid"])
 
         available_credit -= amount_to_apply
         total_applied += amount_to_apply
