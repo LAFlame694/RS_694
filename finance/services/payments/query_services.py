@@ -1,6 +1,7 @@
 import logging
 
 from django.core.exceptions import ValidationError
+from django.db.models import F
 
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
@@ -19,17 +20,15 @@ def get_unpaid_invoices(*, tenant, limit=5):
     try:
         tenancy = Tenancy.objects.select_related(
             "ledger_account"
-        ).get(
+        ).get( 
             tenant=tenant,
             status=TenancyStatus.ACTIVE
         )
 
         invoices = Invoice.objects.filter(
             ledger_account=tenancy.ledger_account,
-            status__in=[
-                InvoiceStatus.ISSUED,
-                InvoiceStatus.PARTIAL,
-            ]
+            status=InvoiceStatus.ISSUED,
+            total_amount__gt=F("amount_paid"), # this retrieves issued invoices where total_amount exceeds amount_paid.
         ).order_by("issue_date", "id")[:limit]
 
         return invoices
@@ -78,10 +77,8 @@ def get_tenant_financial_summary(*, tenant):
 
         unpaid_invoice_count = Invoice.objects.filter(
             ledger_account=ledger_account,
-            status__in=[
-                InvoiceStatus.ISSUED,
-                InvoiceStatus.PARTIAL,
-            ]
+            status=InvoiceStatus.ISSUED,
+            total_amount__gt=F("amount_paid"),
         ).count()
 
         return {

@@ -1,5 +1,6 @@
 from decimal import Decimal
 import logging
+from django.db.models import F
 
 from billing.models import Invoice
 from billing.choices import InvoiceStatus
@@ -10,10 +11,8 @@ def calculate_outstanding_balance(*, ledger_account):
     try:
         invoices = Invoice.objects.filter(
             ledger_account=ledger_account,
-            status__in=[
-                InvoiceStatus.ISSUED,
-                InvoiceStatus.PARTIAL
-            ]
+            status=InvoiceStatus.ISSUED,
+            total_amount__gt=F("amount_paid"),
         )
 
         total_outstanding = Decimal("0.00")
@@ -21,7 +20,7 @@ def calculate_outstanding_balance(*, ledger_account):
         for invoice in invoices:
             balance = invoice.total_amount - invoice.amount_paid
 
-            if balance > 0:
+            if balance > Decimal("0.00"):
                 total_outstanding += balance
             
         return total_outstanding

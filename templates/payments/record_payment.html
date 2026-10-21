@@ -214,6 +214,7 @@
                 <th class="text-end">Total</th>
                 <th class="text-end">Balance</th>
                 <th class="text-center">Status</th>
+                <th class="text-center">Payment Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -241,22 +242,31 @@
 
                 <td class="text-center">
 
-                    {% if invoice.status == "PARTIAL" %}
-                        <span
-                            class="status-badge bg-warning bg-opacity-10 text-warning border border-warning-subtle"
-                        >
-                            Partial
-                        </span>
-
-                    {% elif invoice.status == "ISSUED" %}
-                        <span
-                            class="status-badge bg-danger bg-opacity-10 text-danger border border-danger-subtle"
-                        >
-                            Unpaid
-                        </span>
-                    {% endif %}
+                    <span class="status-badge bg-success bg-opacity-10 text-success border border-success-subtle">
+                        {{ invoice.get_status_display }}
+                    </span>
 
                 </td>
+
+                
+                <td class="text-center">
+                    {% if invoice.payment_status == "PAID" %}
+                        <span class="status-badge bg-success bg-opacity-10 text-success border border-success-subtle">
+                            {{ invoice.payment_status_display }}
+                        </span>
+                    {% elif invoice.payment_status == "PARTIAL" %}
+                        <span class="status-badge bg-warning bg-opacity-10 text-warning border border-warning-subtle">
+                            {{ invoice.payment_status_display }}
+                        </span>
+                    {% elif invoice.payment_status == "UNPAID" %}
+                        <span class="status-badge bg-danger bg-opacity-10 text-danger border border-danger-subtle">
+                            {{ invoice.payment_status_display }}
+                        </span>
+                    {% else %}
+                        <span class="text-muted">—</span>
+                    {% endif %}
+                </td>
+
 
             </tr>
             {% endfor %}

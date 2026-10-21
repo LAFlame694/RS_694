@@ -105,6 +105,13 @@ class Invoice(models.Model):
         return InvoicePaymentStatus.PAID
 
     @property
+    def payment_status_display(self):
+        if self.payment_status is None:
+            return "—"
+
+        return self.payment_status.label
+
+    @property
     def is_overdue(self):
         return (
             self.status == InvoiceStatus.ISSUED

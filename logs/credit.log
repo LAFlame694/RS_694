@@ -7,3 +7,6 @@
 2026-10-16 01:44:42,280 | INFO | credit | No available credit to apply | ledger=3
 2026-10-16 01:45:20,863 | INFO | credit | Available credit applied | ledger=3 | invoice=INV-2026-0002 | amount=12000.00 | remaining_credit=18000.00
 2026-10-16 01:45:20,869 | INFO | credit | Available credit application complete | ledger=3 | total_applied=12000.00 | remaining_credit=18000.00
+2026-10-21 23:37:17,809 | INFO | credit | No available credit to apply | ledger=1
+2026-10-22 00:06:50,735 | INFO | credit | Available credit applied | ledger=1 | invoice=INV-2026-0001 | amount=10000.00 | remaining_credit=0.00
+2026-10-22 00:06:50,738 | INFO | credit | Available credit application complete | ledger=1 | total_applied=10000.00 | remaining_credit=0.00
