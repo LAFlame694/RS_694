@@ -10,6 +10,7 @@ from finance.models import LedgerEntry
 from finance.choices import LedgerEntryType, LedgerEntryCategory, SourceChoices
 from billing.models import Invoice, RecurringCharge
 from billing.choices import InvoiceStatus
+from billing.services.invoice_services import create_invoice_service
 from accounts.utils import get_system_user
 from finance.services.credit_service import apply_available_credit_to_invoices
 
@@ -80,15 +81,16 @@ def generate_rent_invoices(today, system_user):
             f"Creating RENT invoice | tenancy={tenancy.id} | amount={tenancy.rent_amount}"
         )
 
-        create_invoice_and_ledger_entry(
+        create_invoice_service(
             tenancy=tenancy,
-            ledger_account=ledger_account,
             category=LedgerEntryCategory.RENT,
             amount=tenancy.rent_amount,
-            billing_start=billing_start,
-            billing_end=billing_end,
-            today=today,
-            system_user=system_user
+            issue_date=today,
+            due_date=billing_end,
+            billing_period_start=billing_start,
+            billing_period_end=billing_end,
+            created_by=system_user,
+            status=InvoiceStatus.ISSUED,
         )
 
 def generate_recurring_charge_invoices(today, system_user):
@@ -159,15 +161,16 @@ def generate_recurring_charge_invoices(today, system_user):
                 f"Creating charge invoice | tenancy={tenancy.id} | charge={charge.id} | amount={charge.amount}"
             )
 
-            create_invoice_and_ledger_entry(
+            create_invoice_service(
                 tenancy=tenancy,
-                ledger_account=ledger_account,
-                category=charge.category,
-                amount=charge.amount,
-                billing_start=billing_start,
-                billing_end=billing_end,
-                today=today,
-                system_user=system_user
+                category=LedgerEntryCategory.RENT,
+                amount=tenancy.rent_amount,
+                issue_date=today,
+                due_date=billing_end,
+                billing_period_start=billing_start,
+                billing_period_end=billing_end,
+                created_by=system_user,
+                status=InvoiceStatus.ISSUED,
             )
 
             invoices_created = True
@@ -183,61 +186,3 @@ def generate_recurring_charge_invoices(today, system_user):
             logger.warning(
                 f"No invoices created for charge {charge.id} - last_generated_date not updated"
             )
-
-def create_invoice_and_ledger_entry(
-        tenancy,
-        ledger_account,
-        category,
-        amount,
-        billing_start,
-        billing_end,
-        today,
-        system_user
-):
-    try:
-        with transaction.atomic():
-            logger.info(
-                f"Creating invoice + ledger | tenancy={tenancy.id} | category={category} | amount={amount}"
-            )
-            invoice = Invoice.objects.create(
-                tenancy=tenancy,
-                ledger_account=ledger_account,
-                category=category,
-                issue_date=today,
-                due_date=billing_end,
-                billing_period_start=billing_start,
-                billing_period_end=billing_end,
-                total_amount=amount,
-                status=InvoiceStatus.ISSUED,
-                created_by=system_user
-            )
-            logger.info(
-                f"Invoice created | id={invoice.id} | tenancy={tenancy.id}"
-            )
-
-            LedgerEntry.objects.create(
-                ledger_account=ledger_account,
-                invoice=invoice,
-                entry_type=LedgerEntryType.CHARGE,
-                category=category,
-                amount=amount,
-                entry_date=today,
-                description=f"{category} charge for {billing_start} - {billing_end}",
-                created_by=system_user
-            )
-
-        user = get_system_user()
-
-        apply_available_credit_to_invoices(
-            ledger_account=ledger_account,
-            created_by=user,
-            entry_date=None
-        )
-        
-        logger.info(f"Ledger entry created | invoice={invoice.id} | amount={amount}")
-        
-    except Exception as e:
-        logger.error(
-            f"FAILED to create invoice | tenancy={tenancy.id} | category={category} | error={str(e)}"
-        )
-        raise
