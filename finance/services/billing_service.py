@@ -1,18 +1,15 @@
 import calendar
 
 from django.utils import timezone
-from django.db import transaction
 from django.db.models import Q
 import logging
 
 from tenants.models import Tenancy
-from finance.models import LedgerEntry
-from finance.choices import LedgerEntryType, LedgerEntryCategory, SourceChoices
+from finance.choices import LedgerEntryCategory
 from billing.models import Invoice, RecurringCharge
 from billing.choices import InvoiceStatus
 from billing.services.invoice_services import create_invoice_service
 from accounts.utils import get_system_user
-from finance.services.credit_service import apply_available_credit_to_invoices
 
 logger = logging.getLogger("billing")
 

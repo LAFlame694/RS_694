@@ -12,3 +12,5 @@
 2026-10-22 00:06:50,738 | INFO | credit | Available credit application complete | ledger=1 | total_applied=10000.00 | remaining_credit=0.00
 2026-10-27 19:08:36,717 | INFO | credit | No available credit to apply | ledger=2
 2026-10-28 22:09:06,634 | INFO | credit | No available credit to apply | ledger=2
+2026-10-30 19:45:24,741 | INFO | credit | No available credit to apply | ledger=3
+2026-10-30 20:17:47,456 | INFO | credit | No available credit to apply | ledger=4

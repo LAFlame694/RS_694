@@ -69,3 +69,36 @@
 2026-10-27 19:28:48,376 | INFO | billing | Invoice created | invoice=3 | tenancy=2 | status=DRAFT
 2026-10-28 22:09:06,623 | INFO | billing | Invoice issued | invoice=3 | issued_by=2
 2026-10-28 22:09:06,636 | INFO | billing | Invoice issuance completed | invoice=3
+2026-10-30 19:45:24,651 | INFO | billing | === Monthly billing job STARTED ===
+2026-10-30 19:45:24,676 | INFO | billing | Billing date: 2026-10-30
+2026-10-30 19:45:24,677 | INFO | billing | Generating RENT invoices for period 2026-10-01 to 2026-10-31
+2026-10-30 19:45:24,685 | INFO | billing | Found 3 active tenancies for rent billing
+2026-10-30 19:45:24,701 | INFO | billing | Creating RENT invoice | tenancy=3 | amount=7500.00
+2026-10-30 19:45:24,713 | INFO | billing | Invoice created | invoice=4 | tenancy=3 | status=ISSUED
+2026-10-30 19:45:24,731 | INFO | billing | Invoice charge recorded | invoice=4 | amount=7500.00
+2026-10-30 19:45:24,750 | INFO | billing | Invoice creation completed | invoice=4
+2026-10-30 19:45:24,780 | INFO | billing | Invoice already exists for tenancy 2, category RENT
+2026-10-30 19:45:24,822 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-10-30 19:45:24,824 | INFO | billing | Starting recurring charge billing
+2026-10-30 19:45:24,834 | INFO | billing | Found 0 active recurring charges
+2026-10-30 19:45:24,839 | WARNING | billing | No recurring charges found
+2026-10-30 19:45:24,841 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-10-30 19:54:16,965 | INFO | billing | Invoice cancelled | invoice=4 | cancelled_by=2
+2026-10-30 20:17:47,387 | INFO | billing | === Monthly billing job STARTED ===
+2026-10-30 20:17:47,396 | INFO | billing | Billing date: 2026-10-30
+2026-10-30 20:17:47,397 | INFO | billing | Generating RENT invoices for period 2026-10-01 to 2026-10-31
+2026-10-30 20:17:47,402 | INFO | billing | Found 4 active tenancies for rent billing
+2026-10-30 20:17:47,417 | INFO | billing | Invoice already exists for tenancy 3, category RENT
+2026-10-30 20:17:47,425 | INFO | billing | Creating RENT invoice | tenancy=4 | amount=8000.00
+2026-10-30 20:17:47,436 | INFO | billing | Invoice created | invoice=5 | tenancy=4 | status=ISSUED
+2026-10-30 20:17:47,444 | INFO | billing | Invoice charge recorded | invoice=5 | amount=8000.00
+2026-10-30 20:17:47,461 | INFO | billing | Invoice creation completed | invoice=5
+2026-10-30 20:17:47,493 | INFO | billing | Invoice already exists for tenancy 2, category RENT
+2026-10-30 20:17:47,500 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-10-30 20:17:47,503 | INFO | billing | Starting recurring charge billing
+2026-10-30 20:17:47,507 | INFO | billing | Found 0 active recurring charges
+2026-10-30 20:17:47,512 | WARNING | billing | No recurring charges found
+2026-10-30 20:17:47,514 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-10-30 20:22:21,813 | INFO | billing | Invoice cancelled | invoice=5 | cancelled_by=2
+2026-10-30 21:07:31,001 | INFO | billing | Invoice created | invoice=6 | tenancy=1 | status=DRAFT
+2026-10-30 21:13:30,608 | INFO | billing | Draft invoice deleted | invoice_id=6 | invoice_number=INV-2026-0006 | deleted_by=2

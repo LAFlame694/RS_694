@@ -1,7 +1,6 @@
 import logging 
 from decimal import Decimal
 
-from django.contrib.gis.gdal.raster import source
 from django.utils import timezone
 from django.db import transaction
 from django.core.exceptions import ValidationError
@@ -19,7 +18,7 @@ def create_invoice_service(
     *,
     tenancy,
     category,
-    amount,
+    amount, 
     due_date,
     created_by,
     status=InvoiceStatus.DRAFT,
@@ -306,6 +305,10 @@ def cancel_invoice_service(*, invoice, cancelled_by, cancellation_date=None):
         created_by=cancelled_by,
     )
 
+    # mark the invoice as cancelled.
+    invoice.status = InvoiceStatus.CANCELLED
+    invoice.save(update_fields=["status"])
+
     logger.info(
         "Invoice cancelled | invoice=%s | cancelled_by=%s",
         invoice.id,
@@ -313,3 +316,45 @@ def cancel_invoice_service(*, invoice, cancelled_by, cancellation_date=None):
     )
 
     return invoice
+
+@transaction.atomic
+def delete_draft_invoice_service(*, invoice, deleted_by):
+    """
+    Delete a draft invoice only if it has no ledger entries.
+    Issued and cancelled invoices must remain in the system
+    """
+
+    try:
+        invoice = Invoice.objects.select_for_update().get(
+            pk=invoice.pk
+        )
+    except Invoice.DoesNotExist:
+        raise ValidationError("Invoice does not exist.")
+
+    # Rule 1: Only draft invoices can be deleted.
+    if invoice.status != InvoiceStatus.DRAFT:
+        raise ValidationError(
+            "Only draft invoices can be deleted."
+            "Issued and cancelled invoices must be retained."
+        )
+
+    # Rule 2: Never delete an invoice that has ledger entries.
+    if invoice.ledger_entries.exists():
+        raise ValidationError(
+            "This draft invoice has ledger entries. "
+            "It cannot be deleted."
+            "Review its financial records first."
+        )
+
+    invoice_id = invoice.id
+    invoice_number = invoice.invoice_number
+
+    invoice.delete()
+
+    logger.info(
+        "Draft invoice deleted | invoice_id=%s | "
+        "invoice_number=%s | deleted_by=%s",
+        invoice_id,
+        invoice_number,
+        deleted_by.id,
+    )
