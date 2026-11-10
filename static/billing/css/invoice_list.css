@@ -1,0 +1,233 @@
+/* ==========================================================================
+   RentMaster Invoice Management CSS - invoice_list.css
+   ========================================================================== */
+
+/* --- 1. General Page Styling --- */
+body.rentmaster-body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+    -webkit-font-smoothing: antialiased;
+}
+
+.rentmaster-main-content {
+    min-height: 100vh;
+    background-color: #f8fafc;
+}
+
+/* Typography utilities */
+.fs-7 {
+    font-size: 0.8125rem;
+}
+
+.fs-8 {
+    font-size: 0.75rem;
+}
+
+/* --- 2. Summary Cards --- */
+.rm-summary-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.rm-summary-card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(15, 23, 42, 0.05) !important;
+}
+
+.rm-card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* --- 3. Filters Section --- */
+.rm-filter-card {
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0 !important;
+    background-color: #ffffff;
+}
+
+.rm-filter-card .form-control,
+.rm-filter-card .form-select {
+    border-color: #cbd5e1;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+}
+
+.rm-filter-card .form-control:focus,
+.rm-filter-card .form-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.input-group-text {
+    border-color: #cbd5e1;
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.input-group .form-control {
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+/* --- 4. Invoice Table --- */
+.rm-invoice-table th {
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    font-size: 0.75rem;
+    color: #64748b;
+    background-color: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.rm-invoice-table td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.rm-invoice-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Overdue row subtle highlighting */
+.rm-row-overdue {
+    background-color: #fffdfd;
+}
+
+.rm-row-overdue td:first-child {
+    border-left: 3px solid #ef4444;
+}
+
+/* --- 5. Status Badges --- */
+/* Payment Status Badges */
+.rm-badge-unpaid {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 30px;
+}
+
+.rm-badge-partial {
+    background-color: #fffbeb;
+    color: #d97706;
+    border: 1px solid #fef3c7;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 30px;
+}
+
+.rm-badge-paid {
+    background-color: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #dcfce7;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 30px;
+}
+
+.rm-badge-cancelled {
+    background-color: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 30px;
+}
+
+/* Invoice Status Badges */
+.rm-badge-issued {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #dbeafe;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 30px;
+}
+
+.rm-badge-draft {
+    background-color: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 30px;
+}
+
+.rm-badge-cancelled-status {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 30px;
+}
+
+/* --- 6. Action Buttons & Dropdowns --- */
+.dropdown-menu {
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-item {
+    font-size: 0.875rem;
+    color: #475569;
+}
+
+.dropdown-item:hover {
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+/* --- 7. Pagination --- */
+.pagination .page-link {
+    color: #475569;
+    border-color: #e2e8f0;
+    font-size: 0.875rem;
+}
+
+.pagination .page-link:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+    border-color: #cbd5e1;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #94a3b8;
+    background-color: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+/* --- 8. Responsive Media Queries --- */
+@media (max-width: 991.98px) {
+    .container-fluid {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    h1.h3 {
+        font-size: 1.5rem;
+    }
+    
+    .rm-summary-card .card-body {
+        padding: 1rem;
+    }
+}
