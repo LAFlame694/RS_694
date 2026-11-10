@@ -1,2 +1,3 @@
 2026-10-12 01:08:29,123 | INFO | admin | ADMIN UPDATE | user=Admin | model=Tenancy | id=1
 2026-10-12 01:08:29,124 | INFO | admin | FIELD CHANGE | user=Admin | model=Tenancy | id=1 | field=start_date | from=2026-10-12 | to=2026-10-11
+2026-11-10 21:05:39,167 | INFO | admin | ADMIN CREATE | user=Admin | model=Invoice | id=7

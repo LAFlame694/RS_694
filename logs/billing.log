@@ -102,3 +102,4 @@
 2026-10-30 20:22:21,813 | INFO | billing | Invoice cancelled | invoice=5 | cancelled_by=2
 2026-10-30 21:07:31,001 | INFO | billing | Invoice created | invoice=6 | tenancy=1 | status=DRAFT
 2026-10-30 21:13:30,608 | INFO | billing | Draft invoice deleted | invoice_id=6 | invoice_number=INV-2026-0006 | deleted_by=2
+2026-11-10 21:13:47,642 | INFO | billing | Draft invoice updated successfully. Invoice ID: 7 | Invoice Number: INV-2026-0007 | Updated by: Admin (SYSTEM_ADMIN)
