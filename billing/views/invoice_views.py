@@ -6,7 +6,8 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from django.utils.dateparse import parse_date
 
-from billing.choices import InvoiceStatus
+from billing.choices import InvoiceStatus, InvoiceCategory
+from finance.choices import PaymentStatus
 from billing.services.invoice_services import (
     get_invoices_service,
     get_invoice_summary_service,
@@ -66,6 +67,15 @@ def invoice_list_view(request):
                 raise ValidationError(
                     "Invalid billing period end date."
                 )
+        
+        if (
+            billing_period_start 
+            and billing_period_end 
+            and billing_period_start > billing_period_end
+        ):
+            raise ValidationError(
+                "Billing period start date cannot be after end date."
+            )
 
         # Retrieve filtered invoices.
         invoices = get_invoices_service(
@@ -121,6 +131,11 @@ def invoice_list_view(request):
         "selected_status": invoice_status or InvoiceStatus.ISSUED,
         "selected_payment_status": payment_status,
         "selected_category": category,
+
+        # dropdown choices for filters
+        "invoice_status_choices": InvoiceStatus.choices,
+        "payment_status_choices": PaymentStatus.choices,
+        "invoice_category_choices": InvoiceCategory.choices,
 
         "search_query": search,
         "billing_period_start": billing_period_start,

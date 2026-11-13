@@ -9,10 +9,13 @@ def get_accessible_properties(user):
     if user.role == Role.SYSTEM_ADMIN:
         properties = Property.objects.all()
     
-    if user.role == Role.LANDLORD:
+    elif user.role == Role.LANDLORD:
         properties = Property.objects.filter(landlord=user)
     
-    if user.role == Role.CARETAKER:
+    elif user.role == Role.CARETAKER:
         properties = Property.objects.filter(landlord=user.landlord)
+
+    else:
+        return Property.objects.none()
     
     return properties.distinct()
