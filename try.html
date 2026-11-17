@@ -3,655 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RentMaster - Create Deposit</title>
-    <!-- Bootstrap 5 CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <title>Create Invoice - RentMaster</title>
     <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --rm-primary: #2563EB;
-            --rm-primary-hover: #1D4ED8;
-            --rm-dark: #0F172A;
-            --rm-secondary: #64748B;
-            --rm-bg: #F8FAFC;
-            --rm-card-bg: #FFFFFF;
-            --rm-border: #E2E8F0;
-            --rm-radius: 12px;
-            --rm-radius-lg: 16px;
-            --rm-teal: #0D9488;
-            --rm-amber: #D97706;
-            --rm-teal-bg: #F0FDFA;
-            --rm-amber-bg: #FFFBEB;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--rm-bg);
-            color: var(--rm-dark);
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .rentmaster-container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 2rem 1rem 4rem 1rem;
-        }
-
-        /* Breadcrumbs & Header */
-        .rm-breadcrumb {
-            font-size: 0.875rem;
-            color: var(--rm-secondary);
-            font-weight: 500;
-            margin-bottom: 0.75rem;
-        }
-
-        .rm-breadcrumb a {
-            color: var(--rm-secondary);
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
-
-        .rm-breadcrumb a:hover {
-            color: var(--rm-primary);
-        }
-
-        .rm-header-title-area {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .rm-header-title-area {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-        }
-
-        .rm-page-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--rm-dark);
-            letter-spacing: -0.025em;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .rm-page-title i {
-            color: var(--rm-primary);
-            font-size: 1.5rem;
-        }
-
-        .rm-page-subtitle {
-            font-size: 0.95rem;
-            color: var(--rm-secondary);
-            margin-bottom: 0;
-        }
-
-        .btn-back-deposits {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background-color: #FFFFFF;
-            border: 1px solid var(--rm-border);
-            color: var(--rm-dark);
-            font-weight: 500;
-            font-size: 0.875rem;
-            border-radius: var(--rm-radius);
-            text-decoration: none;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-            transition: all 0.15s ease;
-            white-space: nowrap;
-        }
-
-        .btn-back-deposits:hover {
-            background-color: #F1F5F9;
-            border-color: #CBD5E1;
-            color: var(--rm-dark);
-        }
-
-        /* Cards Styling */
-        .rm-card {
-            background-color: var(--rm-card-bg);
-            border: 1px solid var(--rm-border);
-            border-radius: var(--rm-radius-lg);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: box-shadow 0.2s ease;
-        }
-
-        @media (min-width: 768px) {
-            .rm-card {
-                padding: 2rem;
-            }
-        }
-
-        .rm-card-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--rm-dark);
-            margin-bottom: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Tenant Info Component */
-        .tenant-main-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.25rem;
-            padding-bottom: 1.25rem;
-            border-bottom: 1px solid var(--rm-border);
-        }
-
-        .tenant-avatar {
-            width: 52px;
-            height: 52px;
-            background-color: #DBEAFE;
-            color: var(--rm-primary);
-            font-weight: 700;
-            font-size: 1.125rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            letter-spacing: -0.01em;
-        }
-
-        .tenant-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--rm-dark);
-            line-height: 1.2;
-            margin-bottom: 0.25rem;
-        }
-
-        .tenant-ref {
-            font-size: 0.8125rem;
-            color: var(--rm-secondary);
-            font-family: monospace;
-            background-color: #F1F5F9;
-            padding: 0.125rem 0.375rem;
-            border-radius: 4px;
-        }
-
-        .tenant-meta-grid {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 1rem;
-        }
-
-        @media (min-width: 640px) {
-            .tenant-meta-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .tenant-meta-item {
-            background-color: #F8FAFC;
-            border: 1px solid #F1F5F9;
-            padding: 0.875rem 1rem;
-            border-radius: var(--rm-radius);
-        }
-
-        .tenant-meta-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--rm-secondary);
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-        }
-
-        .tenant-meta-value {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--rm-dark);
-        }
-
-        /* Available Credit Summary Panel */
-        .credit-summary-panel {
-            background: linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 100%);
-            border: 1px solid #BFDBFE;
-            border-radius: var(--rm-radius-lg);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .credit-summary-panel {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                padding: 1.75rem 2rem;
-            }
-        }
-
-        .credit-info-left {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .credit-icon-box {
-            width: 48px;
-            height: 48px;
-            background-color: #FFFFFF;
-            color: var(--rm-primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            flex-shrink: 0;
-        }
-
-        .credit-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--rm-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.025em;
-            margin-bottom: 0.125rem;
-        }
-
-        .credit-amount {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--rm-dark);
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
-
-        .credit-support-text {
-            font-size: 0.875rem;
-            color: var(--rm-secondary);
-            margin-top: 0.25rem;
-        }
-
-        .credit-note-badge {
-            background-color: rgba(255, 255, 255, 0.7);
-            border: 1px solid #E2E8F0;
-            padding: 0.75rem 1rem;
-            border-radius: var(--rm-radius);
-            font-size: 0.8125rem;
-            color: var(--rm-secondary);
-            max-width: 300px;
-        }
-
-        /* Form Controls */
-        .form-label {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--rm-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .input-group-text {
-            background-color: #F8FAFC;
-            border-color: var(--rm-border);
-            color: var(--rm-secondary);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .form-control, .form-select {
-            border-color: var(--rm-border);
-            padding: 0.75rem 1rem;
-            font-size: 0.95rem;
-            border-radius: var(--rm-radius);
-            color: var(--rm-dark);
-            background-color: #FFFFFF;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: var(--rm-primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-        }
-
-        .form-text {
-            font-size: 0.8125rem;
-            color: var(--rm-secondary);
-            margin-top: 0.375rem;
-        }
-
-        /* Transaction Preview Box */
-        .transaction-preview {
-            background-color: #F8FAFC;
-            border: 1px solid var(--rm-border);
-            border-radius: var(--rm-radius);
-            padding: 1.25rem;
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .transaction-preview-title {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--rm-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .preview-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.625rem 0;
-            border-bottom: 1px dashed var(--rm-border);
-        }
-
-        .preview-row:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .preview-row:first-of-type {
-            padding-top: 0;
-        }
-
-        .preview-item-label {
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--rm-dark);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .preview-item-sub {
-            font-size: 0.75rem;
-            color: var(--rm-secondary);
-        }
-
-        .preview-amount {
-            font-weight: 600;
-            font-size: 0.95rem;
-            font-family: monospace;
-        }
-
-        .amount-reduction {
-            color: var(--rm-amber);
-            background-color: var(--rm-amber-bg);
-            padding: 0.125rem 0.5rem;
-            border-radius: 4px;
-            border: 1px solid #FDE68A;
-        }
-
-        .amount-increase {
-            color: var(--rm-teal);
-            background-color: var(--rm-teal-bg);
-            padding: 0.125rem 0.5rem;
-            border-radius: 4px;
-            border: 1px solid #99F6E4;
-        }
-
-        /* Informational Notice */
-        .rm-info-notice {
-            background-color: #EFF6FF;
-            border: 1px solid #BFDBFE;
-            border-radius: var(--rm-radius);
-            padding: 1rem 1.25rem;
-            display: flex;
-            gap: 0.875rem;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
-
-        .rm-info-notice i {
-            color: var(--rm-primary);
-            font-size: 1.125rem;
-            margin-top: 0.125rem;
-            flex-shrink: 0;
-        }
-
-        .rm-info-notice p {
-            margin: 0;
-            font-size: 0.875rem;
-            color: #1E3A8A;
-            line-height: 1.5;
-        }
-
-        /* Form Actions */
-        .form-actions {
-            display: flex;
-            flex-direction: column-reverse;
-            gap: 0.75rem;
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--rm-border);
-        }
-
-        @media (min-width: 640px) {
-            .form-actions {
-                flex-direction: row;
-                justify-content: flex-end;
-                align-items: center;
-            }
-        }
-
-        .btn-cancel {
-            background-color: #FFFFFF;
-            border: 1px solid var(--rm-border);
-            color: var(--rm-dark);
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--rm-radius);
-            transition: all 0.15s ease;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .btn-cancel:hover {
-            background-color: #F1F5F9;
-            color: var(--rm-dark);
-            border-color: #CBD5E1;
-        }
-
-        .btn-primary-rm {
-            background-color: var(--rm-primary);
-            border: 1px solid var(--rm-primary);
-            color: #FFFFFF;
-            font-weight: 600;
-            padding: 0.75rem 1.75rem;
-            border-radius: var(--rm-radius);
-            transition: all 0.15s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
-        }
-
-        .btn-primary-rm:hover {
-            background-color: var(--rm-primary-hover);
-            border-color: var(--rm-primary-hover);
-            color: #FFFFFF;
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
-        }
-
-        .btn-primary-rm:focus {
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
-            outline: none;
-        }
-    </style>
+    <!-- Bootstrap 5.3.2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.4.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="try.css">
 </head>
-<body>
+<body class="rm-body">
 
-    <div class="rentmaster-container">
-        
-        <!-- A. Page Header -->
-        <div class="mb-4">
-            <div class="rm-breadcrumb">
-                <a href="#">Finance</a> / <a href="#">Deposits</a> / Create Deposit
-            </div>
-            <div class="rm-header-title-area">
-                <div>
-                    <h1 class="rm-page-title">
-                        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Create Deposit
-                    </h1>
-                    <p class="rm-page-subtitle">Transfer available tenant credit into a security deposit balance.</p>
-                </div>
-                <div>
-                    <a href="#" class="btn-back-deposits">
-                        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to Deposits
-                    </a>
-                </div>
-            </div>
-        </div>
+    <!-- Main Content Wrapper -->
+    <main class="rm-main-content">
+        <div class="container-fluid px-4 py-4">
 
-        <!-- B. Tenant Information Card -->
-        <div class="rm-card">
-            <div class="rm-card-title">
-                <i class="fa-solid fa-user-check text-primary" aria-hidden="true"></i> Tenant Account Profile
-            </div>
-            
-            <div class="tenant-main-info">
-                <div class="tenant-avatar" aria-hidden="true">JK</div>
-                <div>
-                    <div class="tenant-name">John Kamau</div>
-                    <div><span class="tenant-ref">Account Ref: LA-000123</span></div>
-                </div>
-            </div>
-
-            <div class="tenant-meta-grid">
-                <div class="tenant-meta-item">
-                    <div class="tenant-meta-label">
-                        <i class="fa-solid fa-building" aria-hidden="true"></i> Property
+            <!-- Page Heading & Breadcrumbs -->
+            <div class="d-flex flex-column mb-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-2">
+                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Billing</a></li>
+                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Invoices</a></li>
+                        <li class="breadcrumb-item active text-primary fw-medium" aria-current="page">Create Invoice</li>
+                    </ol>
+                </nav>
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+                    <div>
+                        <h1 class="h3 fw-bold text-dark mb-1">Create Invoice</h1>
+                        <p class="text-muted mb-0">Create a new invoice for a tenant and manage its billing details.</p>
                     </div>
-                    <div class="tenant-meta-value">SunSet Apartments</div>
-                </div>
-                <div class="tenant-meta-item">
-                    <div class="tenant-meta-label">
-                        <i class="fa-solid fa-door-open" aria-hidden="true"></i> Unit
+                    <div>
+                        <a href="#" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span>Back to Invoices</span>
+                        </a>
                     </div>
-                    <div class="tenant-meta-value">Unit A1</div>
-                </div>
-                <div class="tenant-meta-item">
-                    <div class="tenant-meta-label">
-                        <i class="fa-solid fa-home" aria-hidden="true"></i> Unit Type
-                    </div>
-                    <div class="tenant-meta-value">Bedsitter</div>
                 </div>
             </div>
-        </div>
 
-        <!-- C. Available Credit Summary -->
-        <div class="credit-summary-panel">
-            <div class="credit-info-left">
-                <div class="credit-icon-box" aria-hidden="true">
-                    <i class="fa-solid fa-wallet"></i>
-                </div>
-                <div>
-                    <div class="credit-label">Available Credit</div>
-                    <div class="credit-amount">KSh 15,000.00</div>
-                    <div class="credit-support-text">Credit available to transfer into the deposit balance.</div>
-                </div>
-            </div>
-            <div class="credit-note-badge mt-3 mt-md-0">
-                <i class="fa-solid fa-circle-info text-primary me-1" aria-hidden="true"></i> Only available normal credit can be transferred. Maximum transfer cannot exceed this balance.
-            </div>
-        </div>
-
-        <!-- D. Create Deposit Form Card -->
-        <div class="rm-card">
-            <div class="rm-card-title">
-                <i class="fa-solid fa-coins text-primary" aria-hidden="true"></i> Deposit Details
-            </div>
-
-            <form action="#" method="post">
-                <!-- Deposit Amount Field -->
-                <div class="mb-4">
-                    <label for="depositAmount" class="form-label">Deposit Amount <span class="text-danger">*</span></label>
-                    <div class="input-group">
-                        <span class="input-group-text">KSh</span>
-                        <input type="number" class="form-control" id="depositAmount" name="amount" placeholder="5000.00" min="0.01" step="0.01" required>
-                    </div>
-                    <div class="form-text">Enter the amount you want to move into the deposit balance.</div>
-                </div>
-
-                <!-- Optional Description Field -->
-                <div class="mb-3">
-                    <label for="depositDescription" class="form-label">Description <span class="text-muted fw-normal">(Optional)</span></label>
-                    <textarea class="form-control" id="depositDescription" name="description" rows="3" placeholder="Add a note about this deposit..."></textarea>
-                    <div class="form-text">Provide any additional context or reference notes for this transaction.</div>
-                </div>
-
-                <!-- E. Transaction Preview -->
-                <div class="transaction-preview">
-                    <div class="transaction-preview-title">
-                        <i class="fa-solid fa-receipt" aria-hidden="true"></i> Transaction Summary Preview
-                    </div>
+            <!-- Main Form Layout -->
+            <form id="createInvoiceForm" class="needs-validation" novalidate>
+                <div class="row g-4">
                     
-                    <div class="preview-row">
-                        <div class="preview-item-label">
-                            <div>
-                                <div>Available Credit</div>
-                                <div class="preview-item-sub">Credit transferred out</div>
+                    <!-- Main Form Column (8 Columns on Desktop) -->
+                    <div class="col-12 col-lg-8">
+                        
+                        <!-- Card 1: Tenant and Property Information -->
+                        <div class="card rm-card border-0 shadow-sm mb-4">
+                            <div class="card-body p-4">
+                                <h5 class="card-title fw-bold text-dark mb-3">
+                                    <i class="fa-solid fa-user-tie text-primary me-2"></i>Tenant & Property Selection
+                                </h5>
+                                
+                                <div class="mb-3">
+                                    <label for="tenancySelect" class="form-label small fw-semibold text-muted">Select Tenancy <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-search"></i></span>
+                                        <select id="tenancySelect" class="form-select border-start-0 ps-0" required>
+                                            <option value="" disabled selected>Search or select tenant/unit...</option>
+                                            <option value="john_kamau" data-tenant="John Kamau" data-property="Sunrise Apartments" data-unit="Unit B12" data-type="2 Bedroom Apartment" data-rent="KES 25,000.00">John Kamau — Sunrise Apartments — Unit B12</option>
+                                            <option value="sarah_mwangi" data-tenant="Sarah Mwangi" data-property="Westlands Court" data-unit="Unit 4A" data-type="1 Bedroom Studio" data-rent="KES 18,500.00">Sarah Mwangi — Westlands Court — Unit 4A</option>
+                                            <option value="david_kiprono" data-tenant="David Kiprono" data-property="Kilimani Heights" data-unit="Unit 7C" data-type="3 Bedroom Penthouse" data-rent="KES 65,000.00">David Kiprono — Kilimani Heights — Unit 7C</option>
+                                        </select>
+                                        <div class="invalid-feedback">Please select a tenancy.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Selected Tenancy Preview Box -->
+                                <div id="tenantPreview" class="rm-preview-box rounded-3 p-3 bg-light border d-none">
+                                    <h6 class="text-uppercase fs-8 text-muted fw-bold mb-2">Selected Tenancy Details</h6>
+                                    <div class="row g-2">
+                                        <div class="col-6 col-md-4">
+                                            <small class="text-muted d-block">Tenant Name</small>
+                                            <span id="previewTenant" class="fw-medium text-dark">-</span>
+                                        </div>
+                                        <div class="col-6 col-md-4">
+                                            <small class="text-muted d-block">Property Name</small>
+                                            <span id="previewProperty" class="fw-medium text-dark">-</span>
+                                        </div>
+                                        <div class="col-6 col-md-4">
+                                            <small class="text-muted d-block">Unit Number</small>
+                                            <span id="previewUnit" class="fw-medium text-dark">-</span>
+                                        </div>
+                                        <div class="col-6 col-md-6">
+                                            <small class="text-muted d-block">Unit Type</small>
+                                            <span id="previewType" class="fw-medium text-dark">-</span>
+                                        </div>
+                                        <div class="col-6 col-md-6">
+                                            <small class="text-muted d-block">Standard Rent</small>
+                                            <span id="previewRent" class="fw-semibold text-primary">-</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="preview-amount amount-reduction">
-                            <i class="fa-solid fa-minus" aria-hidden="true"></i> KSh 5,000.00
+
+                        <!-- Card 2: Invoice Details -->
+                        <div class="card rm-card border-0 shadow-sm mb-4">
+                            <div class="card-body p-4">
+                                <h5 class="card-title fw-bold text-dark mb-3">
+                                    <i class="fa-solid fa-file-invoice-dollar text-primary me-2"></i>Invoice Details
+                                </h5>
+
+                                <div class="row g-3">
+                                    <!-- Invoice Category -->
+                                    <div class="col-12 col-md-6">
+                                        <label for="invoiceCategory" class="form-label small fw-semibold text-muted">Invoice Category <span class="text-danger">*</span></label>
+                                        <select id="invoiceCategory" class="form-select" required>
+                                            <option value="" disabled selected>Select category...</option>
+                                            <option value="Rent" selected>Rent</option>
+                                            <option value="Water">Water</option>
+                                            <option value="Electricity">Electricity</option>
+                                            <option value="Garbage">Garbage</option>
+                                            <option value="Penalty">Penalty</option>
+                                            <option value="Other">Other</option>
+                                            <option value="Refund">Refund</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Invoice Amount -->
+                                    <div class="col-12 col-md-6">
+                                        <label for="invoiceAmount" class="form-label small fw-semibold text-muted">Invoice Amount <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light text-muted fw-semibold">KES</span>
+                                            <input type="number" step="0.01" id="invoiceAmount" class="form-control" placeholder="15,000.00" value="25000.00" required>
+                                            <div class="invalid-feedback">Please enter a valid invoice amount.</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Due Date -->
+                                    <div class="col-12 col-md-4">
+                                        <label for="dueDate" class="form-label small fw-semibold text-muted">Due Date <span class="text-danger">*</span></label>
+                                        <input type="date" id="dueDate" class="form-control" required>
+                                        <div class="invalid-feedback">Please select a due date.</div>
+                                    </div>
+
+                                    <!-- Billing Period Start -->
+                                    <div class="col-12 col-md-4">
+                                        <label for="periodStart" class="form-label small fw-semibold text-muted">Billing Period Start <span class="text-muted fw-normal">(Optional)</span></label>
+                                        <input type="date" id="periodStart" class="form-control">
+                                    </div>
+
+                                    <!-- Billing Period End -->
+                                    <div class="col-12 col-md-4">
+                                        <label for="periodEnd" class="form-label small fw-semibold text-muted">Billing Period End <span class="text-muted fw-normal">(Optional)</span></label>
+                                        <input type="date" id="periodEnd" class="form-control">
+                                    </div>
+
+                                    <!-- Invoice Notes -->
+                                    <div class="col-12">
+                                        <label for="invoiceNotes" class="form-label small fw-semibold text-muted">Invoice Notes <span class="text-muted fw-normal">(Optional)</span></label>
+                                        <textarea id="invoiceNotes" class="form-control" rows="3" placeholder="Add any additional information about this invoice..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Invoice Status -->
+                        <div class="card rm-card border-0 shadow-sm mb-4">
+                            <div class="card-body p-4">
+                                <h5 class="card-title fw-bold text-dark mb-3">
+                                    <i class="fa-solid fa-sliders text-primary me-2"></i>Invoice Status
+                                </h5>
+                                <p class="text-muted small mb-3">Choose whether to save this invoice as a draft for later review or issue it immediately.</p>
+
+                                <div class="row g-3">
+                                    <!-- Option 1: Save as Draft -->
+                                    <div class="col-12 col-md-6">
+                                        <input type="radio" class="btn-check" name="invoiceStatus" id="statusDraft" value="Draft" autocomplete="off" checked>
+                                        <label class="btn rm-radio-card w-100 p-3 text-start h-100" for="statusDraft">
+                                            <div class="d-flex align-items-start gap-3">
+                                                <div class="rm-radio-icon bg-secondary-subtle text-secondary rounded-2 p-2">
+                                                    <i class="fa-solid fa-file-lines fa-lg"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="fw-bold text-dark d-block mb-1">Save as Draft</span>
+                                                    <small class="text-muted d-block">Save the invoice without issuing. You can review and edit it later before sending.</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <!-- Option 2: Issue Immediately -->
+                                    <div class="col-12 col-md-6">
+                                        <input type="radio" class="btn-check" name="invoiceStatus" id="statusIssued" value="Issued" autocomplete="off">
+                                        <label class="btn rm-radio-card w-100 p-3 text-start h-100" for="statusIssued">
+                                            <div class="d-flex align-items-start gap-3">
+                                                <div class="rm-radio-icon bg-primary-subtle text-primary rounded-2 p-2">
+                                                    <i class="fa-solid fa-paper-plane fa-lg"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="fw-bold text-dark d-block mb-1">Issue Immediately</span>
+                                                    <small class="text-muted d-block">Make the invoice active right away and available for tenant payment notifications.</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions Bottom -->
+                        <div class="d-flex flex-wrap align-items-center justify-content-end gap-3 mb-4">
+                            <button type="button" class="btn btn-light px-4 text-muted border">Cancel</button>
+                            <button type="submit" class="btn btn-primary px-4 d-inline-flex align-items-center gap-2">
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                <span>Create Invoice</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Sidebar Column (4 Columns on Desktop) -->
+                    <div class="col-12 col-lg-4">
+                        <div class="sticky-top rm-sticky-sidebar" style="top: 1.5rem; z-index: 10;">
+                            
+                            <!-- Invoice Summary Card -->
+                            <div class="card rm-card border-0 shadow-sm mb-4">
+                                <div class="card-header bg-white py-3 border-bottom">
+                                    <h5 class="card-title fw-bold text-dark mb-0 fs-6">
+                                        <i class="fa-solid fa-receipt text-primary me-2"></i>Invoice Summary
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Amount Highlight -->
+                                    <div class="text-center bg-light rounded-3 p-3 mb-3 border">
+                                        <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Total Amount</span>
+                                        <h2 id="summaryAmount" class="fw-bold text-primary mb-0">KES 25,000.00</h2>
+                                    </div>
+
+                                    <!-- Summary Details List -->
+                                    <ul class="list-unstyled mb-0 small">
+                                        <li class="d-flex justify-content-between py-2 border-bottom">
+                                            <span class="text-muted">Tenant:</span>
+                                            <span id="summaryTenant" class="fw-medium text-dark">John Kamau</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-2 border-bottom">
+                                            <span class="text-muted">Property & Unit:</span>
+                                            <span id="summaryPropertyUnit" class="fw-medium text-dark text-end">Sunrise Apartments (B12)</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-2 border-bottom">
+                                            <span class="text-muted">Category:</span>
+                                            <span id="summaryCategory" class="fw-medium text-dark"><span class="badge bg-light text-dark border">Rent</span></span>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-2 border-bottom">
+                                            <span class="text-muted">Due Date:</span>
+                                            <span id="summaryDueDate" class="fw-medium text-dark">2023-12-05</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-2">
+                                            <span class="text-muted">Billing Period:</span>
+                                            <span id="summaryPeriod" class="fw-medium text-dark text-end">Not specified</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Helper Card -->
+                            <div class="card rm-card border-0 shadow-sm bg-primary-subtle border-primary-subtle">
+                                <div class="card-body">
+                                    <h6 class="fw-bold text-primary mb-2">
+                                        <i class="fa-solid fa-circle-info me-1"></i>Before you create an invoice
+                                    </h6>
+                                    <ul class="text-muted small ps-3 mb-0">
+                                        <li class="mb-1">Verify the tenant and unit information carefully.</li>
+                                        <li class="mb-1">Confirm the correct invoice amount and category.</li>
+                                        <li class="mb-1">Check the due date and billing period dates.</li>
+                                        <li>Review all details before issuing or saving as a draft.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
-                    <div class="preview-row">
-                        <div class="preview-item-label">
-                            <div>
-                                <div>Deposit Balance</div>
-                                <div class="preview-item-sub">Deposit balance increased</div>
-                            </div>
-                        </div>
-                        <div class="preview-amount amount-increase">
-                            <i class="fa-solid fa-plus" aria-hidden="true"></i> KSh 5,000.00
-                        </div>
-                    </div>
-                </div>
-
-                <!-- F. Informational Notice -->
-                <div class="rm-info-notice">
-                    <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-                    <p>
-                        Creating a deposit transfers available credit into the tenant's deposit balance. The amount will no longer be available for normal invoice payments. You can apply the deposit to eligible invoices later, according to the system's deposit rules.
-                    </p>
-                </div>
-
-                <!-- G. Form Actions -->
-                <div class="form-actions">
-                    <a href="#" class="btn-cancel">Cancel</a>
-                    <button type="submit" class="btn-primary-rm">
-                        Create Deposit <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                    </button>
                 </div>
             </form>
+
         </div>
+    </main>
 
-    </div>
-
-    <!-- Bootstrap JS Bundle CDN -->
+    <!-- Bootstrap 5.3.2 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="try.js"></script>
 </body>
 </html>

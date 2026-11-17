@@ -41,10 +41,10 @@
                     <i class="fa-solid fa-file-invoice-dollar"></i>
                     <span>Generate Monthly Invoices</span>
                 </button>
-                <button type="button" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                <a href="{% url 'billing:invoice_create' %}" class="btn btn-primary d-inline-flex align-items-center gap-2">
                     <i class="fa-solid fa-plus"></i>
                     <span>Create Invoice</span>
-                </button>
+                </a>
             </div>
         </div>
 
@@ -103,7 +103,11 @@
 
                 
 
-                <form method="GET" class="row g-3">
+                <form 
+                    method="GET" 
+                    class="row g-3"
+                    id="invoiceFilterForm"
+                >
 
                     <!-- Search input -->
                     <div class="col-12 col-lg-4">
@@ -123,6 +127,14 @@
                                 class="form-control border-start-0 ps-0"
                                 placeholder="Search invoice number, tenant name, phone or ID..."
                                 value="{{ search_query }}"
+
+                                hx-get="{% url 'billing:invoice_list' %}" 
+                                hx-target="#invoice-table-card"
+                                hx-trigger="input changed delay:400ms"
+                                hx-include="#invoiceFilterForm"
+                                hx-push-url="true"
+                                hx-swap="outerHTML"
+
                             >
                         </div>
                     </div>
@@ -308,282 +320,9 @@
         </div>
 
         <!-- Invoice Table Card -->
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold text-dark fs-6">Invoice Records</h5>
-
-                <span class="badge bg-light text-muted border fw-normal">
-                    {{ paginator.count }} invoice{{ paginator.count|pluralize }}
-                </span>
-
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0 rm-invoice-table">
-                        <thead class="table-light text-muted text-uppercase fs-8">
-                            <tr>
-                                <th class="ps-3">Invoice Number</th>
-                                <th>Tenant / Unit</th>
-                                <th>Property</th>
-                                <th>Category</th>
-                                <th>Billing Period</th>
-                                <th>Due Date</th>
-                                <th>Amount</th>
-                                <th>Outstanding</th>
-                                <th>Payment Status</th>
-                                <th>Status</th>
-                                <th class="text-end pe-3">Actions</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {% for invoice in invoices %}
-
-                                <tr
-                                    {% if invoice.is_overdue %}
-                                        class="rm-row-overdue"
-                                    {% elif invoice.status == "CANCELLED" %}
-                                        class="text-muted"
-                                    {% endif %}
-                                >
-
-                                    <!-- Invoice Number -->
-                                    <td class="ps-3 fw-semibold text-primary">
-                                        {{ invoice.invoice_number }}
-                                    </td>
-
-                                    <!-- Tenant / Unit -->
-                                    <td>
-                                        <div class="fw-medium text-dark">
-                                            {{ invoice.tenancy.tenant }}
-                                        </div>
-
-                                        <div class="text-muted small">
-                                            {{ invoice.tenancy.unit }}
-                                        </div>
-                                    </td>
-
-                                    <!-- Property -->
-                                    <td class="text-muted">
-                                        {{ invoice.tenancy.unit.property.name }}
-                                    </td>
-
-                                    <!-- Category -->
-                                    <td>
-                                        <span class="badge bg-light text-dark border">
-                                            {{ invoice.get_category_display }}
-                                        </span>
-                                    </td>
-
-                                    <!-- Billing Period -->
-                                    <td class="text-muted small">
-                                        {{ invoice.billing_period_start|date:"d M Y" }}
-                                        -
-                                        {{ invoice.billing_period_end|date:"d M Y" }}
-                                    </td>
-
-                                    <!-- Due Date -->
-                                    <td class="
-                                        {% if invoice.is_overdue %}
-                                            text-danger fw-medium
-                                        {% else %}
-                                            text-muted
-                                        {% endif %}
-                                        small
-                                    ">
-                                        {{ invoice.due_date|date:"d M Y" }}
-                                    </td>
-
-                                    <!-- Invoice Amount -->
-                                    <td class="fw-semibold">
-                                        KSh {{ invoice.total_amount|floatformat:2 }}
-                                    </td>
-
-                                    <!-- Outstanding Amount -->
-                                    <td class="
-                                        fw-semibold
-                                        {% if invoice.outstanding_balance > 0 %}
-                                            text-danger
-                                        {% else %}
-                                            text-success
-                                        {% endif %}
-                                    ">
-                                        KSh {{ invoice.outstanding_balance|floatformat:2 }}
-                                    </td>
-
-                                    <!-- Payment Status -->
-                                    <td>
-                                        {% if invoice.payment_status == "UNPAID" %}
-                                            <span class="badge rm-badge-unpaid">
-                                                Unpaid
-                                            </span>
-
-                                        {% elif invoice.payment_status == "PARTIAL" %}
-                                            <span class="badge rm-badge-partial">
-                                                Partially Paid
-                                            </span>
-
-                                        {% elif invoice.payment_status == "PAID" %}
-                                            <span class="badge rm-badge-paid">
-                                                Paid
-                                            </span>
-
-                                        {% else %}
-                                            <span class="text-muted">—</span>
-                                        {% endif %}
-                                    </td>
-
-                                    <!-- Invoice Status -->
-                                    <td>
-                                        {% if invoice.status == "ISSUED" %}
-                                            <span class="badge rm-badge-issued">
-                                                Issued
-                                            </span>
-
-                                        {% elif invoice.status == "DRAFT" %}
-                                            <span class="badge rm-badge-draft">
-                                                Draft
-                                            </span>
-
-                                        {% elif invoice.status == "CANCELLED" %}
-                                            <span class="badge rm-badge-cancelled-status">
-                                                Cancelled
-                                            </span>
-                                        {% endif %}
-                                    </td>
-
-                                    <!-- Actions -->
-                                    <td class="text-end pe-3">
-                                        <div class="dropdown">
-
-                                            <button
-                                                class="btn btn-sm btn-light text-muted border-0"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                                            </button>
-
-                                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-
-                                                <li>
-                                                    <a class="dropdown-item py-2 small" href="#">
-                                                        <i class="fa-regular fa-eye me-2 text-muted"></i>
-                                                        View
-                                                    </a>
-                                                </li>
-
-                                                {% if invoice.status == "DRAFT" %}
-                                                    <li>
-                                                        <a class="dropdown-item py-2 small" href="#">
-                                                            <i class="fa-regular fa-pen-to-square me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a class="dropdown-item py-2 small" href="#">
-                                                            <i class="fa-solid fa-paper-plane me-2 text-muted"></i>
-                                                            Issue
-                                                        </a>
-                                                    </li>
-
-                                                    <li><hr class="dropdown-divider"></li>
-
-                                                    <li>
-                                                        <a class="dropdown-item py-2 small text-danger" href="#">
-                                                            <i class="fa-solid fa-trash-can me-2"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-
-                                                {% elif invoice.status == "ISSUED" %}
-                                                    <li>
-                                                        <a class="dropdown-item py-2 small" href="#">
-                                                            <i class="fa-regular fa-pen-to-square me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-
-                                                    <li><hr class="dropdown-divider"></li>
-
-                                                    <li>
-                                                        <a class="dropdown-item py-2 small text-danger" href="#">
-                                                            <i class="fa-solid fa-ban me-2"></i>
-                                                            Cancel
-                                                        </a>
-                                                    </li>
-                                                {% endif %}
-
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-                            {% empty %}
-
-                                <tr>
-                                    <td colspan="11" class="text-center py-5">
-
-                                        <div class="mb-3">
-                                            <i class="fa-solid fa-file-invoice-dollar fa-3x text-muted"></i>
-                                        </div>
-
-                                        <h6 class="fw-semibold text-dark">
-                                            No invoices found
-                                        </h6>
-
-                                        <p class="text-muted small mb-0">
-                                            There are no invoices matching your current filters.
-                                        </p>
-
-                                    </td>
-                                </tr>
-
-                            {% endfor %}
-                        </tbody>
-
-                    </table>
-                </div>
-            </div>
-            <!-- Pagination Footer -->
-            <div class="card-footer bg-white py-3 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-                <div class="d-flex align-items-center gap-2">
-                    <span class="text-muted small">
-                        Showing {{ page_obj.start_index }}–{{ page_obj.end_index }}
-                        of {{ paginator.count }} invoices
-                    </span>
-                    <select class="form-select form-select-sm w-auto">
-                        <option value="10">10</option>
-                        <option value="15" selected>15</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                    <span class="text-muted small">per page</span>
-                </div>
-                <nav aria-label="Invoice Table Pagination">
-                    <ul class="pagination pagination-sm mb-0">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">9</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+        {% include 'billing/invoices/partials/invoice_table.html' %}
 
     </div>
 </main>
 
-<!-- Bootstrap 5.3.2 JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

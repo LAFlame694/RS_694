@@ -1,0 +1,401 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Create Invoice - RentMaster{% endblock %}
+
+{% load static %}
+
+{% block extra_css %}
+<!-- Google Fonts: Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Bootstrap 5.3.2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome 6.4.2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'billing/css/create_invoice.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Main Content Wrapper -->
+<main class="rm-main-content">
+<div class="container-fluid px-4 py-4">
+
+    <!-- Page Heading & Breadcrumbs -->
+    <div class="d-flex flex-column mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Billing</a></li>
+                <a href="{% url 'billing:invoice_list' %}" class="text-decoration-none text-muted">Invoices</a>
+                <li class="breadcrumb-item active text-primary fw-medium" aria-current="page">Create Invoice</li>
+            </ol>
+        </nav>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+            <div>
+                <h1 class="h3 fw-bold text-dark mb-1">Create Invoice</h1>
+                <p class="text-muted mb-0">Create a new invoice for a tenant and manage its billing details.</p>
+            </div>
+            <div>
+                <a href="{% url 'billing:invoice_list' %}" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Back to Invoices</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Form Layout -->
+    <form 
+        id="createInvoiceForm" 
+        class="needs-validation" 
+        method="POST"
+        action="{% url 'billing:invoice_create' %}"
+        novalidate
+    >
+
+    {% csrf_token %}
+
+        <div class="row g-4">
+            
+            <!-- Main Form Column (8 Columns on Desktop) -->
+            <div class="col-12 col-lg-8">
+                
+                <!-- Card 1: Tenant and Property Information -->
+                <div class="card rm-card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold text-dark mb-3">
+                            <i class="fa-solid fa-user-tie text-primary me-2"></i>Tenant & Property Selection
+                        </h5>
+                        
+                        <div class="mb-3">
+                            <label for="tenancySelect" class="form-label small fw-semibold text-muted">Select Tenancy <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-search"></i></span>
+
+                                <select
+                                    id="tenancySelect"
+                                    name="tenancy"
+                                    class="form-select border-start-0 ps-0"
+                                    required
+                                >
+                                    <option value="">Select tenant and unit...</option>
+
+                                    {% for tenancy in tenancies %}
+                                        <option
+                                            value="{{ tenancy.pk }}"
+                                            data-tenant="{{ tenancy.tenant }}"
+                                            data-property="{{ tenancy.unit.property }}"
+                                            data-unit="{{ tenancy.unit }}"
+                                            data-type="{{ tenancy.unit.get_unit_type_display|default:tenancy.unit }}"
+                                            data-rent="{{ tenancy.rent_amount }}"
+                                            {% if form_data.tenancy == tenancy.pk|stringformat:"s" %}selected{% endif %}
+                                        >
+                                            {{ tenancy.tenant }} — {{ tenancy.unit.property }} — {{ tenancy.unit }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+
+                                <div class="invalid-feedback">Please select a tenancy.</div>
+                            </div>
+                        </div>
+
+                        <!-- Selected Tenancy Preview Box -->
+                        <div id="tenantPreview" class="rm-preview-box rounded-3 p-3 bg-light border d-none">
+                            <h6 class="text-uppercase fs-8 text-muted fw-bold mb-2">Selected Tenancy Details</h6>
+                            <div class="row g-2">
+                                <div class="col-6 col-md-4">
+                                    <small class="text-muted d-block">Tenant Name</small>
+                                    <span id="previewTenant" class="fw-medium text-dark">-</span>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <small class="text-muted d-block">Property Name</small>
+                                    <span id="previewProperty" class="fw-medium text-dark">-</span>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <small class="text-muted d-block">Unit Number</small>
+                                    <span id="previewUnit" class="fw-medium text-dark">-</span>
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <small class="text-muted d-block">Unit Type</small>
+                                    <span id="previewType" class="fw-medium text-dark">-</span>
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <small class="text-muted d-block">Standard Rent</small>
+                                    <span id="previewRent" class="fw-semibold text-primary">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Invoice Details -->
+                <div class="card rm-card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold text-dark mb-3">
+                            <i class="fa-solid fa-file-invoice-dollar text-primary me-2"></i>Invoice Details
+                        </h5>
+
+                        <div class="row g-3">
+                            <!-- Invoice Category -->
+                            <div class="col-12 col-md-6">
+                                <label for="invoiceCategory" class="form-label small fw-semibold text-muted">Invoice Category <span class="text-danger">*</span></label>
+
+                                <select
+                                    id="invoiceCategory"
+                                    name="category"
+                                    class="form-select"
+                                    required
+                                >
+                                    <option value="">Select category...</option>
+
+                                    {% for value, label in invoice_category_choices %}
+                                        <option
+                                            value="{{ value }}"
+                                            {% if form_data.category == value %}selected{% endif %}
+                                        >
+                                            {{ label }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+
+                            <!-- Invoice Amount -->
+                            <div class="col-12 col-md-6">
+                                <label for="invoiceAmount" class="form-label small fw-semibold text-muted">Invoice Amount <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light text-muted fw-semibold">KES</span>
+
+                                    <input 
+                                        type="number" 
+                                        step="0.01" 
+                                        min="0.01"
+                                        name="amount"
+                                        id="invoiceAmount" 
+                                        class="form-control" 
+                                        placeholder="15,000.00" 
+                                        value="{{ form_data.amount|default:'' }}" 
+                                        required
+                                    >
+
+                                    <div class="invalid-feedback">Please enter a valid invoice amount.</div>
+                                </div>
+                            </div>
+
+                            <!-- Due Date -->
+                            <div class="col-12 col-md-4">
+                                <label for="dueDate" class="form-label small fw-semibold text-muted">Due Date <span class="text-danger">*</span></label>
+
+                                <input 
+                                    type="date" 
+                                    id="dueDate" 
+                                    name="due_date"
+                                    class="form-control" 
+                                    value="{{ form_data.due_date|default:'' }}"
+                                    required
+                                >
+
+                                <div class="invalid-feedback">Please select a due date.</div>
+                            </div>
+
+                            <!-- Billing Period Start -->
+                            <div class="col-12 col-md-4">
+                                <label for="periodStart" class="form-label small fw-semibold text-muted">Billing Period Start <span class="text-muted fw-normal">(Optional)</span></label>
+                                
+                                <input 
+                                    type="date" 
+                                    id="periodStart" 
+                                    name="billing_period_start"
+                                    class="form-control"
+                                    value="{{ form_data.billing_period_start|default:'' }}"
+                                >
+
+                            </div>
+
+                            <!-- Billing Period End -->
+                            <div class="col-12 col-md-4">
+                                <label for="periodEnd" class="form-label small fw-semibold text-muted">Billing Period End <span class="text-muted fw-normal">(Optional)</span></label>
+
+                                <input 
+                                    type="date" 
+                                    id="periodEnd" 
+                                    name="billing_period_end"
+                                    class="form-control"
+                                    value="{{ form_data.billing_period_end|default:'' }}"
+                                >
+
+                            </div>
+
+                            <!-- Invoice Notes -->
+                            <div class="col-12">
+                                <label for="invoiceNotes" class="form-label small fw-semibold text-muted">Invoice Notes <span class="text-muted fw-normal">(Optional)</span></label>
+
+                                <textarea 
+                                    id="invoiceNotes" 
+                                    name="notes"
+                                    class="form-control"
+                                    rows="3" 
+                                    placeholder="Add any additional information about this invoice...">
+                                    {{ form_data.notes|default:'' }}
+                                </textarea>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Invoice Status -->
+                <div class="card rm-card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold text-dark mb-3">
+                            <i class="fa-solid fa-sliders text-primary me-2"></i>Invoice Status
+                        </h5>
+                        <p class="text-muted small mb-3">Choose whether to save this invoice as a draft for later review or issue it immediately.</p>
+
+                        <div class="row g-3">
+                            <!-- Option 1: Save as Draft -->
+                            <div class="col-12 col-md-6">
+                                <input 
+                                    type="radio" 
+                                    class="btn-check" 
+                                    name="status"
+                                    id="statusDraft" 
+                                    value="DRAFT" 
+                                    autocomplete="off" 
+                                    {% if form_data.status == "DRAFT" or not form_data.status %}checked{% endif %}
+                                >
+                                <label class="btn rm-radio-card w-100 p-3 text-start h-100" for="statusDraft">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="rm-radio-icon bg-secondary-subtle text-secondary rounded-2 p-2">
+                                            <i class="fa-solid fa-file-lines fa-lg"></i>
+                                        </div>
+                                        <div>
+                                            <span class="fw-bold text-dark d-block mb-1">Save as Draft</span>
+                                            <small class="text-muted d-block">Save the invoice without issuing. You can review and edit it later before sending.</small>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Option 2: Issue Immediately -->
+                            <div class="col-12 col-md-6">
+
+                                <input 
+                                    type="radio" 
+                                    class="btn-check" 
+                                    name="status" 
+                                    id="statusIssued" 
+                                    value="ISSUED" 
+                                    autocomplete="off"
+                                    {% if form_data.status == "ISSUED" %}checked{% endif %}
+                                >
+
+                                <label class="btn rm-radio-card w-100 p-3 text-start h-100" for="statusIssued">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="rm-radio-icon bg-primary-subtle text-primary rounded-2 p-2">
+                                            <i class="fa-solid fa-paper-plane fa-lg"></i>
+                                        </div>
+                                        <div>
+                                            <span class="fw-bold text-dark d-block mb-1">Issue Immediately</span>
+                                            <small class="text-muted d-block">Make the invoice active right away and available for tenant payment notifications.</small>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions Bottom -->
+                <div class="d-flex flex-wrap align-items-center justify-content-end gap-3 mb-4">
+                    <a
+                        href="{% url 'billing:invoice_list' %}"
+                        class="btn btn-light px-4 text-muted border"
+                    >
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-primary px-4 d-inline-flex align-items-center gap-2">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>Create Invoice</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Right Sidebar Column (4 Columns on Desktop) -->
+            <div class="col-12 col-lg-4">
+                <div class="sticky-top rm-sticky-sidebar" style="top: 1.5rem; z-index: 10;">
+                    
+                    <!-- Invoice Summary Card -->
+                    <div class="card rm-card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white py-3 border-bottom">
+                            <h5 class="card-title fw-bold text-dark mb-0 fs-6">
+                                <i class="fa-solid fa-receipt text-primary me-2"></i>Invoice Summary
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Amount Highlight -->
+                            <div class="text-center bg-light rounded-3 p-3 mb-3 border">
+                                <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Total Amount</span>
+                                <h2 id="summaryAmount" class="fw-bold text-primary mb-0">KES 25,000.00</h2>
+                            </div>
+
+                            <!-- Summary Details List -->
+                            <ul class="list-unstyled mb-0 small">
+                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                    <span class="text-muted">Tenant:</span>
+                                    <span id="summaryTenant" class="fw-medium text-dark">John Kamau</span>
+                                </li>
+                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                    <span class="text-muted">Property & Unit:</span>
+                                    <span id="summaryPropertyUnit" class="fw-medium text-dark text-end">Sunrise Apartments (B12)</span>
+                                </li>
+                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                    <span class="text-muted">Category:</span>
+                                    <span id="summaryCategory" class="fw-medium text-dark"><span class="badge bg-light text-dark border">Rent</span></span>
+                                </li>
+                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                    <span class="text-muted">Due Date:</span>
+                                    <span id="summaryDueDate" class="fw-medium text-dark">2023-12-05</span>
+                                </li>
+                                <li class="d-flex justify-content-between py-2">
+                                    <span class="text-muted">Billing Period:</span>
+                                    <span id="summaryPeriod" class="fw-medium text-dark text-end">Not specified</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Helper Card -->
+                    <div class="card rm-card border-0 shadow-sm bg-primary-subtle border-primary-subtle">
+                        <div class="card-body">
+                            <h6 class="fw-bold text-primary mb-2">
+                                <i class="fa-solid fa-circle-info me-1"></i>Before you create an invoice
+                            </h6>
+                            <ul class="text-muted small ps-3 mb-0">
+                                <li class="mb-1">Verify the tenant and unit information carefully.</li>
+                                <li class="mb-1">Confirm the correct invoice amount and category.</li>
+                                <li class="mb-1">Check the due date and billing period dates.</li>
+                                <li>Review all details before issuing or saving as a draft.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+</main>
+
+
+<!-- Custom JavaScript -->
+<script src="{% static 'billing/js/create_invoice.js' %}"></script>
+    
+{% endblock %}

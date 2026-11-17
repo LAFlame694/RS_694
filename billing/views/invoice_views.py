@@ -1,17 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.utils.dateparse import parse_date
+from django.db.models import Q
+from django.utils import timezone
+
+from decimal import Decimal, InvalidOperation
+
+from tenants.models import Tenancy
 
 from billing.choices import InvoiceStatus, InvoiceCategory
-from finance.choices import PaymentStatus
 from billing.services.invoice_services import (
     get_invoices_service,
     get_invoice_summary_service,
+    create_invoice_service,
 )
+
+from finance.services.tenant_access import get_accessible_tenants
+
 from properties.services.property_access import get_accessible_properties
 # Create your views here.
 
@@ -134,7 +143,6 @@ def invoice_list_view(request):
 
         # dropdown choices for filters
         "invoice_status_choices": InvoiceStatus.choices,
-        "payment_status_choices": PaymentStatus.choices,
         "invoice_category_choices": InvoiceCategory.choices,
 
         "search_query": search,
@@ -144,16 +152,184 @@ def invoice_list_view(request):
 
     }
 
+    # Return only the invoice table for HTMX requests.
+    if request.headers.get("HX-Request") == "true":
+        return render(
+            request,
+            "billing/invoices/partials/invoice_table.html",
+            context,
+        )
+
     return render(
         request,
         "billing/invoices/invoice_list.html",
         context,
     )
 
+# create_invoice_view()
+@login_required
+def create_invoice_view(request):
+    """
+    Create an invoice for an accessible active tenancy.
+    """
 
+    accessible_tenants = get_accessible_tenants(
+        user=request.user
+    )
+
+    today = timezone.localdate()
+
+    # Retrieve only currently active and accessible tenancies.
+    tenancies = (
+        Tenancy.objects
+        .filter(
+            tenant__in=accessible_tenants,
+            status="ACTIVE",
+            start_date__lte=today,
+        )
+        .filter(
+            Q(end_date__isnull=True) |
+            Q(end_date__gte=today)
+        )
+        .select_related(
+            "tenant",
+            "unit",
+            "unit__property",
+        )
+    )
+
+    context = {
+        "tenancies": tenancies,
+        "invoice_category_choices": InvoiceCategory.choices,
+        "invoice_status_choices": [
+            (InvoiceStatus.DRAFT, "Save as Draft"),
+            (InvoiceStatus.ISSUED, "Issue Immediately"),
+        ],
+    }
+
+    if request.method == "POST":
+
+        # Retrieve submitted form values.
+        tenancy_id = request.POST.get("tenancy")
+        category = request.POST.get("category")
+        amount = request.POST.get("amount")
+        due_date = request.POST.get("due_date")
+        billing_period_start = request.POST.get(
+            "billing_period_start"
+        )
+        billing_period_end = request.POST.get(
+            "billing_period_end"
+        )
+        notes = request.POST.get("notes", "").strip()
+        status = request.POST.get(
+            "status",
+            InvoiceStatus.DRAFT
+        )
+
+        # Preserve submitted values if validation fails.
+        context["form_data"] = request.POST
+
+        try:
+            # Retrieve the selected tenancy while enforcing access.
+            if not tenancy_id:
+                raise ValidationError(
+                    "Please select a tenancy."
+                )
+
+            try:
+                tenancy_id = int(tenancy_id)
+            except (ValueError, TypeError):
+                raise ValidationError(
+                    "Invalid tenancy selected."
+                )
+
+            tenancy = get_object_or_404(
+                tenancies,
+                pk=tenancy_id
+            )
+
+            # Validate the amount.
+            try:
+                amount = Decimal(amount)
+            except (InvalidOperation, TypeError, ValueError):
+                raise ValidationError(
+                    "Please enter a valid invoice amount."
+                )
+
+            if not amount.is_finite() or amount <= Decimal("0.00"):
+                raise ValidationError(
+                    "Invoice amount must be greater than zero."
+                )
+
+            # Parse the dates.
+            due_date = parse_date(due_date)
+
+            if due_date is None:
+                raise ValidationError(
+                    "Please provide a valid due date."
+                )
+
+            if billing_period_start:
+                billing_period_start = parse_date(
+                    billing_period_start
+                )
+
+                if billing_period_start is None:
+                    raise ValidationError(
+                        "Invalid billing period start date."
+                    )
+
+            if billing_period_end:
+                billing_period_end = parse_date(
+                    billing_period_end
+                )
+
+                if billing_period_end is None:
+                    raise ValidationError(
+                        "Invalid billing period end date."
+                    )
+
+            # Create the invoice through the service layer.
+            invoice = create_invoice_service(
+                tenancy=tenancy,
+                category=category,
+                amount=amount,
+                due_date=due_date,
+                created_by=request.user,
+                status=status,
+                billing_period_start=billing_period_start,
+                billing_period_end=billing_period_end,
+                notes=notes,
+            )
+
+            if invoice.status == InvoiceStatus.DRAFT:
+                messages.success(
+                    request,
+                    f"Invoice {invoice.invoice_number} "
+                    "was saved successfully as a draft."
+                )
+            else:
+                messages.success(
+                    request,
+                    f"Invoice {invoice.invoice_number} "
+                    "was created and issued successfully."
+                )
+
+            return redirect("billing:invoice_list")
+
+        except ValidationError as error:
+            messages.error(
+                request,
+                "; ".join(error.messages)
+            )
+
+    return render(
+        request,
+        "billing/invoices/create_invoice.html",
+        context,
+    )
 
 # invoice_detail_view()
-# create_invoice_view()
 # update_invoice_view()
 # issue_invoice_view()
 # cancel_invoice_view()

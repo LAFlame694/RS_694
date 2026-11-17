@@ -1,9 +1,14 @@
 from django.urls import path
-from billing.views.invoice_views import invoice_list_view
+
+from billing.views.invoice_views import (
+    invoice_list_view,
+    create_invoice_view,
+)
 
 app_name = "billing"
 
 # Create your urls here.
 urlpatterns = [
     path("invoices/", invoice_list_view, name="invoice_list"),
+    path("invoices/create/", create_invoice_view, name="invoice_create"),
 ]
