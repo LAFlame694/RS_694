@@ -1,4 +1,3 @@
-from random import choice
 from django.db import models, transaction
 from django.conf import settings
 from django.core.exceptions import ValidationError

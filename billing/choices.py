@@ -19,6 +19,8 @@ class InvoiceCategory(models.TextChoices):
     WATER = "WATER", "Water"
     ELECTRICITY = "ELECTRICITY", "Electricity"
     GARBAGE = "GARBAGE", "Garbage"
+    PARKING = "PARKING", "Parking Fee"
+    SECURITY = "SECURITY", "Security Fee"
     PENALTY = "PENALTY", "Penalty"
     OTHER = "OTHER", "Other"
     REFUND = "REFUND", "Refund"

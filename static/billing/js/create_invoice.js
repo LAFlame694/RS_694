@@ -64,14 +64,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form Client-side Validation (Bootstrap requirement)
     if (createInvoiceForm) {
         createInvoiceForm.addEventListener('submit', function(event) {
+
             if (!createInvoiceForm.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();
-            } else {
-                event.preventDefault();
-                alert('Frontend Demo: Invoice successfully validated and submitted!');
             }
+
             createInvoiceForm.classList.add('was-validated');
+
         }, false);
     }
 
@@ -145,16 +145,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function setDefaultDueDate() {
-        const today = new Date();
-        const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 5); // 5th of next month
-        const yyyy = nextMonth.getFullYear();
-        const mm = String(nextMonth.getMonth() + 1).padStart(2, '0');
-        const dd = String(nextMonth.getDate()).padStart(2, '0');
-        
-        if (dueDate) {
+
+        if (dueDate && !dueDate.value) {
+
+            const today = new Date();
+
+            const nextMonth = new Date(
+                today.getFullYear(),
+                today.getMonth() + 1,
+                5
+            );
+
+            const yyyy = nextMonth.getFullYear();
+            const mm = String(nextMonth.getMonth() + 1).padStart(2, '0');
+            const dd = String(nextMonth.getDate()).padStart(2, '0');
+
             dueDate.value = `${yyyy}-${mm}-${dd}`;
-            updateSummary();
         }
+
+        updateSummary();
     }
 
     function formatDateShort(dateString) {

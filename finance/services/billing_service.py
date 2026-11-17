@@ -5,9 +5,8 @@ from django.db.models import Q
 import logging
 
 from tenants.models import Tenancy
-from finance.choices import LedgerEntryCategory
 from billing.models import Invoice, RecurringCharge
-from billing.choices import InvoiceStatus
+from billing.choices import InvoiceStatus, InvoiceCategory
 from billing.services.invoice_services import create_invoice_service
 from accounts.utils import get_system_user
 
@@ -63,7 +62,7 @@ def generate_rent_invoices(today, system_user):
 
         invoice_exists = Invoice.objects.filter(
             ledger_account=ledger_account,
-            category=LedgerEntryCategory.RENT,
+            category=InvoiceCategory.RENT,
             billing_period_start=billing_start,
             billing_period_end=billing_end
         ).exists()
@@ -80,7 +79,7 @@ def generate_rent_invoices(today, system_user):
 
         create_invoice_service(
             tenancy=tenancy,
-            category=LedgerEntryCategory.RENT,
+            category=InvoiceCategory.RENT,
             amount=tenancy.rent_amount,
             issue_date=today,
             due_date=billing_end,
@@ -160,7 +159,7 @@ def generate_recurring_charge_invoices(today, system_user):
 
             create_invoice_service(
                 tenancy=tenancy,
-                category=LedgerEntryCategory.RENT,
+                category=InvoiceCategory.RENT,
                 amount=tenancy.rent_amount,
                 issue_date=today,
                 due_date=billing_end,
