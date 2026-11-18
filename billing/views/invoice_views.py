@@ -1,18 +1,22 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, PermissionDenied
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.utils.dateparse import parse_date
 from django.db.models import Q
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 
 from decimal import Decimal, InvalidOperation
+
+from accounts.choices import Role
 
 from tenants.models import Tenancy
 
 from billing.choices import InvoiceStatus, InvoiceCategory
+from billing.services.monthly_billing import generate_manual_monthly_billing
 from billing.services.invoice_services import (
     get_invoices_service,
     get_invoice_summary_service,
@@ -22,7 +26,69 @@ from billing.services.invoice_services import (
 from finance.services.tenant_access import get_accessible_tenants
 
 from properties.services.property_access import get_accessible_properties
+
 # Create your views here.
+
+@login_required
+@require_POST
+def generate_monthly_billing_view(request):
+
+    allowed_roles = [
+        Role.SYSTEM_ADMIN,
+        Role.LANDLORD,
+        Role.CARETAKER,
+    ]
+
+    if request.user.role not in allowed_roles:
+        raise PermissionDenied(
+            "You are not authorised to generate monthly invoices."
+        )
+
+    accessible_properties = get_accessible_properties(request.user)
+
+    # Check whether the user has any accessible properties.
+    if not accessible_properties.exists():
+        messages.warning(
+            request,
+            "There are no properties available for montlhy billing."
+        )
+
+        return redirect("billing:invoice_list")
+
+    try:
+        result = generate_manual_monthly_billing(
+            properties=accessible_properties,
+            triggered_by=request.user
+        )
+
+        total_created = result["total_created"]
+
+        if total_created > 0:
+            messages.success(
+                request,
+                (
+                    f"Monthly billing completed successfully. "
+                    f"{result['rent_invoices_created']} "
+                    f"recurring-charge invoices were generated."
+                )
+            )
+
+        else:
+            messages.info(
+                request,
+                "Monthly billing completed. No new invoices were generated. "
+                "Invoices may already exist for this billing period, "
+                "or recurring charges may not yet be due."
+            )
+
+    except Exception:
+        messages.error(
+            request,
+            "Monthly billing could not be completed. "
+            "Please try again or contact the administrator."
+        )
+
+    return redirect("billing:invoice_list")
 
 # invoice_list_view()
 @login_required
