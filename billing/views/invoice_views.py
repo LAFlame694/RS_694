@@ -21,6 +21,7 @@ from billing.services.invoice_services import (
     get_invoices_service,
     get_invoice_summary_service,
     create_invoice_service,
+    get_invoice_service,
 )
 
 from finance.services.tenant_access import get_accessible_tenants
@@ -28,6 +29,61 @@ from finance.services.tenant_access import get_accessible_tenants
 from properties.services.property_access import get_accessible_properties
 
 # Create your views here.
+
+# invoice_detail_view()
+@login_required
+def invoice_detail_view(request, invoice_id):
+
+    """
+    Display an invoice regardless of it's invoice status
+    or payment status.
+    """
+
+    try:
+        invoice = get_invoice_service(
+            user=request.user,
+            invoice_id=invoice_id
+        )
+
+    except ValidationError:
+        raise Http404("Invoice not found.")
+
+    payment_progress = Decimal("0.00")
+
+    if (
+        invoice.status == InvoiceStatus.ISSUED
+        and invoice.amount_paid > 0
+    ):
+        payment_progress = (
+            invoice.amount_paid / invoice.total_amount
+        ) * Decimal("100.00")
+
+        payment_progress = min(
+            max(payment_progress, Decimal("0.00")), 
+            Decimal("100.00"))
+
+    # calculate the number of overdue days
+    overdue_days = None
+
+    if invoice.is_overdue:
+        overdue_days = (
+            timezone.localdate() - invoice.due_date
+        ).days
+
+    ledger_entries = invoice.ledger_entries.all()
+
+    context = {
+        "invoice": invoice,
+        "ledger_entries": ledger_entries,
+        "payment_progress": payment_progress,
+        "overdue_days": overdue_days,
+    }
+
+    return render(
+        request,
+        "billing/invoices/view_invoice.html",
+        context
+    )
 
 @login_required
 @require_POST
@@ -395,7 +451,6 @@ def create_invoice_view(request):
         context,
     )
 
-# invoice_detail_view()
 # update_invoice_view()
 # issue_invoice_view()
 # cancel_invoice_view()

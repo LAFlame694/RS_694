@@ -1,114 +1,100 @@
-/* ==========================================================================
-   RentMaster Create Invoice CSS - try.css
-   ========================================================================== */
+/* --------------------------------------------------
+   RentMaster - Invoice Detail Standalone Stylesheet
+   Design: Modern SaaS Financial Application
+   Font: Inter
+   -------------------------------------------------- */
 
-/* --- 1. General Page Styling --- */
-body.rm-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8fafc;
+:root {
+    --bs-primary: #0d6efd;
+    --bs-primary-rgb: 13, 110, 253;
+    --primary-subtle: #cfe2ff;
+    --amber: #d97706;
+    --amber-subtle: #fef3c7;
+    --success-subtle: #d1e7dd;
+    --danger-subtle: #f8d7da;
+    --info-subtle: #cff4fc;
+}
+
+body.font-inter {
+    font-family: 'Inter', sans-serif !important;
+    background-color: #f8f9fa;
     color: #334155;
     -webkit-font-smoothing: antialiased;
 }
 
-.rm-main-content {
-    min-height: 100vh;
-    background-color: #f8fafc;
+.invoice-container {
+    max-width: 1100px;
 }
 
-/* Typography utilities */
-.fs-8 {
+/* Utility Font Sizes & Spacing */
+.x-small {
     font-size: 0.75rem;
 }
 
-/* --- 2. Cards & Containers --- */
-.rm-card {
-    border-radius: 0.75rem;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0 !important;
+.tracking-tight {
+    letter-spacing: -0.025em;
+}
+
+.tracking-wider {
+    letter-spacing: 0.05em;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+/* Custom Status and Badge Colors */
+.bg-amber-subtle {
+    background-color: var(--amber-subtle) !important;
+}
+
+.text-amber {
+    color: var(--amber) !important;
+}
+
+.border-amber-subtle {
+    border-color: #fde68a !important;
+}
+
+/* Cards & Layout */
+.card {
+    border-radius: 0.5rem;
     transition: box-shadow 0.2s ease;
 }
 
-.rm-card:hover {
-    box-shadow: 0 0.5rem 1rem rgba(15, 23, 42, 0.03) !important;
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.04) !important;
 }
 
-.rm-preview-box {
-    background-color: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
+/* Invoice Info List */
+.invoice-info-list li:last-child {
+    border-bottom: none !important;
 }
 
-/* --- 3. Form Controls & Inputs --- */
-.form-control,
-.form-select {
-    border-color: #cbd5e1;
-    font-size: 0.875rem;
-    border-radius: 0.5rem;
-    padding: 0.625rem 0.875rem;
+/* Tables */
+.table th {
+    font-weight: 600;
+    letter-spacing: 0.03em;
 }
 
-.form-control:focus,
-.form-select:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+.table td {
+    vertical-align: middle;
 }
 
-.input-group-text {
-    border-color: #cbd5e1;
-    border-radius: 0.5rem 0 0 0.5rem;
-}
-
-.input-group .form-control {
-    border-radius: 0 0.5rem 0.5rem 0;
-}
-
-/* --- 4. Selectable Radio Cards (Status) --- */
-.rm-radio-card {
-    border: 1px solid #cbd5e1 !important;
-    background-color: #ffffff;
-    border-radius: 0.75rem;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-.rm-radio-card:hover {
-    border-color: #94a3b8 !important;
-    background-color: #f8fafc;
-}
-
-/* Checked state styling for radio cards */
-.btn-check:checked + .rm-radio-card {
-    border-color: #2563eb !important;
-    background-color: #eff6ff !important;
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-}
-
-.rm-radio-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-/* --- 5. Sticky Sidebar Styling --- */
-@media (min-width: 992px) {
-    .rm-sticky-sidebar {
-        position: sticky;
-        top: 1.5rem;
+/* Print Stylesheet Adjustments */
+@media print {
+    body {
+        background-color: #ffffff !important;
     }
-}
-
-/* --- 6. Responsive Adjustments --- */
-@media (max-width: 991.98px) {
-    .container-fluid {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+    .invoice-container {
+        max-width: 100% !important;
+        padding: 0 !important;
     }
-}
-
-@media (max-width: 575.98px) {
-    h1.h3 {
-        font-size: 1.35rem;
+    .btn, button, .action-toolbar {
+        display: none !important;
+    }
+    .card {
+        border: none !important;
+        box-shadow: none !important;
     }
 }

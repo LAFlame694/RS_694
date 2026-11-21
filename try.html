@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Invoice - RentMaster</title>
+    <title>Invoice Details - RentMaster</title>
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,280 +15,309 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="try.css">
 </head>
-<body class="rm-body">
+<body class="bg-light font-inter py-4 py-md-5">
 
-    <!-- Main Content Wrapper -->
-    <main class="rm-main-content">
-        <div class="container-fluid px-4 py-4">
-
-            <!-- Page Heading & Breadcrumbs -->
-            <div class="d-flex flex-column mb-4">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-2">
-                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Billing</a></li>
-                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Invoices</a></li>
-                        <li class="breadcrumb-item active text-primary fw-medium" aria-current="page">Create Invoice</li>
+    <div class="container invoice-container">
+        
+        <!-- Main Page Header -->
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-start gap-3 mb-4">
+            <div>
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-2">
+                    <ol class="breadcrumb mb-0 small text-muted">
+                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-secondary">Billing</a></li>
+                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-secondary">Invoices</a></li>
+                        <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Invoice Details</li>
                     </ol>
                 </nav>
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
-                    <div>
-                        <h1 class="h3 fw-bold text-dark mb-1">Create Invoice</h1>
-                        <p class="text-muted mb-0">Create a new invoice for a tenant and manage its billing details.</p>
+                <!-- Title & Subtitle -->
+                <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
+                    <h1 class="h3 fw-bold text-dark mb-0">Invoice Details</h1>
+                    <span class="font-monospace fw-semibold text-primary bg-primary-subtle px-2 py-05 rounded fs-6">INV-2023-089</span>
+                </div>
+                <p class="text-muted small mb-0">View invoice information, payment progress, and financial activity.</p>
+            </div>
+
+            <!-- Action Area -->
+            <div class="d-flex flex-wrap align-items-center gap-2 action-toolbar">
+                <a href="#" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-1">
+                    <i class="fa-solid fa-arrow-left fa-xs"></i> Back to Invoices
+                </a>
+                <button type="button" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-1">
+                    <i class="fa-solid fa-download fa-xs"></i> Download PDF
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-1" onclick="window.print()">
+                    <i class="fa-solid fa-print fa-xs"></i> Print Invoice
+                </button>
+                <!-- Contextual Action Buttons (Issued State Example) -->
+                <button type="button" class="btn btn-outline-danger btn-sm d-inline-flex align-items-center gap-1">
+                    <i class="fa-solid fa-ban fa-xs"></i> Cancel Invoice
+                </button>
+            </div>
+        </div>
+
+        <!-- Invoice Status Section -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+                <div class="row align-items-center gy-3">
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center flex-wrap gap-3">
+                            <div class="status-group">
+                                <span class="text-muted x-small d-block mb-1 text-uppercase fw-bold tracking-wider">Invoice Status</span>
+                                <span class="badge bg-primary px-3 py-2 fs-6 fw-semibold text-uppercase">
+                                    <i class="fa-solid fa-file-circle-check me-1"></i> Issued
+                                </span>
+                            </div>
+                            <div class="vr text-muted opacity-25 d-none d-sm-block"></div>
+                            <div class="payment-status-group">
+                                <span class="text-muted x-small d-block mb-1 text-uppercase fw-bold tracking-wider">Payment Status</span>
+                                <span class="badge bg-amber-subtle text-amber px-3 py-2 fs-6 fw-semibold text-uppercase border border-amber-subtle">
+                                    <i class="fa-solid fa-clock-rotate-left me-1"></i> Partial
+                                </span>
+                            </div>
+                            <div class="overdue-group ms-auto">
+                                <span class="badge bg-danger-subtle text-danger px-2 py-1 small fw-medium">
+                                    <i class="fa-solid fa-triangle-exclamation me-1"></i> 3 Days Overdue
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <a href="#" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
-                            <i class="fa-solid fa-arrow-left"></i>
-                            <span>Back to Invoices</span>
-                        </a>
+                    <div class="col-md-5 text-md-end border-top border-md-top-0 pt-3 pt-md-0">
+                        <span class="text-muted small d-block">Outstanding Balance Due</span>
+                        <h2 class="text-danger fw-bold mb-0">KES 10,000.00</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Summary Section -->
+        <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="text-muted small fw-medium">Total Amount</span>
+                            <div class="icon-box bg-primary-subtle text-primary rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                <i class="fa-solid fa-coins fa-xs"></i>
+                            </div>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-0">KES 15,000.00</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="text-muted small fw-medium">Amount Paid</span>
+                            <div class="icon-box bg-success-subtle text-success rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                <i class="fa-solid fa-circle-check fa-xs"></i>
+                            </div>
+                        </div>
+                        <h4 class="fw-bold text-success mb-0">KES 5,000.00</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="text-muted small fw-medium">Outstanding Balance</span>
+                            <div class="icon-box bg-danger-subtle text-danger rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                <i class="fa-solid fa-scale-unbalanced fa-xs"></i>
+                            </div>
+                        </div>
+                        <h4 class="fw-bold text-danger mb-0">KES 10,000.00</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted small fw-medium">Payment Progress</span>
+                            <span class="small fw-bold text-dark">33.3%</span>
+                        </div>
+                        <div class="progress mb-2" style="height: 8px;">
+                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 33.3%;" aria-valuenow="33.3" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="text-muted x-small">Partially settled</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Section: Invoice Info & Tenant/Property Info -->
+        <div class="row g-4 mb-4">
+            <!-- Invoice Information -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h5 class="card-title fw-bold text-dark mb-0 fs-6">
+                            <i class="fa-solid fa-file-lines text-primary me-2"></i> Invoice Information
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0 invoice-info-list">
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span class="text-muted small">Invoice Number</span>
+                                <span class="fw-semibold font-monospace text-dark small">INV-2023-089</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span class="text-muted small">Invoice Category</span>
+                                <span class="fw-medium text-dark small">Monthly Rent</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span class="text-muted small">Invoice Status</span>
+                                <span class="badge bg-primary-subtle text-primary small fw-medium">Issued</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span class="text-muted small">Issue Date</span>
+                                <span class="fw-medium text-dark small">Oct 01, 2023</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span class="text-muted small">Due Date</span>
+                                <span class="fw-medium text-danger small">Oct 10, 2023</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span class="text-muted small">Billing Period Start</span>
+                                <span class="fw-medium text-dark small">Oct 01, 2023</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span class="text-muted small">Billing Period End</span>
+                                <span class="fw-medium text-dark small">Oct 31, 2023</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-2">
+                                <span class="text-muted small">Date Created</span>
+                                <span class="fw-medium text-dark small">Sep 28, 2023 14:22</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Main Form Layout -->
-            <form id="createInvoiceForm" class="needs-validation" novalidate>
-                <div class="row g-4">
-                    
-                    <!-- Main Form Column (8 Columns on Desktop) -->
-                    <div class="col-12 col-lg-8">
-                        
-                        <!-- Card 1: Tenant and Property Information -->
-                        <div class="card rm-card border-0 shadow-sm mb-4">
-                            <div class="card-body p-4">
-                                <h5 class="card-title fw-bold text-dark mb-3">
-                                    <i class="fa-solid fa-user-tie text-primary me-2"></i>Tenant & Property Selection
-                                </h5>
-                                
-                                <div class="mb-3">
-                                    <label for="tenancySelect" class="form-label small fw-semibold text-muted">Select Tenancy <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-search"></i></span>
-                                        <select id="tenancySelect" class="form-select border-start-0 ps-0" required>
-                                            <option value="" disabled selected>Search or select tenant/unit...</option>
-                                            <option value="john_kamau" data-tenant="John Kamau" data-property="Sunrise Apartments" data-unit="Unit B12" data-type="2 Bedroom Apartment" data-rent="KES 25,000.00">John Kamau — Sunrise Apartments — Unit B12</option>
-                                            <option value="sarah_mwangi" data-tenant="Sarah Mwangi" data-property="Westlands Court" data-unit="Unit 4A" data-type="1 Bedroom Studio" data-rent="KES 18,500.00">Sarah Mwangi — Westlands Court — Unit 4A</option>
-                                            <option value="david_kiprono" data-tenant="David Kiprono" data-property="Kilimani Heights" data-unit="Unit 7C" data-type="3 Bedroom Penthouse" data-rent="KES 65,000.00">David Kiprono — Kilimani Heights — Unit 7C</option>
-                                        </select>
-                                        <div class="invalid-feedback">Please select a tenancy.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Selected Tenancy Preview Box -->
-                                <div id="tenantPreview" class="rm-preview-box rounded-3 p-3 bg-light border d-none">
-                                    <h6 class="text-uppercase fs-8 text-muted fw-bold mb-2">Selected Tenancy Details</h6>
-                                    <div class="row g-2">
-                                        <div class="col-6 col-md-4">
-                                            <small class="text-muted d-block">Tenant Name</small>
-                                            <span id="previewTenant" class="fw-medium text-dark">-</span>
-                                        </div>
-                                        <div class="col-6 col-md-4">
-                                            <small class="text-muted d-block">Property Name</small>
-                                            <span id="previewProperty" class="fw-medium text-dark">-</span>
-                                        </div>
-                                        <div class="col-6 col-md-4">
-                                            <small class="text-muted d-block">Unit Number</small>
-                                            <span id="previewUnit" class="fw-medium text-dark">-</span>
-                                        </div>
-                                        <div class="col-6 col-md-6">
-                                            <small class="text-muted d-block">Unit Type</small>
-                                            <span id="previewType" class="fw-medium text-dark">-</span>
-                                        </div>
-                                        <div class="col-6 col-md-6">
-                                            <small class="text-muted d-block">Standard Rent</small>
-                                            <span id="previewRent" class="fw-semibold text-primary">-</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2: Invoice Details -->
-                        <div class="card rm-card border-0 shadow-sm mb-4">
-                            <div class="card-body p-4">
-                                <h5 class="card-title fw-bold text-dark mb-3">
-                                    <i class="fa-solid fa-file-invoice-dollar text-primary me-2"></i>Invoice Details
-                                </h5>
-
-                                <div class="row g-3">
-                                    <!-- Invoice Category -->
-                                    <div class="col-12 col-md-6">
-                                        <label for="invoiceCategory" class="form-label small fw-semibold text-muted">Invoice Category <span class="text-danger">*</span></label>
-                                        <select id="invoiceCategory" class="form-select" required>
-                                            <option value="" disabled selected>Select category...</option>
-                                            <option value="Rent" selected>Rent</option>
-                                            <option value="Water">Water</option>
-                                            <option value="Electricity">Electricity</option>
-                                            <option value="Garbage">Garbage</option>
-                                            <option value="Penalty">Penalty</option>
-                                            <option value="Other">Other</option>
-                                            <option value="Refund">Refund</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Invoice Amount -->
-                                    <div class="col-12 col-md-6">
-                                        <label for="invoiceAmount" class="form-label small fw-semibold text-muted">Invoice Amount <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-light text-muted fw-semibold">KES</span>
-                                            <input type="number" step="0.01" id="invoiceAmount" class="form-control" placeholder="15,000.00" value="25000.00" required>
-                                            <div class="invalid-feedback">Please enter a valid invoice amount.</div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Due Date -->
-                                    <div class="col-12 col-md-4">
-                                        <label for="dueDate" class="form-label small fw-semibold text-muted">Due Date <span class="text-danger">*</span></label>
-                                        <input type="date" id="dueDate" class="form-control" required>
-                                        <div class="invalid-feedback">Please select a due date.</div>
-                                    </div>
-
-                                    <!-- Billing Period Start -->
-                                    <div class="col-12 col-md-4">
-                                        <label for="periodStart" class="form-label small fw-semibold text-muted">Billing Period Start <span class="text-muted fw-normal">(Optional)</span></label>
-                                        <input type="date" id="periodStart" class="form-control">
-                                    </div>
-
-                                    <!-- Billing Period End -->
-                                    <div class="col-12 col-md-4">
-                                        <label for="periodEnd" class="form-label small fw-semibold text-muted">Billing Period End <span class="text-muted fw-normal">(Optional)</span></label>
-                                        <input type="date" id="periodEnd" class="form-control">
-                                    </div>
-
-                                    <!-- Invoice Notes -->
-                                    <div class="col-12">
-                                        <label for="invoiceNotes" class="form-label small fw-semibold text-muted">Invoice Notes <span class="text-muted fw-normal">(Optional)</span></label>
-                                        <textarea id="invoiceNotes" class="form-control" rows="3" placeholder="Add any additional information about this invoice..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 3: Invoice Status -->
-                        <div class="card rm-card border-0 shadow-sm mb-4">
-                            <div class="card-body p-4">
-                                <h5 class="card-title fw-bold text-dark mb-3">
-                                    <i class="fa-solid fa-sliders text-primary me-2"></i>Invoice Status
-                                </h5>
-                                <p class="text-muted small mb-3">Choose whether to save this invoice as a draft for later review or issue it immediately.</p>
-
-                                <div class="row g-3">
-                                    <!-- Option 1: Save as Draft -->
-                                    <div class="col-12 col-md-6">
-                                        <input type="radio" class="btn-check" name="invoiceStatus" id="statusDraft" value="Draft" autocomplete="off" checked>
-                                        <label class="btn rm-radio-card w-100 p-3 text-start h-100" for="statusDraft">
-                                            <div class="d-flex align-items-start gap-3">
-                                                <div class="rm-radio-icon bg-secondary-subtle text-secondary rounded-2 p-2">
-                                                    <i class="fa-solid fa-file-lines fa-lg"></i>
-                                                </div>
-                                                <div>
-                                                    <span class="fw-bold text-dark d-block mb-1">Save as Draft</span>
-                                                    <small class="text-muted d-block">Save the invoice without issuing. You can review and edit it later before sending.</small>
-                                                </div>
-                                            </div>
-                                        </label>
-                                    </div>
-
-                                    <!-- Option 2: Issue Immediately -->
-                                    <div class="col-12 col-md-6">
-                                        <input type="radio" class="btn-check" name="invoiceStatus" id="statusIssued" value="Issued" autocomplete="off">
-                                        <label class="btn rm-radio-card w-100 p-3 text-start h-100" for="statusIssued">
-                                            <div class="d-flex align-items-start gap-3">
-                                                <div class="rm-radio-icon bg-primary-subtle text-primary rounded-2 p-2">
-                                                    <i class="fa-solid fa-paper-plane fa-lg"></i>
-                                                </div>
-                                                <div>
-                                                    <span class="fw-bold text-dark d-block mb-1">Issue Immediately</span>
-                                                    <small class="text-muted d-block">Make the invoice active right away and available for tenant payment notifications.</small>
-                                                </div>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Form Actions Bottom -->
-                        <div class="d-flex flex-wrap align-items-center justify-content-end gap-3 mb-4">
-                            <button type="button" class="btn btn-light px-4 text-muted border">Cancel</button>
-                            <button type="submit" class="btn btn-primary px-4 d-inline-flex align-items-center gap-2">
-                                <i class="fa-solid fa-file-invoice-dollar"></i>
-                                <span>Create Invoice</span>
-                            </button>
-                        </div>
-
+            <!-- Tenant & Property Information -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h5 class="card-title fw-bold text-dark mb-0 fs-6">
+                            <i class="fa-solid fa-house-user text-primary me-2"></i> Tenant & Property Information
+                        </h5>
                     </div>
-
-                    <!-- Right Sidebar Column (4 Columns on Desktop) -->
-                    <div class="col-12 col-lg-4">
-                        <div class="sticky-top rm-sticky-sidebar" style="top: 1.5rem; z-index: 10;">
-                            
-                            <!-- Invoice Summary Card -->
-                            <div class="card rm-card border-0 shadow-sm mb-4">
-                                <div class="card-header bg-white py-3 border-bottom">
-                                    <h5 class="card-title fw-bold text-dark mb-0 fs-6">
-                                        <i class="fa-solid fa-receipt text-primary me-2"></i>Invoice Summary
-                                    </h5>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <h6 class="text-uppercase x-small fw-bold text-muted tracking-wider mb-2">Tenant Details</h6>
+                            <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                <div class="avatar-placeholder bg-secondary-subtle text-secondary rounded-circle d-flex align-items-center justify-content-center me-3 fw-bold" style="width: 42px; height: 42px;">
+                                    JO
                                 </div>
-                                <div class="card-body">
-                                    <!-- Amount Highlight -->
-                                    <div class="text-center bg-light rounded-3 p-3 mb-3 border">
-                                        <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Total Amount</span>
-                                        <h2 id="summaryAmount" class="fw-bold text-primary mb-0">KES 25,000.00</h2>
+                                <div>
+                                    <h6 class="fw-bold text-dark mb-1">James Omondi</h6>
+                                    <p class="text-muted small mb-0"><i class="fa-solid fa-phone me-1 fa-xs"></i> +254 712 345 678</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="text-uppercase x-small fw-bold text-muted tracking-wider mb-2">Property Details</h6>
+                            <div class="p-3 bg-light rounded-3">
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <span class="text-muted x-small d-block">Property Name</span>
+                                        <span class="fw-semibold text-dark small">Sunrise Apartments</span>
                                     </div>
-
-                                    <!-- Summary Details List -->
-                                    <ul class="list-unstyled mb-0 small">
-                                        <li class="d-flex justify-content-between py-2 border-bottom">
-                                            <span class="text-muted">Tenant:</span>
-                                            <span id="summaryTenant" class="fw-medium text-dark">John Kamau</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between py-2 border-bottom">
-                                            <span class="text-muted">Property & Unit:</span>
-                                            <span id="summaryPropertyUnit" class="fw-medium text-dark text-end">Sunrise Apartments (B12)</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between py-2 border-bottom">
-                                            <span class="text-muted">Category:</span>
-                                            <span id="summaryCategory" class="fw-medium text-dark"><span class="badge bg-light text-dark border">Rent</span></span>
-                                        </li>
-                                        <li class="d-flex justify-content-between py-2 border-bottom">
-                                            <span class="text-muted">Due Date:</span>
-                                            <span id="summaryDueDate" class="fw-medium text-dark">2023-12-05</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between py-2">
-                                            <span class="text-muted">Billing Period:</span>
-                                            <span id="summaryPeriod" class="fw-medium text-dark text-end">Not specified</span>
-                                        </li>
-                                    </ul>
+                                    <div class="col-6">
+                                        <span class="text-muted x-small d-block">Unit Number</span>
+                                        <span class="fw-semibold text-dark small">Unit 4B (Second Floor)</span>
+                                    </div>
+                                    <div class="col-6 mt-2">
+                                        <span class="text-muted x-small d-block">Unit Type</span>
+                                        <span class="fw-semibold text-dark small">2 Bedroom Executive</span>
+                                    </div>
+                                    <div class="col-6 mt-2">
+                                        <span class="text-muted x-small d-block">Location</span>
+                                        <span class="fw-semibold text-dark small">Kilimani, Nairobi</span>
+                                    </div>
                                 </div>
                             </div>
-
-                            <!-- Helper Card -->
-                            <div class="card rm-card border-0 shadow-sm bg-primary-subtle border-primary-subtle">
-                                <div class="card-body">
-                                    <h6 class="fw-bold text-primary mb-2">
-                                        <i class="fa-solid fa-circle-info me-1"></i>Before you create an invoice
-                                    </h6>
-                                    <ul class="text-muted small ps-3 mb-0">
-                                        <li class="mb-1">Verify the tenant and unit information carefully.</li>
-                                        <li class="mb-1">Confirm the correct invoice amount and category.</li>
-                                        <li class="mb-1">Check the due date and billing period dates.</li>
-                                        <li>Review all details before issuing or saving as a draft.</li>
-                                    </ul>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
-
                 </div>
-            </form>
-
+            </div>
         </div>
-    </main>
+
+        <!-- Financial Activity / Ledger Table -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                <h5 class="card-title fw-bold text-dark mb-0 fs-6">
+                    <i class="fa-solid fa-book-open text-primary me-2"></i> Financial Activity
+                </h5>
+                <span class="badge bg-light text-secondary border">3 Entries</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 text-nowrap">
+                        <thead class="table-light text-muted x-small fw-bold uppercase">
+                            <tr>
+                                <th class="py-3 px-3">Date</th>
+                                <th class="py-3 px-3">Transaction Description</th>
+                                <th class="py-3 px-3">Transaction Type</th>
+                                <th class="py-3 px-3">Reference</th>
+                                <th class="py-3 px-3 text-end">Amount (KES)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small">
+                            <tr>
+                                <td class="px-3 text-muted">Oct 01, 2023</td>
+                                <td class="px-3 fw-semibold text-dark">Monthly Rent Charge - October 2023</td>
+                                <td class="px-3"><span class="badge bg-primary-subtle text-primary fw-medium">Charge</span></td>
+                                <td class="px-3 font-monospace text-muted">INV-2023-089</td>
+                                <td class="px-3 text-end fw-semibold text-dark">15,000.00</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 text-muted">Oct 05, 2023</td>
+                                <td class="px-3 fw-semibold text-dark">M-Pesa Mobile Payment Allocation</td>
+                                <td class="px-3"><span class="badge bg-success-subtle text-success fw-medium">Payment</span></td>
+                                <td class="px-3 font-monospace text-muted">MPESA-QHJ9821K</td>
+                                <td class="px-3 text-end fw-semibold text-success">-5,000.00</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 text-muted">Oct 06, 2023</td>
+                                <td class="px-3 fw-semibold text-dark">Security Deposit Offset Credit Applied</td>
+                                <td class="px-3"><span class="badge bg-info-subtle text-info fw-medium">Credit</span></td>
+                                <td class="px-3 font-monospace text-muted">CR-DEP-012</td>
+                                <td class="px-3 text-end fw-semibold text-info">0.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invoice Notes -->
+        <div class="card border-0 shadow-sm mb-5">
+            <div class="card-header bg-white border-bottom py-3">
+                <h5 class="card-title fw-bold text-dark mb-0 fs-6">
+                    <i class="fa-solid fa-note-sticky text-primary me-2"></i> Invoice Notes
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="p-3 bg-light rounded-3 text-secondary small">
+                    <p class="mb-1 fw-medium text-dark">Manager Remark:</p>
+                    <p class="mb-0">Tenant requested a partial payment extension until the 15th of the month due to salary processing schedule adjustments. Approved by management.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Note -->
+        <div class="text-center text-muted small py-3">
+            &copy; 2023 RentMaster Property Management Systems. All rights reserved.
+        </div>
+
+    </div>
 
     <!-- Bootstrap 5.3.2 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JavaScript -->
+    <!-- Custom JS -->
     <script src="try.js"></script>
 </body>
 </html>

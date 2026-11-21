@@ -173,6 +173,34 @@ def update_draft_invoice_service(
 
     return invoice
 
+# retrieve a specific invoice by ID, ensuring the user has access.
+def get_invoice_service(*, user, invoice_id):
+
+    """
+    Retrieve a specific invoice by ID, ensuring the user has access.
+    """
+
+    accessible_tenants = get_accessible_tenants(user)
+
+    try:
+        invoice = Invoice.objects.filter(
+            pk=invoice_id,
+            tenancy__tenant__in=accessible_tenants,
+        ).select_related(
+            "tenancy",
+            "tenancy__tenant",
+            "tenancy__unit",
+            "tenancy__unit__property",
+            "ledger_account",
+            "created_by",
+        ).prefetch_related("ledger_entries").get()
+
+    except Invoice.DoesNotExist:
+        raise ValidationError("Invoice does not exist.")
+
+    return invoice
+
+# Retrieve invoices accessible to the user, with optional filtering and searching.
 def get_invoices_service(
         *,
         user,

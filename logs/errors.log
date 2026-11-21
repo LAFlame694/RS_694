@@ -106,3 +106,46 @@ Traceback (most recent call last):
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for 'tenant_deposit' with no arguments not found. 1 pattern(s) tried: ['finance/deposits/tenant/(?P<tenant_id>[0-9]+)/\\Z']
 2026-10-16 01:37:45,688 | ERROR | django.server | "POST /finance/deposits/create/2/ HTTP/1.1" 500 108535
+2026-11-19 00:27:39,480 | ERROR | django.request | Internal Server Error: /billing/invoices/generate-monthly/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: generate_manual_monthly_billing() takes 0 positional arguments but 1 was given
+2026-11-19 00:27:39,578 | ERROR | django.server | "POST /billing/invoices/generate-monthly/ HTTP/1.1" 500 76047
+2026-11-21 22:35:56,599 | ERROR | django.request | Internal Server Error: /billing/invoices/2/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 56, in invoice_detail_view
+    return render(
+        request,
+        "billing/invoices/invoice_detail.html",
+        context
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: billing/invoices/invoice_detail.html
+2026-11-21 22:35:56,691 | ERROR | django.server | "GET /billing/invoices/2/ HTTP/1.1" 500 100356
+2026-11-21 23:08:23,051 | ERROR | django.request | Internal Server Error: /billing/invoices/2/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 55, in invoice_detail_view
+    and invoice.amount > 0
+        ^^^^^^^^^^^^^^
+AttributeError: 'Invoice' object has no attribute 'amount'
+2026-11-21 23:08:23,180 | ERROR | django.server | "GET /billing/invoices/2/ HTTP/1.1" 500 84671
