@@ -169,26 +169,51 @@
 
                                                 {% if invoice.status == "DRAFT" %}
                                                     <li>
-                                                        <a class="dropdown-item py-2 small" href="#">
+                                                        <a 
+                                                            class="dropdown-item py-2 small" 
+                                                            href="{% url 'billing:edit_invoice' invoice.id %}"
+                                                        >
                                                             <i class="fa-regular fa-pen-to-square me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
 
                                                     <li>
-                                                        <a class="dropdown-item py-2 small" href="#">
-                                                            <i class="fa-solid fa-paper-plane me-2 text-muted"></i>
-                                                            Issue
-                                                        </a>
+                                                        <form
+                                                            method="POST"
+                                                            action="{% url 'billing:issue_invoice' invoice.id %}"
+                                                            onsubmit="return confirm('Are you sure you want to issue this invoice? Once issued, it will create a financial charge.');"
+                                                        >
+                                                            {% csrf_token %}
+
+                                                            <button
+                                                                type="submit"
+                                                                class="dropdown-item py-2 small"
+                                                            >
+                                                                <i class="fa-solid fa-paper-plane me-2 text-muted"></i>
+                                                                Issue
+                                                            </button>
+                                                        </form>
                                                     </li>
 
                                                     <li><hr class="dropdown-divider"></li>
 
                                                     <li>
-                                                        <a class="dropdown-item py-2 small text-danger" href="#">
-                                                            <i class="fa-solid fa-trash-can me-2"></i>
-                                                            Delete
-                                                        </a>
+                                                        <form
+                                                            method="POST"
+                                                            action="{% url 'billing:delete_invoice' invoice.id %}"
+                                                            onsubmit="return confirm('Are you sure you want to delete this draft invoice? This action cannot be undone.');"
+                                                        >
+                                                            {% csrf_token %}
+
+                                                            <button
+                                                                type="submit"
+                                                                class="dropdown-item py-2 small text-danger"
+                                                            >
+                                                                <i class="fa-solid fa-trash-can me-2"></i>
+                                                                Delete
+                                                            </button>
+                                                        </form>
                                                     </li>
 
                                                 {% elif invoice.status == "ISSUED" and invoice.payment_status == "UNPAID" %}
@@ -202,10 +227,21 @@
                                                     <li><hr class="dropdown-divider"></li>
 
                                                     <li>
-                                                        <a class="dropdown-item py-2 small text-danger" href="#">
-                                                            <i class="fa-solid fa-ban me-2"></i>
-                                                            Cancel
-                                                        </a>
+                                                        <form
+                                                            method="POST"
+                                                            action="{% url 'billing:cancel_invoice' invoice.id %}"
+                                                            onsubmit="return confirm('Are you sure you want to cancel this invoice? This will create a financial reversal entry.');"
+                                                        >
+                                                            {% csrf_token %}
+
+                                                            <button
+                                                                type="submit"
+                                                                class="dropdown-item py-2 small text-danger"
+                                                            >
+                                                                <i class="fa-solid fa-ban me-2"></i>
+                                                                Cancel
+                                                            </button>
+                                                        </form>
                                                     </li>
                                                 {% endif %}
 

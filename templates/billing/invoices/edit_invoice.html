@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>Fuck You</H1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label for="category">Invoice Category</label>
+        <select name="category" id="category" required>
+            {% for value, label in invoice_category_choices %}
+                <option
+                    value="{{ value }}"
+                    {% if form_data %}
+                        {% if form_data.category == value %}selected{% endif %}
+                    {% elif invoice.category == value %}
+                        selected
+                    {% endif %}
+                >
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="amount">Amount</label>
+        <input
+            type="number"
+            name="amount"
+            id="amount"
+            step="0.01"
+            min="0.01"
+            value="{% if form_data %}{{ form_data.amount }}{% else %}{{ invoice.total_amount }}{% endif %}"
+            required
+        >
+
+        <label for="due_date">Due Date</label>
+        <input
+            type="date"
+            name="due_date"
+            id="due_date"
+            value="{% if form_data %}{{ form_data.due_date }}{% else %}{{ invoice.due_date|date:'Y-m-d' }}{% endif %}"
+            required
+        >
+
+        <label for="billing_period_start">Billing Period Start</label>
+        <input
+            type="date"
+            name="billing_period_start"
+            id="billing_period_start"
+            value="{% if form_data %}{{ form_data.billing_period_start }}{% else %}{{ invoice.billing_period_start|date:'Y-m-d' }}{% endif %}"
+        >
+
+        <label for="billing_period_end">Billing Period End</label>
+        <input
+            type="date"
+            name="billing_period_end"
+            id="billing_period_end"
+            value="{% if form_data %}{{ form_data.billing_period_end }}{% else %}{{ invoice.billing_period_end|date:'Y-m-d' }}{% endif %}"
+        >
+
+        <label for="notes">Notes</label>
+        <textarea name="notes" id="notes">{% if form_data %}{{ form_data.notes }}{% else %}{{ invoice.notes }}{% endif %}</textarea>
+
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

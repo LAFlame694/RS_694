@@ -285,3 +285,24 @@
 2026-11-21 23:27:14,591 | INFO | billing | Monthly billing completed | Rent: 0 | Recurring: 0 | Total: 0
 2026-11-21 23:27:14,592 | INFO | billing | === Monthly billing job COMPLETED ===
 2026-11-21 23:27:14,599 | INFO | billing | Manual monthly billing completed | Triggered by: Landlord1 (LANDLORD) | Role: LANDLORD
+2026-11-23 08:13:28,861 | INFO | billing | Manual monthly billing initiated | Triggered by: Landlord1 (LANDLORD) | Role: LANDLORD
+2026-11-23 08:13:28,875 | INFO | billing | === Monthly billing job STARTED ===
+2026-11-23 08:13:28,894 | INFO | billing | Billing date: 2026-11-23
+2026-11-23 08:13:28,901 | INFO | billing | Generating RENT invoices for period 2026-11-01 to 2026-11-30
+2026-11-23 08:13:28,940 | INFO | billing | Found 2 active tenancies for rent billing
+2026-11-23 08:13:28,976 | INFO | billing | Invoice already exists for tenancy 1, category RENT
+2026-11-23 08:13:28,988 | INFO | billing | Invoice already exists for tenancy 2, category RENT
+2026-11-23 08:13:28,989 | INFO | billing | Starting recurring charge billing
+2026-11-23 08:13:28,995 | INFO | billing | Found 0 active recurring charges
+2026-11-23 08:13:29,006 | INFO | billing | Monthly billing completed | Rent: 0 | Recurring: 0 | Total: 0
+2026-11-23 08:13:29,007 | INFO | billing | === Monthly billing job COMPLETED ===
+2026-11-23 08:13:29,009 | INFO | billing | Manual monthly billing completed | Triggered by: Landlord1 (LANDLORD) | Role: LANDLORD
+2026-11-23 08:36:15,436 | INFO | billing | Draft invoice deleted | invoice_id=3 | invoice_number=INV-2026-0003 | deleted_by=3
+2026-11-23 09:06:23,021 | INFO | billing | Invoice created | invoice=4 | tenancy=1 | status=DRAFT
+2026-11-23 09:14:50,308 | INFO | billing | Invoice issued | invoice=4 | issued_by=3
+2026-11-23 09:14:50,328 | INFO | billing | Invoice issuance completed | invoice=4
+2026-11-23 09:16:22,629 | INFO | billing | Invoice created | invoice=5 | tenancy=2 | status=DRAFT
+2026-11-23 09:27:43,165 | INFO | billing | Invoice issued | invoice=5 | issued_by=3
+2026-11-23 09:27:43,185 | INFO | billing | Invoice issuance completed | invoice=5
+2026-11-23 09:28:48,398 | INFO | billing | Invoice cancelled | invoice=2 | cancelled_by=3
+2026-11-23 10:02:55,513 | INFO | billing | Invoice created | invoice=6 | tenancy=2 | status=DRAFT

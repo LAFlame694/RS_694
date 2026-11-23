@@ -79,7 +79,10 @@ class Invoice(models.Model):
                     "billing_period_start",
                     "billing_period_end"
                 ],
-                name="unique_invoice_per_charge_per_period"
+                condition=~models.Q(
+                    status=InvoiceStatus.CANCELLED
+                ),
+                name="unique_active_invoice_per_charge_per_period"
             )
         ]
 

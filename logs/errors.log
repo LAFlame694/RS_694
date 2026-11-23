@@ -149,3 +149,753 @@ Traceback (most recent call last):
         ^^^^^^^^^^^^^^
 AttributeError: 'Invoice' object has no attribute 'amount'
 2026-11-21 23:08:23,180 | ERROR | django.server | "GET /billing/invoices/2/ HTTP/1.1" 500 84671
+2026-11-23 08:35:36,724 | ERROR | django.request | Internal Server Error: /billing/invoices/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 320, in invoice_list_view
+    return render(
+        request,
+        "billing/invoices/invoice_list.html",
+        context,
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'invoice_delete' not found. 'invoice_delete' is not a valid view function or pattern name.
+2026-11-23 08:35:36,811 | ERROR | django.server | "GET /billing/invoices/?search=&property=&status=ALL&payment_status=&category=&billing_period_start=&billing_period_end= HTTP/1.1" 500 271028
+2026-11-23 09:06:36,144 | ERROR | django.request | Internal Server Error: /billing/invoices/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 355, in invoice_list_view
+    return render(
+        request,
+        "billing/invoices/invoice_list.html",
+        context,
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'invoice_issue' not found. 'invoice_issue' is not a valid view function or pattern name.
+2026-11-23 09:06:36,274 | ERROR | django.server | "GET /billing/invoices/?search=&property=&status=ALL&payment_status=&category=&billing_period_start=&billing_period_end= HTTP/1.1" 500 271887
+2026-11-23 09:07:12,499 | ERROR | django.request | Internal Server Error: /billing/invoices/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 355, in invoice_list_view
+    return render(
+        request,
+        "billing/invoices/invoice_list.html",
+        context,
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'issue_invoice' with arguments '(4,)' not found. 1 pattern(s) tried: ['billing/invoice/<int:invoice_id/issue/\\Z']
+2026-11-23 09:07:12,516 | ERROR | django.server | "GET /billing/invoices/?search=&property=&status=ALL&payment_status=&category=&billing_period_start=&billing_period_end= HTTP/1.1" 500 273797
+2026-11-23 09:07:39,921 | ERROR | django.request | Internal Server Error: /billing/invoices/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 355, in invoice_list_view
+    return render(
+        request,
+        "billing/invoices/invoice_list.html",
+        context,
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'issue_invoice' with arguments '(4,)' not found. 1 pattern(s) tried: ['billing/invoices/<int:invoice_id/issue/\\Z']
+2026-11-23 09:07:40,054 | ERROR | django.server | "GET /billing/invoices/?search=&property=&status=ALL&payment_status=&category=&billing_period_start=&billing_period_end= HTTP/1.1" 500 273810
+2026-11-23 09:11:40,199 | ERROR | django.request | Internal Server Error: /billing/invoices/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 355, in invoice_list_view
+    return render(
+        request,
+        "billing/invoices/invoice_list.html",
+        context,
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'issue_invoice' with arguments '(4,)' not found. 1 pattern(s) tried: ['billing/invoices/<int:invoice_id/issue/\\Z']
+2026-11-23 09:11:40,213 | ERROR | django.server | "GET /billing/invoices/?search=&property=&status=ALL&payment_status=&category=&billing_period_start=&billing_period_end= HTTP/1.1" 500 273673
+2026-11-23 09:12:55,655 | ERROR | django.request | Internal Server Error: /billing/invoices/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 355, in invoice_list_view
+    return render(
+        request,
+        "billing/invoices/invoice_list.html",
+        context,
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'issue_invoice' with arguments '(4,)' not found. 1 pattern(s) tried: ['billing/invoices/<int:invoice_id/issue/\\Z']
+2026-11-23 09:12:55,777 | ERROR | django.server | "GET /billing/invoices/?search=&property=&status=ALL&payment_status=&category=&billing_period_start=&billing_period_end= HTTP/1.1" 500 273810
+2026-11-23 09:51:26,676 | ERROR | django.request | Internal Server Error: /billing/invoices/create/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: billing_invoice.ledger_account_id, billing_invoice.category, billing_invoice.billing_period_start, billing_invoice.billing_period_end
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 592, in create_invoice_view
+    invoice = create_invoice_service(
+        tenancy=tenancy,
+    ...<7 lines>...
+        notes=notes,
+    )
+  File "C:\Program Files\Python315\Lib\contextlib.py", line 116, in inner
+    return func(*args, **kwds)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\services\invoice_services.py", line 392, in create_invoice_service
+    invoice = Invoice.objects.create(
+        tenancy=tenancy,
+    ...<9 lines>...
+        notes=notes
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 752, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\models.py", line 141, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 904, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 996, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1201, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\models\base.py", line 1253, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\models\query.py", line 2166, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1954, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: UNIQUE constraint failed: billing_invoice.ledger_account_id, billing_invoice.category, billing_invoice.billing_period_start, billing_invoice.billing_period_end
+2026-11-23 09:51:26,773 | ERROR | django.server | "POST /billing/invoices/create/ HTTP/1.1" 500 207585
+2026-11-23 10:03:14,174 | ERROR | django.request | Internal Server Error: /billing/invoices/
+Traceback (most recent call last):
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\exception.py", line 56, in inner
+    response = get_response(request)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\core\handlers\base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\billing\views\invoice_views.py", line 462, in invoice_list_view
+    return render(
+        request,
+        "billing/invoices/invoice_list.html",
+        context,
+    )
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\lilfl\OneDrive\Desktop\Projects\RS_694\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'invoice_edit' not found. 'invoice_edit' is not a valid view function or pattern name.
+2026-11-23 10:03:14,274 | ERROR | django.server | "GET /billing/invoices/?search=&property=&status=ALL&payment_status=&category=&billing_period_start=&billing_period_end= HTTP/1.1" 500 272313

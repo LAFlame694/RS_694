@@ -22,6 +22,10 @@ from billing.services.invoice_services import (
     get_invoice_summary_service,
     create_invoice_service,
     get_invoice_service,
+    delete_draft_invoice_service,
+    issue_invoice_service,
+    cancel_invoice_service,
+    update_draft_invoice_service
 )
 
 from finance.services.tenant_access import get_accessible_tenants
@@ -29,6 +33,179 @@ from finance.services.tenant_access import get_accessible_tenants
 from properties.services.property_access import get_accessible_properties
 
 # Create your views here.
+
+# update_draft_invoice_view()
+@login_required
+def update_draft_invoice_view(request, invoice_id):
+    """
+    Display and update an accessible draft invoice.
+    """
+
+    try:
+        invoice = get_invoice_service(
+            user=request.user,
+            invoice_id=invoice_id
+        )
+    except ValidationError:
+        raise Http404("Invoice not found.")
+
+    if request.method == "POST":
+
+        # Read the submitted form values.
+        category = request.POST.get("category")
+        amount = request.POST.get("amount")
+        due_date = parse_date(request.POST.get("due_date"))
+
+        billing_period_start = parse_date(
+            request.POST.get("billing_period_start") or ""
+        )
+
+        billing_period_end = parse_date(
+            request.POST.get("billing_period_end") or ""
+        )
+
+        notes = request.POST.get("notes", "")
+
+        try:
+            updated_invoice = update_draft_invoice_service(
+                invoice=invoice,
+                updated_by=request.user,
+                category=category,
+                amount=amount,
+                due_date=due_date,
+                billing_period_start=billing_period_start,
+                billing_period_end=billing_period_end,
+                notes=notes,
+            )
+
+            messages.success(
+                request,
+                f"Invoice {updated_invoice.invoice_number} "
+                "was updated successfully."
+            )
+
+            return redirect("billing:invoice_list")
+
+        except ValidationError as error:
+            messages.error(
+                request,
+                "; ".join(error.messages)
+            )
+
+    context = {
+        "invoice": invoice,
+        "form_data": request.POST if request.method == "POST" else None,
+    }
+
+    return render(
+        request,
+        "billing/invoices/edit_invoice.html",
+        context
+    )
+
+# cancel_invoice_view()
+@login_required
+@require_POST
+def cancel_invoice_view(request, invoice_id):
+    """
+    Cancel an accessible issued invoice.
+    """
+
+    try:
+        # Retrieve the invoice.
+        invoice = get_invoice_service(
+            user=request.user,
+            invoice_id=invoice_id
+        )
+
+        invoice_number = invoice.invoice_number
+
+        # Cancel the invoice.
+        cancel_invoice_service(
+            invoice=invoice,
+            cancelled_by=request.user
+        )
+
+        messages.success(
+            request,
+            f"Invoice {invoice_number} was cancelled successfully."
+        )
+
+    except ValidationError as error:
+        messages.error(
+            request,
+            "; ".join(error.messages)
+        )
+
+    return redirect("billing:invoice_list")
+
+# issue_invoice_view()
+@login_required
+@require_POST
+def issue_invoice_view(request, invoice_id):
+
+    # issue an accessible draft invoice
+    try:
+        # retrieve the invoice
+        invoice = get_invoice_service(
+            user=request.user,
+            invoice_id=invoice_id
+        )
+
+        invoice_number = invoice.invoice_number
+
+        # issue the invoice
+        issue_invoice_service(
+            invoice=invoice,
+            issued_by=request.user
+        )
+
+        messages.success(
+            request,
+            f"Invoice {invoice_number} was issued successfully."
+        )
+
+    except ValidationError as error:
+        messages.error(
+            request,
+            "; ".join(error.messages)
+        )
+
+    return redirect("billing:invoice_list")
+
+# delete_draft_invoice_view()
+@login_required
+@require_POST
+def delete_draft_invoice_view(request, invoice_id):
+
+    try:
+
+        # retrieve the invoice while enforcing access and status checks
+        invoice = get_invoice_service(
+            user=request.user,
+            invoice_id=invoice_id
+        )
+
+        invoice_number = invoice.invoice_number
+
+        delete_draft_invoice_service(
+            invoice=invoice,
+            deleted_by=request.user
+        )
+
+        messages.success(
+            request,
+            f"Draft invoice {invoice_number} was deleted successfully."
+        )
+
+    except ValidationError as error:
+        messages.error(
+            request,
+            "; ".join(error.messages)
+        )
+
+    return redirect("billing:invoice_list")
+
 
 # invoice_detail_view()
 @login_required
@@ -450,18 +627,3 @@ def create_invoice_view(request):
         "billing/invoices/create_invoice.html",
         context,
     )
-
-# update_invoice_view()
-# issue_invoice_view()
-# cancel_invoice_view()
-# delete_invoice_view()
-
-
-# ==========================================
-# BILLING PERIOD / MONTHLY BILLING VIEWS
-# ==========================================
-
-
-# ==========================================
-# OTHER BILLING VIEWS
-# ==========================================
