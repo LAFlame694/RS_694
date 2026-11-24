@@ -324,14 +324,10 @@ def apply_deposit_to_invoice(
 
     if invoice.amount_paid >= invoice.total_amount:
         invoice.amount_paid = invoice.total_amount
-        invoice.status = InvoiceStatus.PAID
-    else:
-        invoice.status = InvoiceStatus.PARTIAL
 
     invoice.save(
         update_fields=[
             "amount_paid",
-            "status",
         ]
     )
 

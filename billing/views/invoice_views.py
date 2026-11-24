@@ -95,6 +95,7 @@ def update_draft_invoice_view(request, invoice_id):
     context = {
         "invoice": invoice,
         "form_data": request.POST if request.method == "POST" else None,
+        "invoice_category_choices": InvoiceCategory.choices,
     }
 
     return render(
@@ -476,10 +477,14 @@ def create_invoice_view(request):
         user=request.user
     )
 
+    properties = get_accessible_properties(
+        request.user
+    )
+
     today = timezone.localdate()
 
     # Retrieve only currently active and accessible tenancies.
-    tenancies = (
+    active_tenancies = (
         Tenancy.objects
         .filter(
             tenant__in=accessible_tenants,
@@ -497,12 +502,62 @@ def create_invoice_view(request):
         )
     )
 
+    # Read filters from GET on the initial request.
+    # On POST, read them from the hidden form fields.
+    filter_data = (
+        request.POST
+        if request.method == "POST"
+        else request.GET
+    )
+
+    property_id = filter_data.get("property", "").strip()
+    search_query = filter_data.get("search", "").strip()
+
+    # start with all accessible active tenancies
+    tenancies = active_tenancies
+
+    # filter by property
+    if property_id:
+        try:
+            property_id = int(property_id)
+        except (ValueError, TypeError):
+            raise Http404("Invalid property.")
+
+        if not properties.filter(pk=property_id).exists():
+            raise Http404("Property not found.")
+
+        tenancies = tenancies.filter(
+            unit__property_id=property_id
+        )
+
+    # search by tenant name, phone number or unit number.
+    if search_query:
+        search_terms = search_query.split()
+
+        for term in search_terms:
+            tenancies = tenancies.filter(
+                Q(tenant__first_name__icontains=term) |
+                Q(tenant__last_name__icontains=term) |
+                Q(tenant__phone_number__icontains=term) |
+                Q(unit__unit_number__icontains=term)
+            )
+
+    # keep results consistently ordered.
+    tenancies = tenancies.order_by(
+        "tenant__first_name",
+        "tenant__last_name",
+        "unit__unit_number",
+    )
+
     context = {
         "tenancies": tenancies,
+        "properties": properties,
+        "selected_property": str(property_id) if property_id else "",
+        "search_query": search_query,
         "invoice_category_choices": InvoiceCategory.choices,
-        "invoice_status_choices": [
+        "invoices_status_choices": [
             (InvoiceStatus.DRAFT, "Save as Draft"),
-            (InvoiceStatus.ISSUED, "Issue Immediately"),
+            (InvoiceStatus.ISSUED, "Issue Immediately")
         ],
     }
 

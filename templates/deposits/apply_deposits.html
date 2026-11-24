@@ -1,0 +1,331 @@
+
+{% extends "dashboard/base_dashboard.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Apply Deposit - RentMaster{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <!-- Page Heading -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <div>
+            <h3 class="fw-bold mb-1">Apply Deposit</h3>
+            <p class="text-muted mb-0">
+                Use the tenant's available deposit to settle outstanding invoices.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'finance:tenant_deposit' tenant.id %}"
+            class="btn btn-outline-secondary"
+        >
+            <i class="fas fa-arrow-left me-2"></i>
+            Back to Deposits
+        </a>
+    </div>
+
+    <!-- Tenant Information -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h5 class="fw-bold mb-3">Tenant Information</h5>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Tenant</small>
+                    <strong>
+                        {{ tenant.first_name }} {{ tenant.last_name }}
+                    </strong>
+                </div>
+
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Property</small>
+                    <strong>{{ tenancy.unit.property.name }}</strong>
+                </div>
+
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Unit</small>
+                    <strong>{{ tenancy.unit.unit_number }}</strong>
+                </div>
+
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Account Number</small>
+                    <strong>{{ ledger_account.account_number }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Overview -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <small class="text-muted d-block mb-2">
+                        Available Deposit
+                    </small>
+
+                    <h3 class="fw-bold text-success mb-0">
+                        KSh {{ available_deposit|floatformat:2|intcomma }}
+                    </h3>
+
+                    <small class="text-muted">
+                        Funds available for invoice settlement
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <small class="text-muted d-block mb-2">
+                        Available Credit
+                    </small>
+
+                    <h3 class="fw-bold text-primary mb-0">
+                        KSh {{ available_credit|floatformat:2|intcomma }}
+                    </h3>
+
+                    <small class="text-muted">
+                        Normal tenant credit balance
+                    </small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Outstanding Invoices -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white border-0 p-4 pb-2">
+            <h5 class="fw-bold mb-1">Outstanding Invoices</h5>
+            <p class="text-muted small mb-0">
+                Select an invoice to apply deposit funds.
+            </p>
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Invoice</th>
+                            <th>Category</th>
+                            <th>Due Date</th>
+                            <th>Total Amount</th>
+                            <th>Amount Paid</th>
+                            <th>Outstanding</th>
+                            <th class="text-end pe-4">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for invoice in invoices %}
+
+                            <tr>
+                                <td class="ps-4 fw-semibold">
+                                    {{ invoice.invoice_number }}
+                                </td>
+
+                                <td>
+                                    {{ invoice.get_category_display }}
+                                </td>
+
+                                <td>
+                                    {{ invoice.due_date|date:"d M Y" }}
+                                </td>
+
+                                <td>
+                                    KSh {{ invoice.total_amount|floatformat:2|intcomma }}
+                                </td>
+
+                                <td>
+                                    KSh {{ invoice.amount_paid|floatformat:2|intcomma }}
+                                </td>
+
+                                <td class="fw-semibold text-danger">
+                                    KSh {{ invoice.outstanding_balance|floatformat:2|intcomma }}
+                                </td>
+
+                                <td class="text-end pe-4">
+
+                                    {% if available_deposit > 0 %}
+
+                                        <a
+                                            href="?invoice={{ invoice.pk }}"
+                                            class="btn btn-sm btn-outline-primary"
+                                        >
+                                            <i class="fas fa-money-bill-transfer me-1"></i>
+                                            Apply Deposit
+                                        </a>
+
+                                    {% else %}
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-outline-secondary"
+                                            disabled
+                                        >
+                                            No Deposit Available
+                                        </button>
+
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+
+                        {% empty %}
+
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <i class="fas fa-file-invoice-dollar fa-2x text-muted mb-3"></i>
+
+                                    <h6 class="fw-bold">
+                                        No Outstanding Invoices
+                                    </h6>
+
+                                    <p class="text-muted small mb-0">
+                                        This tenant currently has no eligible invoices for deposit application.
+                                    </p>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Selected Invoice Application Form -->
+    {% if selected_invoice %}
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+
+                <h5 class="fw-bold mb-1">Confirm Deposit Application</h5>
+
+                <p class="text-muted small mb-4">
+                    Enter the amount you want to apply to
+                    {{ selected_invoice.invoice_number }}.
+                </p>
+
+                <div class="row g-3 mb-4">
+
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">
+                            Invoice Total
+                        </small>
+                        <strong>
+                            KSh {{ selected_invoice.total_amount|floatformat:2|intcomma }}
+                        </strong>
+                    </div>
+
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">
+                            Amount Already Paid
+                        </small>
+                        <strong>
+                            KSh {{ selected_invoice.amount_paid|floatformat:2|intcomma }}
+                        </strong>
+                    </div>
+
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">
+                            Outstanding Balance
+                        </small>
+                        <strong class="text-danger">
+                            KSh {{ selected_invoice.outstanding_balance|floatformat:2|intcomma }}
+                        </strong>
+                    </div>
+
+                </div>
+
+                {% if available_deposit > 0 %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="invoice_id"
+                            value="{{ selected_invoice.pk }}"
+                        >
+
+                        <div class="mb-3">
+                            <label
+                                for="amount"
+                                class="form-label fw-semibold"
+                            >
+                                Amount to Apply (KSh)
+                            </label>
+
+                            <input
+                                type="number"
+                                name="amount"
+                                id="amount"
+                                class="form-control"
+                                min="0.01"
+                                max="{% if available_deposit < selected_invoice.outstanding_balance %}{{ available_deposit }}{% else %}{{ selected_invoice.outstanding_balance }}{% endif %}"
+                                step="0.01"
+                                value="{{ amount }}"
+                                placeholder="Enter amount"
+                                required
+                            >
+
+                            <small class="text-muted">
+                                Maximum applicable amount:
+                                KSh
+                                {% if available_deposit < selected_invoice.outstanding_balance %}
+                                    {{ available_deposit|floatformat:2|intcomma }}
+                                {% else %}
+                                    {{ selected_invoice.outstanding_balance|floatformat:2|intcomma }}
+                                {% endif %}
+                            </small>
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-2">
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                <i class="fas fa-check-circle me-2"></i>
+                                Confirm Application
+                            </button>
+
+                            <a
+                                href="{% url 'finance:apply_deposit' tenant.id %}"
+                                class="btn btn-outline-secondary"
+                            >
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+
+                {% else %}
+
+                    <div class="alert alert-warning mb-0">
+                        There is no available deposit balance to apply.
+                    </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

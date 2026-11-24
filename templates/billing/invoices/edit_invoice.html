@@ -1,72 +1,252 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <H1>Fuck You</H1>
+{% extends 'dashboard/base_dashboard.html' %}
 
-    <form method="POST">
-        {% csrf_token %}
+{% block title %}Edit Invoice - RentMaster{% endblock %}
 
-        <label for="category">Invoice Category</label>
-        <select name="category" id="category" required>
-            {% for value, label in invoice_category_choices %}
-                <option
-                    value="{{ value }}"
-                    {% if form_data %}
-                        {% if form_data.category == value %}selected{% endif %}
-                    {% elif invoice.category == value %}
-                        selected
-                    {% endif %}
-                >
-                    {{ label }}
-                </option>
-            {% endfor %}
-        </select>
+{% load static %}
 
-        <label for="amount">Amount</label>
-        <input
-            type="number"
-            name="amount"
-            id="amount"
-            step="0.01"
-            min="0.01"
-            value="{% if form_data %}{{ form_data.amount }}{% else %}{{ invoice.total_amount }}{% endif %}"
-            required
-        >
+{% block extra_css %}
+<!-- Google Fonts - Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Bootstrap 5.3.2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome 6.4.2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<!-- Custom CSS for Search Tenant -->
+<link rel="stylesheet" href="{% static 'billing/css/edit_invoice.css' %}" />
+{% endblock %}
 
-        <label for="due_date">Due Date</label>
-        <input
-            type="date"
-            name="due_date"
-            id="due_date"
-            value="{% if form_data %}{{ form_data.due_date }}{% else %}{{ invoice.due_date|date:'Y-m-d' }}{% endif %}"
-            required
-        >
+{% block content %}
+<div class="edit-invoice-container">
+    
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Invoices</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Draft</li>
+                </ol>
+            </nav>
+            <h1 class="h3 page-header-title mb-0">Edit Invoice</h1>
+        </div>
+        <div class="mt-3 mt-md-0">
+            <a href="#" class="btn btn-outline-secondary btn-sm">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Invoices
+            </a>
+        </div>
+    </div>
 
-        <label for="billing_period_start">Billing Period Start</label>
-        <input
-            type="date"
-            name="billing_period_start"
-            id="billing_period_start"
-            value="{% if form_data %}{{ form_data.billing_period_start }}{% else %}{{ invoice.billing_period_start|date:'Y-m-d' }}{% endif %}"
-        >
+    <!-- Status & Information Alert -->
+    <div class="alert alert-info-custom alert-dismissible fade show mb-4 d-flex align-items-start" role="alert">
+        <i class="fa-solid fa-circle-info mt-1 me-2 flex-shrink-0"></i>
+        <div>
+            <strong>Draft Invoice Mode:</strong> This invoice has not yet been issued to the tenant. Editing is fully available because no ledger entries are currently associated with this document.
+        </div>
+    </div>
 
-        <label for="billing_period_end">Billing Period End</label>
-        <input
-            type="date"
-            name="billing_period_end"
-            id="billing_period_end"
-            value="{% if form_data %}{{ form_data.billing_period_end }}{% else %}{{ invoice.billing_period_end|date:'Y-m-d' }}{% endif %}"
-        >
+    <!-- Invoice Read-Only Overview Card -->
+    <div class="card card-custom mb-4">
+        <div class="card-body p-4">
+            <h6 class="text-uppercase text-muted fs-7 fw-bold mb-3">Invoice Information <span class="text-muted fw-normal font-monospace">(Read-Only)</span></h6>
+            
+            <div class="row g-3">
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="info-label">Invoice Number</div>
+                    <div class="info-value font-monospace text-primary">{{ invoice.invoice_number }}</div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="info-label">Status</div>
+                    <div><span class="badge badge-draft px-2 py-1">{{ invoice.status }}</span></div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="info-label">Issue Date</div>
+                    <div class="info-value">{{ invoice.issue_date }}</div>
+                </div>
+                <div class="col-6 col-md-6 col-lg-3">
+                    <div class="info-label">Tenant Name</div>
+                    <div class="info-value">
+                        {{ invoice.tenancy.tenant.first_name }}
+                        {{ invoice.tenancy.tenant.last_name }}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="info-label">Property / Unit</div>
+                    <div class="info-value">{{ invoice.tenancy.unit.property.name }} /<span class="text-muted"> ({{ invoice.tenancy.unit.unit_number }})</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <label for="notes">Notes</label>
-        <textarea name="notes" id="notes">{% if form_data %}{{ form_data.notes }}{% else %}{{ invoice.notes }}{% endif %}</textarea>
+    <!-- Edit Invoice Form Card -->
+    <div class="card card-custom">
+        <div class="card-body p-4 p-md-5">
 
-        <button type="submit">Save Changes</button>
-    </form>
-</body>
-</html>
+            
+            <form method="POST" action="" novalidate>
+                {% csrf_token %}
+
+                <h5 class="fw-bold mb-4 pb-2 border-bottom">
+                    Editable Invoice Details
+                </h5>
+
+                <div class="row g-4">
+
+                    <!-- Invoice Category -->
+                    <div class="col-md-6">
+                        <label for="invoiceCategory" class="form-label">
+                            Invoice Category <span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select" id="invoiceCategory"
+                                name="category" required>
+
+                            <option value="" disabled
+                                {% if not invoice.category %}selected{% endif %}>
+                                Select charge type...
+                            </option>
+
+                            {% for value, label in invoice_category_choices %}
+                                <option value="{{ value }}"
+                                    {% if form_data %}
+                                        {% if form_data.category == value %}selected{% endif %}
+                                    {% elif invoice.category == value %}
+                                        selected
+                                    {% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+
+                        </select>
+
+                        <div class="form-text">
+                            Specifies the type of charge being billed.
+                        </div>
+                    </div>
+
+
+                    <!-- Invoice Amount -->
+                    <div class="col-md-6">
+                        <label for="invoiceAmount" class="form-label">
+                            Invoice Amount <span class="text-danger">*</span>
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text">KES</span>
+
+                            <input type="number"
+                                step="0.01"
+                                min="0.01"
+                                class="form-control"
+                                id="invoiceAmount"
+                                name="amount"
+                                value="{% if form_data %}{{ form_data.amount }}{% else %}{{ invoice.total_amount }}{% endif %}"
+                                placeholder="0.00"
+                                required>
+                        </div>
+
+                        <div class="form-text">
+                            Total charge amount to be billed to the tenant.
+                        </div>
+                    </div>
+
+
+                    <!-- Due Date -->
+                    <div class="col-md-4">
+                        <label for="dueDate" class="form-label">
+                            Due Date <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="date"
+                            class="form-control"
+                            id="dueDate"
+                            name="due_date"
+                            value="{% if form_data %}{{ form_data.due_date }}{% else %}{{ invoice.due_date|date:'Y-m-d' }}{% endif %}"
+                            required>
+
+                        <div class="form-text">
+                            Deadline for tenant payment.
+                        </div>
+                    </div>
+
+
+                    <!-- Billing Period Start -->
+                    <div class="col-md-4">
+                        <label for="periodStart" class="form-label">
+                            Billing Period Start
+                        </label>
+
+                        <input type="date"
+                            class="form-control"
+                            id="periodStart"
+                            name="billing_period_start"
+                            value="{% if form_data %}{{ form_data.billing_period_start }}{% elif invoice.billing_period_start %}{{ invoice.billing_period_start|date:'Y-m-d' }}{% endif %}">
+
+                        <div class="form-text">
+                            Start date of the period covered by this invoice.
+                        </div>
+                    </div>
+
+
+                    <!-- Billing Period End -->
+                    <div class="col-md-4">
+                        <label for="periodEnd" class="form-label">
+                            Billing Period End
+                        </label>
+
+                        <input type="date"
+                            class="form-control"
+                            id="periodEnd"
+                            name="billing_period_end"
+                            value="{% if form_data %}{{ form_data.billing_period_end }}{% elif invoice.billing_period_end %}{{ invoice.billing_period_end|date:'Y-m-d' }}{% endif %}">
+
+                        <div class="form-text">
+                            End date of the period covered by this invoice.
+                        </div>
+                    </div>
+
+
+                    <!-- Notes -->
+                    <div class="col-12">
+                        <label for="invoiceNotes" class="form-label">
+                            Notes
+                            <span class="text-muted fw-normal">(Optional)</span>
+                        </label>
+
+                        <textarea class="form-control"
+                                id="invoiceNotes"
+                                name="notes"
+                                rows="3"
+                                placeholder="Add any additional information about this invoice...">{% if form_data %}{{ form_data.notes }}{% else %}{{ invoice.notes }}{% endif %}</textarea>
+
+                        <div class="form-text">
+                            Optional additional information about the invoice.
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Form Action Buttons -->
+                <div class="d-flex flex-column-reverse flex-sm-row justify-content-end gap-2 mt-5 pt-3 border-top">
+
+                    <a href="{% url 'billing:invoice_list' %}"
+                    class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-floppy-disk me-2"></i>
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -81,6 +81,10 @@ def update_draft_invoice_service(
     Issued and cancelled invoices cannot be modified.
     """
 
+    logger.info(
+        "======= Invoice update started (DRAFT Invoice) ======="
+    )
+
     # Lock the invoice before making changes.
     try:
         invoice = Invoice.objects.select_for_update().get(
@@ -160,15 +164,20 @@ def update_draft_invoice_service(
         raise ValidationError(
             "An invoice with this category and billing period "
             "already exists for this account."
-        )
+        ) 
 
     # Log the update.
     logger.info(
         "Draft invoice updated successfully. "
-        "Invoice ID: %s | Invoice Number: %s | Updated by: %s",
+        "Tenant Name: %s | Invoice ID: %s | Invoice Number: %s | Updated by: %s",
+        invoice.tenancy.tenant,
         invoice.pk,
         invoice.invoice_number,
         updated_by,
+    )
+
+    logger.info(
+        "======= Invoice update closed successfully ======="
     )
 
     return invoice
@@ -346,6 +355,10 @@ def create_invoice_service(
     apply available credit.
     """
 
+    logger.info(
+        "======= Invoice creation started ======= "
+    )
+
     if issue_date is None:
         issue_date = timezone.localdate()
 
@@ -404,7 +417,8 @@ def create_invoice_service(
     )
 
     logger.info(
-        "Invoice created | invoice=%s | tenancy=%s | status=%s",
+        "Invoice created | Tenant Name=%s | invoice=%s | tenancy=%s | status=%s",
+        invoice.tenancy.tenant,
         invoice.id,
         tenancy.id,
         invoice.status
@@ -430,7 +444,8 @@ def create_invoice_service(
     )
 
     logger.info(
-        "Invoice charge recorded | invoice=%s | amount=%s",
+        "Invoice charge recorded | Tenant Name=%s | invoice=%s | amount=%s",
+        invoice.tenancy.tenant,
         invoice.id,
         amount,
     )
@@ -447,10 +462,18 @@ def create_invoice_service(
         invoice.id,
     )
 
+    logger.info(
+            "======= Invoice creation completed successfully ======= "
+        )
+
     return invoice
 
 @transaction.atomic
 def issue_invoice_service(*, invoice, issued_by, issue_date=None):
+
+    logger.info(
+        "======= Starting ISSUE invoice ======="
+    )
 
     if issue_date is None:
         issue_date = timezone.localdate()
@@ -517,7 +540,8 @@ def issue_invoice_service(*, invoice, issued_by, issue_date=None):
     )
 
     logger.info(
-        "Invoice issued | invoice=%s | issued_by=%s",
+        "Invoice issued | Tenant Name=%s | invoice=%s | issued_by=%s",
+        invoice.tenancy.tenant,
         invoice.id,
         issued_by.id,
     )
@@ -534,11 +558,19 @@ def issue_invoice_service(*, invoice, issued_by, issue_date=None):
         invoice.id,
     )
 
+    logger.info(
+            "======= Ending ISSUE invoice ======= "
+        )
+
     return invoice
 
 @transaction.atomic
 def cancel_invoice_service(*, invoice, cancelled_by, cancellation_date=None):
     """Cancel an issued and completely unpaid invoice"""
+
+    logger.info(
+        "======= Starting CANCEL invoice ======="
+    )
 
     if cancellation_date is None:
         cancellation_date = timezone.localdate()
@@ -621,9 +653,14 @@ def cancel_invoice_service(*, invoice, cancelled_by, cancellation_date=None):
     invoice.save(update_fields=["status"])
 
     logger.info(
-        "Invoice cancelled | invoice=%s | cancelled_by=%s",
+        "Invoice cancelled | Tenant Name=%s | invoice=%s | cancelled_by=%s",
+        invoice.tenancy.tenant,
         invoice.id,
         cancelled_by.id,
+    )
+
+    logger.info(
+        "======= Ending CANCEL invoice ======="
     )
 
     return invoice
@@ -634,6 +671,10 @@ def delete_draft_invoice_service(*, invoice, deleted_by):
     Delete a draft invoice only if it has no ledger entries.
     Issued and cancelled invoices must remain in the system
     """
+
+    logger.info(
+        "======= Deleting DRAFT invoice ======="
+    )
 
     try:
         invoice = Invoice.objects.select_for_update().get(
@@ -663,9 +704,14 @@ def delete_draft_invoice_service(*, invoice, deleted_by):
     invoice.delete()
 
     logger.info(
-        "Draft invoice deleted | invoice_id=%s | "
+        "Draft invoice deleted |Tenant Name=%s | invoice_id=%s | "
         "invoice_number=%s | deleted_by=%s",
+        invoice.tenancy.tenant,
         invoice_id,
         invoice_number,
         deleted_by.id,
     )
+
+    logger.info(
+            "======= Ending Delete invoice ======= "
+        )

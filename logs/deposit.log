@@ -1,4 +1,0 @@
-2026-10-16 01:00:55,175 | INFO | deposit | Deposit created successfully | ledger=1 | reference=DEP-54AE60B803 | amount=10000
-2026-10-16 01:37:45,418 | INFO | deposit | Deposit created successfully | ledger=2 | reference=DEP-8010C8683E | amount=12000
-2026-10-16 01:45:54,130 | INFO | deposit | Deposit created successfully | ledger=3 | reference=DEP-F13B0DBA6D | amount=10000
-2026-11-18 23:39:17,323 | INFO | deposit | Deposit created successfully | ledger=6 | reference=DEP-4648243002 | amount=5000

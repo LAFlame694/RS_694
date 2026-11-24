@@ -13,11 +13,14 @@ from finance.views.deposit_views import (
     deposit_search_view,
     tenant_deposit_view,
     create_deposit_view,
+    apply_deposit_view,
 )
 
 app_name = "finance"
 
 urlpatterns = [
+
+    # deposits urls
     path(
         "deposits/search/",
         deposit_search_view,
@@ -31,11 +34,18 @@ urlpatterns = [
     ),
 
     path(
-            "deposits/create/<int:tenant_id>/",
-            create_deposit_view,
-            name="create_deposit",
-        ),
+        "deposits/create/<int:tenant_id>/",
+        create_deposit_view,
+        name="create_deposit",
+    ),
 
+    path(
+        "deposits/apply/<int:tenant_id>/",
+        apply_deposit_view,
+        name="apply_deposit",
+    ),
+
+    # payments urls
     path(
         "payments/search/",
         payment_search_view,

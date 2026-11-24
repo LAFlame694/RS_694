@@ -46,6 +46,110 @@
         </div>
     </div>
 
+
+    <!-- Tenant Search and Property Filters -->
+    <div class="card rm-card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="fa-solid fa-filter text-primary"></i>
+                <h5 class="fw-bold text-dark mb-0">
+                    Find a Tenant
+                </h5>
+            </div>
+
+            <p class="text-muted small mb-3">
+                Filter by apartment or search for a tenant using
+                their name, phone number or unit number.
+            </p>
+
+            <form method="GET"
+                action="{% url 'billing:invoice_create' %}">
+
+                <div class="row g-3 align-items-end">
+
+                    <!-- Property Filter -->
+                    <div class="col-12 col-md-5">
+
+                        <label for="propertyFilter"
+                            class="form-label small fw-semibold text-muted">
+                            Select Property
+                        </label>
+
+                        <select name="property"
+                                id="propertyFilter"
+                                class="form-select">
+
+                            <option value="">All Properties</option>
+
+                            {% for property in properties %}
+                                <option value="{{ property.pk }}"
+                                    {% if selected_property == property.pk|stringformat:"s" %}
+                                        selected
+                                    {% endif %}>
+                                    {{ property.name }}
+                                </option>
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <!-- Tenant Search -->
+                    <div class="col-12 col-md-5">
+
+                        <label for="tenantSearch"
+                            class="form-label small fw-semibold text-muted">
+                            Search Tenant
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text bg-white">
+                                <i class="fa-solid fa-search text-muted"></i>
+                            </span>
+
+                            <input type="search"
+                                name="search"
+                                id="tenantSearch"
+                                class="form-control"
+                                placeholder="Name, phone or unit number..."
+                                value="{{ search_query }}">
+
+                        </div>
+
+                    </div>
+
+                    <!-- Filter Buttons -->
+                    <div class="col-12 col-md-2">
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary flex-grow-1">
+                                <i class="fa-solid fa-filter me-1"></i>
+                                Filter
+                            </button>
+
+                            <a href="{% url 'billing:invoice_create' %}"
+                            class="btn btn-outline-secondary"
+                            title="Clear filters">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    <!-- End Tenant Search and Property Filters -->
+
+
     <!-- Main Form Layout -->
     <form 
         id="createInvoiceForm" 
@@ -56,6 +160,14 @@
     >
 
     {% csrf_token %}
+
+        <input type="hidden"
+            name="property"
+            value="{{ selected_property }}">
+
+        <input type="hidden"
+            name="search"
+            value="{{ search_query }}">
 
         <div class="row g-4">
             
@@ -70,7 +182,20 @@
                         </h5>
                         
                         <div class="mb-3">
-                            <label for="tenancySelect" class="form-label small fw-semibold text-muted">Select Tenancy <span class="text-danger">*</span></label>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+
+                                <label for="tenancySelect"
+                                    class="form-label small fw-semibold text-muted mb-0">
+                                    Select Tenancy <span class="text-danger">*</span>
+                                </label>
+
+                                <small class="text-muted">
+                                    {{ tenancies|length }} matching tenancies
+                                </small>
+
+                            </div>
+
                             <div class="input-group">
                                 <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-search"></i></span>
 
@@ -83,6 +208,7 @@
                                     <option value="">Select tenant and unit...</option>
 
                                     {% for tenancy in tenancies %}
+
                                         <option
                                             value="{{ tenancy.pk }}"
                                             data-tenant="{{ tenancy.tenant }}"
@@ -90,10 +216,21 @@
                                             data-unit="{{ tenancy.unit }}"
                                             data-type="{{ tenancy.unit.get_unit_type_display|default:tenancy.unit }}"
                                             data-rent="{{ tenancy.rent_amount }}"
-                                            {% if form_data.tenancy == tenancy.pk|stringformat:"s" %}selected{% endif %}
+                                            {% if form_data.tenancy == tenancy.pk|stringformat:"s" %}
+                                                selected
+                                            {% endif %}
                                         >
-                                            {{ tenancy.tenant }} — {{ tenancy.unit.property }} — {{ tenancy.unit }}
+                                            {{ tenancy.tenant }} —
+                                            {{ tenancy.unit.property }} —
+                                            {{ tenancy.unit }}
                                         </option>
+
+                                    {% empty %}
+
+                                        <option value="" disabled>
+                                            No active tenancies match your search.
+                                        </option>
+
                                     {% endfor %}
                                 </select>
 
